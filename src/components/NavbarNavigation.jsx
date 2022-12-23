@@ -59,7 +59,7 @@ function NavbarNavigation() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="blue-quinary">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton
             size="large"
@@ -107,7 +107,7 @@ function NavbarNavigation() {
           </SwipeableDrawer>
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {"Hermeco"}
+            {"Prisma"}
           </Typography>
         </Toolbar>
       </AppBar>
