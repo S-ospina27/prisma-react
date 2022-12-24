@@ -1,10 +1,18 @@
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import HomeIcon from "@mui/icons-material/Home";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 export default {
   online: {
-    routes: [
+    administartor: [
+      {
+        nombre: "Dashboard",
+        icon: <HomeIcon color={"primary"} />,
+        link: "/",
+      },
       {
         nombre: "Usuarios",
         icon: <AssignmentIndIcon color={"primary"} />,
@@ -13,12 +21,29 @@ export default {
       {
         nombre: "Portafolios",
         icon: <WorkRoundedIcon color={"primary"} />,
-        link: "/",
+        link: "/products",
       },
       {
         nombre: "Ordenes de Servicios",
         icon: <MenuBookRoundedIcon color={"primary"} />,
-        link: "http://127.0.0.1:5173/",
+        link: "/service-orders",
+      },
+      {
+        nombre: "Solicitudes",
+        icon: <AssignmentIcon color={"primary"} />,
+        link: "/service-request",
+      },
+      {
+        nombre: "Tecnicos",
+        icon: <SupervisedUserCircleIcon color={"primary"} />,
+        link: "/technical"
+      },
+    ],
+    provider: [
+      {
+        nombre: "Ordenes de Servicios",
+        icon: <MenuBookRoundedIcon color={"primary"} />,
+        link: "/service-orders",
       },
     ],
   },
@@ -26,6 +51,11 @@ export default {
     {
       nombre: "Loguin",
       link: "/",
+    },
+    {
+      nombre: "Solicitudes",
+      icon: <AssignmentIcon color={"primary"} />,
+      link: "/service-request",
     },
   ],
 };

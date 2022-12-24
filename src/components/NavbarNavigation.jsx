@@ -18,6 +18,7 @@ import RouteListNavigation from "./tools/RouteListNavigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import  prisma from "./../assets/img/prisma.png"
 // import session, { navigationLinks, remove } from "../tools/SessionSettings";
 // import RouteListNavigation from "../tools/RouteListNavigation";
 
@@ -94,13 +95,13 @@ function NavbarNavigation() {
               <List
                 subheader={
                   <Box sx={{ pt: 2, pb: 2, pl: 2, pr: 2 }}>
-                    {/* <img
-                      src={log}
-                      width={190}
-                      height={65}
+                    <img
+                      src={prisma}
+                      width={208}
+                      height={40}
                       style={{ padding: 5 }}
                       loading={"lazy"}
-                    /> */}
+                    />
                   </Box>
                 }
               >
@@ -112,7 +113,7 @@ function NavbarNavigation() {
                   </Divider>
                 </Box>
 
-                {RouteListNavigation.online.routes.map((text, index) => (
+                {RouteListNavigation.online.administartor.map((text, index) => (
                   <ListItem
                     key={text.nombre}
                     disablePadding
