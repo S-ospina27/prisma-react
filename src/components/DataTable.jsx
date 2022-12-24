@@ -143,8 +143,8 @@ function DataTable({
       localeText={esES.components.MuiDataGrid.defaultProps.localeText}
       onRowClick={(params) => {
         if (onRowClick) {
-          onRowClick.open(true);
           onRowClick.set(params.row);
+          onRowClick.open(true);
         }
       }}
       components={{
