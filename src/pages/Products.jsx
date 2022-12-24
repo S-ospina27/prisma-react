@@ -22,16 +22,17 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import ColumnsTable from "../components/tools/ColumnsTable";
 
 function Products() {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [products, setproducts] = useState([]);
 
 
-  const handleReadUsers = () => {
-    axios.get(RoutesList.api.users.read.index).then((res) => {
-      setUsers(res.data);
+  const handleProducts = () => {
+    axios.get(RoutesList.api.products.read).then((res) => {
+      setproducts(res.data);
     });
   };
 
@@ -46,7 +47,7 @@ function Products() {
   };
 
   useEffect(() => {
-    handleReadUsers();
+    handleProducts();
   }, []);
 
   return (
@@ -62,42 +63,14 @@ function Products() {
       </Box>
       <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
         <DataTable
-          reload={handleReadUsers}
-          rows={users}
-          columns={[
-            { field: "roles_name", headerName: "ROL", width: 250 },
-            {
-              field: "users_identification",
-              headerName: "# DE IDENTIFICACIÓN",
-              width: 250,
-            },
-            { field: "fullname", headerName: "NOMBRE COMPLETO", width: 250 },
-            { field: "users_phone", headerName: "TELEFONO", width: 250 },
-            { field: "users_email", headerName: "EMAIL", width: 250 },
-            { field: "users_address", headerName: "DIRECCIÓN", width: 250 },
-            { field: "cities_name", headerName: "CIUDAD", width: 250 },
-            {
-              field: "departments_name",
-              headerName: "DEPARTAMENTO",
-              width: 250,
-            },
-            {
-              field: "users_contact_name",
-              headerName: "NOMBRE DE CONTACTO",
-              width: 250,
-            },
-            {
-              field: "users_contact_phone",
-              headerName: "# DE CONTACTO",
-              width: 250,
-            },
-            { field: "status_type", headerName: "STATUS", width: 250 },
-          ]}
+          reload={handleProducts}
+          rows={products}
+          columns={ColumnsTable.products}
           onRowClick={{
             open: setOpenUpdate,
             set: setFields,
           }}
-          getRowId={"idusers"}
+          getRowId={"idproducts"}
           sx={{
             height: "450px",
           }}
