@@ -8,7 +8,7 @@ export default {
   host: host,
   api: {
     read_roles: `${host}/api/read-roles`,
-    read_document_types: `${host}/read-document-types`,
+    read_document_types: `${host}/api/read-document-types`,
     users: {
       create: `${host}/api/users/create`,
       update: `${host}/api/users/update`,
@@ -35,6 +35,10 @@ export default {
         index: `${host}api/service-orders/read`,
         by_provider: `${host}/api/service-orders/by-provider/{idprovider_users}`,
       },
+    },
+    locations: {
+      read_departments: `${host}/api/locations/read-departments`,
+      read_cities: `${host}/api/locations/read-cities/`,
     },
   },
 };

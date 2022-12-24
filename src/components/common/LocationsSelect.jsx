@@ -1,6 +1,7 @@
 import { Autocomplete, Grid, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import RoutesList from "../tools/RoutesList";
 
 function LocationsSelect({
   labelDepartment,
@@ -23,13 +24,13 @@ function LocationsSelect({
 
   const handleReadCities = (iddepartments) => {
     axios
-      .get(`http://127.0.0.1:8000/api/locations/read-cities/${iddepartments}`)
+      .get(RoutesList.api.locations.read_cities + iddepartments)
       .then((res) => setCities(res.data));
   };
 
   const handleReadDepartments = () => {
     axios
-      .get("http://127.0.0.1:8000/api/locations/read-departments")
+      .get(RoutesList.api.locations.read_departments)
       .then((res) => {
         setDepartments(res.data);
       });

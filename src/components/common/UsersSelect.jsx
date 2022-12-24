@@ -1,6 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import RoutesList from "../tools/RoutesList";
 
 function UsersSelect({
   value,
@@ -14,7 +15,7 @@ function UsersSelect({
   const [users, setUsers] = useState([]);
 
   const handleReadUsers = () => {
-    axios.get("http://127.0.0.1:8000/api/users/read/filter").then((res) => {
+    axios.get(RoutesList.api.users.read.filter).then((res) => {
       const rows = [];
 
       selected.map((rol) => {

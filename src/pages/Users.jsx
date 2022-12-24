@@ -23,6 +23,7 @@ import DocumentTypesSelect from "../components/common/DocumentTypesSelect";
 
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 import LocationsSelect from "../components/common/LocationsSelect";
+import RoutesList from "../components/tools/RoutesList";
 
 function Users() {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -38,7 +39,7 @@ function Users() {
   const [idcities, setIdcities] = useState("");
 
   const handleReadUsers = () => {
-    axios.get("http://127.0.0.1:8000/api/users/read/").then((res) => {
+    axios.get(RoutesList.api.users.read.index).then((res) => {
       setUsers(res.data);
     });
   };
