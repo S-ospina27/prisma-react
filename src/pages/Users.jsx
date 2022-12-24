@@ -22,6 +22,7 @@ import RolesSelect from "../components/common/RolesSelect";
 import DocumentTypesSelect from "../components/common/DocumentTypesSelect";
 
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
+import LocationsSelect from "../components/common/LocationsSelect";
 
 function Users() {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -33,6 +34,8 @@ function Users() {
   const [idusers_a, setIdusers_a] = useState("");
   const [idroles_a, setIdroles_a] = useState("");
   const [iddocument_types_a, setIddocument_types_a] = useState("");
+  const [iddepartments, setIddepartments] = useState("");
+  const [idcities, setIdcities] = useState("");
 
   const handleReadUsers = () => {
     axios.get("http://127.0.0.1:8000/api/users/read/").then((res) => {
@@ -63,9 +66,12 @@ function Users() {
   const hanledUpdate = (e) => {
     e.preventDefault();
 
-    console.log(parseInt(idusers_a.split("-").shift().trim()));
-    console.log(idroles_a);
-    console.log(iddocument_types_a);
+    // console.log(parseInt(idusers_a.split("-").shift().trim()));
+    // console.log(idroles_a);
+    // console.log(iddocument_types_a);
+
+    console.log(iddepartments)
+    console.log(idcities)
   };
 
   useEffect(() => {
@@ -82,6 +88,21 @@ function Users() {
             color={"primary"}
           />
         </Divider>
+      </Box>
+
+      <Box my={4}>
+        <form onSubmit={hanledUpdate}>
+          <LocationsSelect
+            department={iddepartments}
+            setDepartment={setIddepartments}
+            requiredDepartment={true}
+            city={idcities}
+            setCity={setIdcities}
+            requiredCity={true}
+          />
+
+          <Button type="submit">SEND</Button>
+        </form>
       </Box>
 
       <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
