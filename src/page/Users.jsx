@@ -18,7 +18,7 @@ import DataTable from "../Components/DataTable";
 import FaceIcon from "@mui/icons-material/Face";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import Selection from "../components/Selection";
 
 function Users() {
@@ -26,7 +26,11 @@ function Users() {
   const [openRegister, setOpenRegister] = useState(false);
   const [id, setid] = useState("");
   const [name, setname] = useState("");
+  const [idrol, setidrol] = useState("");
   const [lastname, setlastname] = useState("");
+  const [titleError, settitleError] = useState("");
+  const [error, setError] = useState(false);
+
   const [users_list, setUsers_list] = useState([
     {
       id: 1,
@@ -98,9 +102,13 @@ function Users() {
 
   const hanledRegister = (e) => {
     e.preventDefault();
-    console.log(id);
-    console.log(name);
-    console.log(lastname);
+    if (idrol.length <= 1) {
+      setError(true);
+      settitleError("el campo de idrol se encuentra vasio");
+    } else {
+      setError(false);
+      settitleError("");
+    }
   };
 
   /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -207,8 +215,19 @@ function Users() {
                     label="Id rol"
                     variant="filled"
                     type="number"
-                    // value={name}
-                    // onChange={(e) => setname(e.target.value)}
+                    error={error}
+                    helperText={titleError}
+                    value={idrol}
+                    onChange={(e) => {
+                      setidrol(e.target.value);
+                      if (idrol.length >=10){
+                        setError(true);
+                        settitleError( "El campo Rol solo admite un maximo de 10 digitos")
+                      }else{
+                        settitleError("")
+                        setError(false)
+                      }
+                    }}
                   />
                 </Grid>
 
@@ -309,6 +328,7 @@ function Users() {
                     label="Teléfono del Contacto"
                     variant="filled"
                     type="number"
+
                     // value={lastname}
                     // onChange={(e) => setlastname(e.target.value)}
                   />
@@ -318,7 +338,7 @@ function Users() {
 
             <DialogActions>
               <Button onClick={() => setOpenRegister(false)}>Cancelar</Button>
-              <Button type="submit">Actualizar</Button>
+              <Button type="submit">Registrar</Button>
             </DialogActions>
           </form>
         </Dialog>

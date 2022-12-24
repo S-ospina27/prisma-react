@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<h1>hola</h1>} />
         <Route path="/users" element={<Users />} />
+        <Route path="/portafolio" element={<h1>productos</h1>} />
       </Routes>
     </ThemeProvider>
   );

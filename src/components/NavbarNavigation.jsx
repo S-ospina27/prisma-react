@@ -14,6 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
+import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import session, { navigationLinks, remove } from "../tools/SessionSettings";
@@ -57,6 +60,23 @@ function NavbarNavigation() {
   //   navigate("/dashboard");
   // };
 
+  const prueba = [
+    {
+      nombre: "Usuarios",
+      icon: <AssignmentIndIcon color={"primary"}  />,
+      link: "/Users",
+    },
+    {
+      nombre: "Porganortafolio",
+      icon: <WorkRoundedIcon color={"primary"} />,
+      link: "/",
+    },
+    {
+      nombre: "Ordenes de Servicios",
+      icon: <MenuBookRoundedIcon color={"primary"} />,
+      link: "http://127.0.0.1:5173/",
+    },
+  ];
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="primary">
@@ -102,6 +122,14 @@ function NavbarNavigation() {
                 }
               >
                 <Divider />
+                {prueba.map((text, index) => (
+                  <ListItem key={text.nombre} disablePadding>
+                    <ListItemButton component={Link} to={text.link}>
+                      <ListItemIcon>{text.icon}</ListItemIcon>
+                      <ListItemText primary={text.nombre} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
               </List>
             </Box>
           </SwipeableDrawer>
