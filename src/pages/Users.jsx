@@ -84,6 +84,12 @@ function Users() {
         </Divider>
       </Box>
 
+      <Box my={4}>
+        <Grid container>
+          <Grid item xs={12}></Grid>
+        </Grid>
+      </Box>
+
       <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
         <DataTable
           reload={handleReadUsers}
