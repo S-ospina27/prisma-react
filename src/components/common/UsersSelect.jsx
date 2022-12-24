@@ -38,10 +38,12 @@ function UsersSelect({
       disabled={disabled}
       readOnly={readOnly}
       options={users.map(
-        (user) => `${user.idusers} - ${user.fullname}/${user.users_identification}`
+        (user) =>
+          `${user.idusers} - ${user.fullname}/${user.users_identification}`
       )}
       getOptionLabel={(user) => user}
       getOptionDisabled={(user) => user === value}
+      isOptionEqualToValue={(user, value) => user === value}
       itemID={"idusers"}
       value={value}
       onChange={(event, newValue) => setValue(newValue)}

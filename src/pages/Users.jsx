@@ -21,6 +21,8 @@ import axios from "axios";
 import RolesSelect from "../components/common/RolesSelect";
 import DocumentTypesSelect from "../components/common/DocumentTypesSelect";
 
+import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
+
 function Users() {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
@@ -63,7 +65,7 @@ function Users() {
 
     console.log(parseInt(idusers_a.split("-").shift().trim()));
     console.log(idroles_a);
-    console.log(iddocument_types_a)
+    console.log(iddocument_types_a);
   };
 
   useEffect(() => {
@@ -129,7 +131,7 @@ function Users() {
               size="small"
               onClick={() => setOpenRegister(true)}
               color={"primary"}
-              startIcon={<FaceIcon color={"primary"} />}
+              startIcon={<PersonAddAltRoundedIcon color={"primary"} />}
             >
               {"Registrar Usuario"}
             </Button>
@@ -156,7 +158,7 @@ function Users() {
           <form onSubmit={hanledRegister}>
             <DialogContent>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={6}>
+                {/* <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
                     label="Id rol"
@@ -176,7 +178,7 @@ function Users() {
                       }
                     }}
                   />
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12} sm={6} md={6}>
                   Tipos documento
@@ -304,6 +306,7 @@ function Users() {
           open={openUpdate}
           onClose={() => setOpenUpdate(false)}
           aria-labelledby="responsive-dialog-title"
+          maxWidth={"lg"}
         >
           <DialogTitle id="responsive-dialog-title">
             <Box>
@@ -325,7 +328,7 @@ function Users() {
                     value={idusers_a}
                     setValue={setIdusers_a}
                     required
-                    selected={["ADMINISTRADOR", "DISTRIBUIDOR", "TECNICO"]}
+                    selected={["ADMINISTRADOR"]}
                   />
                 </Grid>
 
@@ -335,6 +338,7 @@ function Users() {
                     setValue={setIdroles_a}
                     required
                     ignore={idroles_a === 1 ? [] : ["ADMINISTRADOR"]}
+                    readOnly={2 === 1 ? false : true}
                   />
                 </Grid>
 
@@ -343,7 +347,7 @@ function Users() {
                     value={iddocument_types_a}
                     setValue={setIddocument_types_a}
                     required
-                    ignore={["NIT"]}
+                    // ignore={["NIT"]}
                   />
                 </Grid>
 

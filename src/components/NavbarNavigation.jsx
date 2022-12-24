@@ -2,6 +2,7 @@ import {
   AppBar,
   Box,
   Button,
+  Chip,
   Divider,
   IconButton,
   List,
@@ -15,10 +16,10 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
-import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
+import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // import session, { navigationLinks, remove } from "../tools/SessionSettings";
 // import RouteListNavigation from "../tools/RouteListNavigation";
 
@@ -27,6 +28,7 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 // import AndroidIcon from "@mui/icons-material/Android";
 
 function NavbarNavigation() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   // const [actualSession, setActualSession] = useState(session());
@@ -63,11 +65,11 @@ function NavbarNavigation() {
   const prueba = [
     {
       nombre: "Usuarios",
-      icon: <AssignmentIndIcon color={"primary"}  />,
-      link: "/Users",
+      icon: <AssignmentIndIcon color={"primary"} />,
+      link: "/users",
     },
     {
-      nombre: "Porganortafolio",
+      nombre: "Portafolios",
       icon: <WorkRoundedIcon color={"primary"} />,
       link: "/",
     },
@@ -121,11 +123,22 @@ function NavbarNavigation() {
                   </Box>
                 }
               >
-                <Divider />
+                {/* <Divider /> */}
+
+                <Box mb={3}>
+                  <Divider>
+                    <Chip label={"Administrar"} color={"primary"} />
+                  </Divider>
+                </Box>
+
                 {prueba.map((text, index) => (
-                  <ListItem key={text.nombre} disablePadding>
+                  <ListItem
+                    key={text.nombre}
+                    disablePadding
+                    selected={text.link === location.pathname}
+                  >
                     <ListItemButton component={Link} to={text.link}>
-                      <ListItemIcon>{text.icon}</ListItemIcon>
+                      {text.icon && <ListItemIcon>{text.icon}</ListItemIcon>}
                       <ListItemText primary={text.nombre} />
                     </ListItemButton>
                   </ListItem>
