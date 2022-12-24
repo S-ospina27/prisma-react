@@ -2,103 +2,50 @@ import {
   Box,
   Button,
   Chip,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Divider,
   Grid,
   TextField,
-  Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DataTable from "../Components/DataTable";
 import FaceIcon from "@mui/icons-material/Face";
 import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import Selection from "../components/Selection";
+import UsersSelect from "../components/common/UsersSelect";
+import axios from "axios";
+import RolesSelect from "../components/common/RolesSelect";
+import DocumentTypesSelect from "../components/common/DocumentTypesSelect";
 
 function Users() {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
-  const [id, setid] = useState("");
-  const [name, setname] = useState("");
-  const [idrol, setidrol] = useState("");
-  const [lastname, setlastname] = useState("");
-  const [titleError, settitleError] = useState("");
-  const [error, setError] = useState(false);
+  const [users, setUsers] = useState([]);
 
-  const [users_list, setUsers_list] = useState([
-    {
-      id: 1,
-      roles_name: "Sergio",
-      lastname: "Leon",
-    },
-    {
-      id: 2,
-      roles_name: "Santiago",
-      lastname: "Ospina",
-    },
-  ]);
-  const [documents, setdocuments] = useState([
-    {
-      id: 1,
-      name: "Cedula de ciudadania",
-    },
-    {
-      id: 2,
-      name: "Pasaporte",
-    },
-    {
-      id: 3,
-      name: "Cedula de extranjeria",
-    },
-  ]);
-  const [cities, setcities] = useState([
-    {
-      id: 1,
-      name: "bogota",
-    },
-    {
-      id: 2,
-      name: "medellin",
-    },
-    {
-      id: 3,
-      name: "girardota",
-    },
-  ]);
-  const [status, setstatus] = useState([
-    {
-      id: 1,
-      name: "Activo",
-    },
-    {
-      id: 2,
-      name: "inactivo",
-    },
-  ]);
+  const [idusers, setIdusers] = useState("");
 
-  /* --------------------------------------------HANDLERDATA UPDATE OF DIALOG------------------------------------------------------------------------- */
+  const [idusers_a, setIdusers_a] = useState("");
+  const [idroles_a, setIdroles_a] = useState("");
+  const [iddocument_types_a, setIddocument_types_a] = useState("");
 
   const handleReadUsers = () => {
-    console.log("reading");
+    axios.get("http://127.0.0.1:8000/api/users/read/").then((res) => {
+      setUsers(res.data);
+    });
   };
-
-  /* --------------------------------------------SETING DATA UPDATE OF DIALOG------------------------------------------------------------------------- */
 
   const setFields = (row) => {
-    setid(row.id);
-    setname(row.name);
-    setlastname(row.lastname);
+    setIdusers_a(
+      `${row.idusers} - ${row.fullname}/${row.users_identification}`
+    );
+
+    setIdroles_a(row.idroles);
+    setIddocument_types_a(row.iddocument_types);
   };
-
-  /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
-
-  /* --------------------------------------------HANLED UPDATE DIALOG------------------------------------------------------------------------- */
 
   const hanledRegister = (e) => {
     e.preventDefault();
@@ -111,17 +58,17 @@ function Users() {
     }
   };
 
-  /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
-  /* --------------------------------------------HANLED UPDATE DIALOG------------------------------------------------------------------------- */
-
   const hanledUpdate = (e) => {
     e.preventDefault();
-    console.log(id);
-    console.log(name);
-    console.log(lastname);
+
+    console.log(parseInt(idusers_a.split("-").shift().trim()));
+    console.log(idroles_a);
+    console.log(iddocument_types_a)
   };
 
-  /* ---------------------------------------------------------------------------------------------------------------------------------------------- */
+  useEffect(() => {
+    handleReadUsers();
+  }, []);
 
   return (
     <Box mx={3} my={3}>
@@ -138,7 +85,7 @@ function Users() {
       <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
         <DataTable
           reload={handleReadUsers}
-          rows={users_list}
+          rows={users}
           columns={[
             { field: "roles_name", headerName: "ROL", width: 250 },
             {
@@ -172,7 +119,7 @@ function Users() {
             open: setOpenUpdate,
             set: setFields,
           }}
-          getRowId={"id"}
+          getRowId={"idusers"}
           sx={{
             height: "450px",
           }}
@@ -232,10 +179,11 @@ function Users() {
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6}>
-                  <Selection
+                  Tipos documento
+                  {/* <Selection
                     props={documents}
                     title={"Seleccione tipo de Documento"}
-                  />
+                  /> */}
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6}>
@@ -248,6 +196,7 @@ function Users() {
                     // onChange={(e) => setname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -269,6 +218,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -279,6 +229,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -289,9 +240,12 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
-                  <Selection props={cities} title={"Seleccione una ciudad"} />
+                  Ciudades
+                  {/* <Selection props={cities} title={"Seleccione una ciudad"} /> */}
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -302,6 +256,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -312,6 +267,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -322,6 +278,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -342,7 +299,6 @@ function Users() {
             </DialogActions>
           </form>
         </Dialog>
-        {/* -------------------------------------------------------------------------------------------------------------------------------------------- */}
         {/* --------------------------------------DIALOG UPDATE ------------------------------------------------------------------------------- */}
         <Dialog
           open={openUpdate}
@@ -365,17 +321,38 @@ function Users() {
             <DialogContent>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}>
-                  <Selection
-                    props={status}
-                    title={"Seleccione tipo de Status"}
+                  <UsersSelect
+                    value={idusers_a}
+                    setValue={setIdusers_a}
+                    required
+                    selected={["ADMINISTRADOR", "DISTRIBUIDOR", "TECNICO"]}
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6}>
-                  <Selection
+                  <RolesSelect
+                    value={idroles_a}
+                    setValue={setIdroles_a}
+                    required
+                    ignore={idroles_a === 1 ? [] : ["ADMINISTRADOR"]}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <DocumentTypesSelect
+                    value={iddocument_types_a}
+                    setValue={setIddocument_types_a}
+                    required
+                    ignore={["NIT"]}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  tipos documento
+                  {/* <Selection
                     props={documents}
                     title={"Seleccione tipo de Documento"}
-                  />
+                  /> */}
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6}>
@@ -388,6 +365,7 @@ function Users() {
                     // onChange={(e) => setname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -409,6 +387,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -419,6 +398,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -429,9 +409,12 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
-                  <Selection props={cities} title={"Seleccione una ciudad"} />
+                  Ciudades
+                  {/* <Selection props={cities} title={"Seleccione una ciudad"} /> */}
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -442,6 +425,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -452,6 +436,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
@@ -462,6 +447,7 @@ function Users() {
                     // onChange={(e) => setlastname(e.target.value)}
                   />
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={6}>
                   <TextField
                     fullWidth
