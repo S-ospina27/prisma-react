@@ -15,7 +15,7 @@ function ProductsTypeSelect({
 
   useEffect(() => {
     axios.get(RoutesList.api.products.types.read).then((res) => {
-      setTypeProducts(res.data);
+      setTypeProducts(!res.data.status ? res.data : []);
     });
   }, []);
   console.log(typeProducts);
