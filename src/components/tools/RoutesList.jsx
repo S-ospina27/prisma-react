@@ -9,6 +9,11 @@ export default {
   api: {
     read_roles: `${host}/api/read-roles`,
     read_document_types: `${host}/api/read-document-types`,
+    status:{
+      index:`${host}/api/status/`,
+      service: `${host}/api/status/service`,
+
+    },
     users: {
       create: `${host}/api/users/create`,
       update: `${host}/api/users/update`,

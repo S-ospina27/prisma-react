@@ -18,17 +18,26 @@ import RolesSelect from "../components/common/RolesSelect";
 import DocumentTypesSelect from "../components/common/DocumentTypesSelect";
 import LocationsSelect from "../components/common/LocationsSelect";
 import RoutesList from "../components/tools/RoutesList";
+
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
-import AddHomeWorkIcon from '@mui/icons-material/AddHomeWork';
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
+import AddHomeWorkIcon from "@mui/icons-material/AddHomeWork";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import ColumnsTable from "../components/tools/ColumnsTable";
+import TextFieldFilled from "../components/common/TextFieldFilled";
+import ProductsTypeSelect from "../components/common/ProductsTypeSelect";
+import StatusSelect from "../components/common/StatusSelect";
 
 function Products() {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [products, setproducts] = useState([]);
-
+  const [idproducts, setidproducts] = useState("");
+  const [referencia, setreferencia] = useState("");
+  const [TypeProducts, setTypeProducts] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [openTypeRegister, setOpenTypeRegister] = useState(false);
+ 
 
   const handleProducts = () => {
     axios.get(RoutesList.api.products.read).then((res) => {
@@ -36,9 +45,7 @@ function Products() {
     });
   };
 
-  const setFields = (row) => {
- 
-  };
+  const setFields = (row) => {};
 
   const hanledRegister = (e) => {};
 
@@ -75,6 +82,7 @@ function Products() {
             height: "450px",
           }}
           toolbar={
+           <> 
             <Button
               type="button"
               size="small"
@@ -84,6 +92,16 @@ function Products() {
             >
               {"Registrar Producto"}
             </Button>
+            <Button
+              type="button"
+              size="small"
+              onClick={() => setOpenTypeRegister(true)}
+              color={"primary"}
+              startIcon={<AddHomeWorkIcon color={"primary"} />}
+            >
+              {"Registrar Tipo Producto"}
+            </Button>
+            </>
           }
         />
         {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
@@ -97,7 +115,7 @@ function Products() {
               <Divider>
                 <Chip
                   icon={<WorkOutlineIcon />}
-                  label={"Registrar Usuario"}
+                  label={"Registrar Productos"}
                   color={"primary"}
                 />
               </Divider>
@@ -107,27 +125,66 @@ function Products() {
           <form onSubmit={hanledRegister}>
             <DialogContent>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"number"}
+                    label={"Id Producto"}
+                    value={idproducts}
+                    setValue={setidproducts}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Referencia"}
+                    value={referencia}
+                    setValue={setreferencia}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <ProductsTypeSelect
+                    value={TypeProducts}
+                    setValue={setTypeProducts}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Descripción"}
+                    value={descripcion}
+                    setValue={setDescripcion}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Color"}
+                    value={descripcion}
+                    setValue={setDescripcion}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"number"}
+                    label={"id usuario"}
+                    value={descripcion}
+                    setValue={setDescripcion}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  falta image y se asigna a balsan
+                </Grid>
               </Grid>
             </DialogContent>
 
@@ -158,34 +215,61 @@ function Products() {
 
           <form onSubmit={hanledUpdate}>
             <DialogContent>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={6}></Grid>
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"number"}
+                    label={"Id Producto"}
+                    value={idproducts}
+                    setValue={setidproducts}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Referencia"}
+                    value={referencia}
+                    setValue={setreferencia}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <ProductsTypeSelect
+                    value={TypeProducts}
+                    setValue={setTypeProducts}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Descripción"}
+                    value={descripcion}
+                    setValue={setDescripcion}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Color"}
+                    value={descripcion}
+                    setValue={setDescripcion}
+                    required
+                  />
+                </Grid>
 
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
-
-                <Grid item xs={12} sm={6} md={6}></Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                 <StatusSelect/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={6}>
+                  falta image y se asigna a balsan
+                </Grid>
               </Grid>
             </DialogContent>
 
@@ -195,7 +279,55 @@ function Products() {
             </DialogActions>
           </form>
         </Dialog>
-        {/* -------------------------------------------------------------------------------------------------------------------------------------------- */}
+      {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}  
+      <Dialog
+          open={openTypeRegister}
+          onClose={() => setOpenTypeRegister(false)}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">
+            <Box>
+              <Divider>
+                <Chip
+                  icon={<WorkOutlineIcon />}
+                  label={"Registrar"}
+                  color={"primary"}
+                />
+              </Divider>
+            </Box>
+          </DialogTitle>
+
+          <form onSubmit={hanledRegister}>
+            <DialogContent>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Color"}
+                    value={descripcion}
+                    setValue={setDescripcion}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"number"}
+                    label={"id usuario"}
+                    value={descripcion}
+                    setValue={setDescripcion}
+                    required
+                  />
+                </Grid>
+              </Grid>
+            </DialogContent>
+
+            <DialogActions>
+              <Button onClick={() => setOpenTypeRegister(false)}>Cancelar</Button>
+              <Button type="submit">Registrar</Button>
+            </DialogActions>
+          </form>
+        </Dialog>
       </Box>
     </Box>
   );
