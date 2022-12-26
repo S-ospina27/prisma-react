@@ -2,13 +2,14 @@ import {
   Box,
   Button,
   Chip,
+  Container,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
   Grid,
-  TextField,
+  IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import DataTable from "../Components/DataTable";
@@ -28,6 +29,9 @@ import TextFieldFilled from "../components/common/TextFieldFilled";
 import ProductsTypeSelect from "../components/common/ProductsTypeSelect";
 import StatusSelect from "../components/common/StatusSelect";
 
+import DialogForm from "../components/common/DialogForm";
+import CloseModal from "../components/common/CloseModal";
+
 function Products() {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
@@ -37,7 +41,6 @@ function Products() {
   const [TypeProducts, setTypeProducts] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [openTypeRegister, setOpenTypeRegister] = useState(false);
- 
 
   const handleProducts = () => {
     axios.get(RoutesList.api.products.read).then((res) => {
@@ -47,9 +50,9 @@ function Products() {
 
   const setFields = (row) => {};
 
-  const hanledRegister = (e) => {};
+  const handleCreateProducts = (e) => {};
 
-  const hanledUpdate = (e) => {
+  const handleUpdateProducts = (e) => {
     e.preventDefault();
   };
 
@@ -82,47 +85,54 @@ function Products() {
             height: "450px",
           }}
           toolbar={
-           <> 
-            <Button
-              type="button"
-              size="small"
-              onClick={() => setOpenRegister(true)}
-              color={"primary"}
-              startIcon={<AddHomeWorkIcon color={"primary"} />}
-            >
-              {"Registrar Producto"}
-            </Button>
-            <Button
-              type="button"
-              size="small"
-              onClick={() => setOpenTypeRegister(true)}
-              color={"primary"}
-              startIcon={<AddHomeWorkIcon color={"primary"} />}
-            >
-              {"Registrar Tipo Producto"}
-            </Button>
+            <>
+              <Button
+                type="button"
+                size="small"
+                onClick={() => setOpenRegister(true)}
+                color={"primary"}
+                startIcon={<AddHomeWorkIcon color={"primary"} />}
+              >
+                {"Registrar Producto"}
+              </Button>
+              {/* <Button
+                type="button"
+                size="small"
+                onClick={() => setOpenTypeRegister(true)}
+                color={"primary"}
+                startIcon={<AddHomeWorkIcon color={"primary"} />}
+              >
+                {"Registrar Tipo Producto"}
+              </Button> */}
             </>
           }
         />
         {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
+        {/* <DialogForm
+          title="Registrar Productos"
+          open={openRegister}
+          set={setOpenRegister}
+          button={{
+            label: "Registrar",
+            type: "submit",
+            onSubmit: handleCreateProducts,
+          }}
+          content={<Container></Container>}
+        /> */}
+
         <Dialog
           open={openRegister}
           onClose={() => setOpenRegister(false)}
           aria-labelledby="responsive-dialog-title"
         >
-          <DialogTitle id="responsive-dialog-title">
-            <Box>
-              <Divider>
-                <Chip
-                  icon={<WorkOutlineIcon />}
-                  label={"Registrar Productos"}
-                  color={"primary"}
-                />
-              </Divider>
-            </Box>
+          <DialogTitle
+            id="responsive-dialog-title"
+            sx={{ background: "#0B72DE", color: "#FFFFFF" }}
+          >
+            Registrar Productos
+            <CloseModal set={setOpenRegister} />
           </DialogTitle>
-
-          <form onSubmit={hanledRegister}>
+          <form onSubmit={handleCreateProducts}>
             <DialogContent>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}>
@@ -188,14 +198,15 @@ function Products() {
               </Grid>
             </DialogContent>
 
-            <DialogActions>
-              <Button onClick={() => setOpenRegister(false)}>Cancelar</Button>
-              <Button type="submit">Registrar</Button>
+            <DialogActions sx={{ background: "#0B72DE", color: "#FFFFFF" }}>
+              <Button variant={"text"} sx={{ color: "#FFFFFF" }} type="submit">
+                Registrar
+              </Button>
             </DialogActions>
           </form>
         </Dialog>
         {/* --------------------------------------DIALOG UPDATE ------------------------------------------------------------------------------- */}
-        <Dialog
+        {/* <Dialog
           open={openUpdate}
           onClose={() => setOpenUpdate(false)}
           aria-labelledby="responsive-dialog-title"
@@ -215,7 +226,7 @@ function Products() {
 
           <form onSubmit={hanledUpdate}>
             <DialogContent>
-            <Grid container spacing={2}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}>
                   <TextFieldFilled
                     type={"number"}
@@ -265,7 +276,7 @@ function Products() {
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6}>
-                 <StatusSelect/>
+                  <StatusSelect />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   falta image y se asigna a balsan
@@ -278,9 +289,10 @@ function Products() {
               <Button type="submit">Actualizar</Button>
             </DialogActions>
           </form>
-        </Dialog>
-      {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}  
-      <Dialog
+        </Dialog> */}
+        {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}
+        {/* <Dialog
+          fullScreen
           open={openTypeRegister}
           onClose={() => setOpenTypeRegister(false)}
           aria-labelledby="responsive-dialog-title"
@@ -323,11 +335,13 @@ function Products() {
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={() => setOpenTypeRegister(false)}>Cancelar</Button>
+              <Button onClick={() => setOpenTypeRegister(false)}>
+                Cancelar
+              </Button>
               <Button type="submit">Registrar</Button>
             </DialogActions>
           </form>
-        </Dialog>
+        </Dialog> */}
       </Box>
     </Box>
   );
