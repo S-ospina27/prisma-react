@@ -14,19 +14,12 @@ function LocationsSelect({
   requiredDepartment,
   readOnlyCity,
   readOnlyDepartment,
-  disabledCity = true,
+  disabledCity,
   disabledDepartment,
 }) {
   const [departments, setDepartments] = useState([]);
   const [cities, setCities] = useState([]);
-
-  const [disabledCityAction, setDisabledCityAction] = useState(disabledCity);
-
-  const handleReadCities = (iddepartments) => {
-    axios
-      .get(RoutesList.api.locations.read_cities + iddepartments)
-      .then((res) => setCities(res.data));
-  };
+  const [disabledCityAction, setDisabledCityAction] = useState(false);
 
   const handleReadDepartments = () => {
     axios
@@ -34,6 +27,12 @@ function LocationsSelect({
       .then((res) => {
         setDepartments(res.data);
       });
+  };
+
+  const handleReadCities = (iddepartments) => {
+    axios
+      .get(RoutesList.api.locations.read_cities + iddepartments)
+      .then((res) => setCities(res.data));
   };
 
   const List = ({
@@ -51,6 +50,7 @@ function LocationsSelect({
       <Autocomplete
         disablePortal
         filterSelectedOptions
+        // disableClearable
         disabled={disabled}
         readOnly={readOnly}
         options={options}
@@ -92,6 +92,14 @@ function LocationsSelect({
   };
 
   useEffect(() => {
+    if ([null, ''].includes(department)) {
+      setDisabledCityAction(true);
+    }
+
+    if (![null, ''].includes(department)) {
+      handleReadCities(department);
+    }
+
     handleReadDepartments();
   }, []);
 
