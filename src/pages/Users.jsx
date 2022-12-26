@@ -24,6 +24,7 @@ import DocumentTypesSelect from "../components/common/DocumentTypesSelect";
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 import LocationsSelect from "../components/common/LocationsSelect";
 import RoutesList from "../components/tools/RoutesList";
+import ColumnsTable from "../components/tools/ColumnsTable";
 
 function Users() {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -71,8 +72,8 @@ function Users() {
     // console.log(idroles_a);
     // console.log(iddocument_types_a);
 
-    console.log(iddepartments)
-    console.log(idcities)
+    console.log(iddepartments);
+    console.log(idcities);
   };
 
   useEffect(() => {
@@ -110,35 +111,7 @@ function Users() {
         <DataTable
           reload={handleReadUsers}
           rows={users}
-          columns={[
-            { field: "roles_name", headerName: "ROL", width: 250 },
-            {
-              field: "users_identification",
-              headerName: "# DE IDENTIFICACIÓN",
-              width: 250,
-            },
-            { field: "fullname", headerName: "NOMBRE COMPLETO", width: 250 },
-            { field: "users_phone", headerName: "TELEFONO", width: 250 },
-            { field: "users_email", headerName: "EMAIL", width: 250 },
-            { field: "users_address", headerName: "DIRECCIÓN", width: 250 },
-            { field: "cities_name", headerName: "CIUDAD", width: 250 },
-            {
-              field: "departments_name",
-              headerName: "DEPARTAMENTO",
-              width: 250,
-            },
-            {
-              field: "users_contact_name",
-              headerName: "NOMBRE DE CONTACTO",
-              width: 250,
-            },
-            {
-              field: "users_contact_phone",
-              headerName: "# DE CONTACTO",
-              width: 250,
-            },
-            { field: "status_type", headerName: "STATUS", width: 250 },
-          ]}
+          columns={ColumnsTable.users}
           onRowClick={{
             open: setOpenUpdate,
             set: setFields,
