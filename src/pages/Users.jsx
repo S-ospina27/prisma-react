@@ -291,7 +291,7 @@ function Users() {
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={() => setOpenRegister(false)}>Cancelar</Button>
+              <Button  variant="contained" size="medium" onClick={() => setOpenRegister(false)}>Cancelar</Button>
               <Button type="submit">Registrar</Button>
             </DialogActions>
           </form>

@@ -20,7 +20,7 @@ function ProductsTypeSelect({
   }, []);
   console.log(typeProducts);
   return (
-    <FormControl variant="filled" fullWidth>
+    <FormControl variant="outlined" fullWidth>
       <InputLabel id="label-Tipo-Productos">{"Tipo de Productos"}</InputLabel>
 
       <Select

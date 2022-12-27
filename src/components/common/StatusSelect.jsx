@@ -20,7 +20,7 @@ function StatusSelect({
   }, []);
 
   return (
-    <FormControl variant="filled" fullWidth>
+    <FormControl variant="outlined" fullWidth >
       <InputLabel id="label-Tipo-estados">{"Tipo de estados"}</InputLabel>
 
       <Select

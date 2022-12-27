@@ -19,6 +19,7 @@ import RolesSelect from "../components/common/RolesSelect";
 import DocumentTypesSelect from "../components/common/DocumentTypesSelect";
 import LocationsSelect from "../components/common/LocationsSelect";
 import RoutesList from "../components/tools/RoutesList";
+import { TextField } from "@mui/material";
 
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
@@ -28,7 +29,7 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 import ProductsTypeSelect from "../components/common/ProductsTypeSelect";
 import StatusSelect from "../components/common/StatusSelect";
-
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import DialogForm from "../components/common/DialogForm";
 import CloseModal from "../components/common/CloseModal";
 
@@ -47,7 +48,6 @@ function Products() {
       setproducts(res.data);
     });
   };
-
   const setFields = (row) => {};
 
   const handleCreateProducts = (e) => {};
@@ -60,6 +60,20 @@ function Products() {
     handleProducts();
   }, []);
 
+  const stilos = {
+    img: {
+      width: "50%",
+      height: "90%",
+      borderRadius: "80%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    box: {
+      display: "flex",
+      justifyContent: "center",
+    },
+  };
   return (
     <Box mx={3} my={3}>
       <Box mb={3}>
@@ -85,49 +99,28 @@ function Products() {
             height: "450px",
           }}
           toolbar={
-            <>
-              <Button
-                type="button"
-                size="small"
-                onClick={() => setOpenRegister(true)}
-                color={"primary"}
-                startIcon={<AddHomeWorkIcon color={"primary"} />}
-              >
-                {"Registrar Producto"}
-              </Button>
-              {/* <Button
-                type="button"
-                size="small"
-                onClick={() => setOpenTypeRegister(true)}
-                color={"primary"}
-                startIcon={<AddHomeWorkIcon color={"primary"} />}
-              >
-                {"Registrar Tipo Producto"}
-              </Button> */}
-            </>
+            <Button
+              type="button"
+              size="small"
+              onClick={() => setOpenRegister(true)}
+              color={"primary"}
+              startIcon={<AddHomeWorkIcon color={"primary"} />}
+            >
+              {"Registrar Producto"}
+            </Button>
           }
         />
         {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
-        {/* <DialogForm
-          title="Registrar Productos"
-          open={openRegister}
-          set={setOpenRegister}
-          button={{
-            label: "Registrar",
-            type: "submit",
-            onSubmit: handleCreateProducts,
-          }}
-          content={<Container></Container>}
-        /> */}
 
         <Dialog
+          fullWidth
           open={openRegister}
           onClose={() => setOpenRegister(false)}
           aria-labelledby="responsive-dialog-title"
         >
           <DialogTitle
             id="responsive-dialog-title"
-            sx={{ background: "#0B72DE", color: "#FFFFFF" }}
+            sx={{ background: "#2A8AC2", color: "#FFFFFF" }}
           >
             Registrar Productos
             <CloseModal set={setOpenRegister} />
@@ -136,19 +129,27 @@ function Products() {
             <DialogContent>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}>
-                  <TextFieldFilled
-                    type={"number"}
-                    label={"Id Producto"}
-                    value={idproducts}
-                    setValue={setidproducts}
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="label"
+                  >
+                    <input hidden accept="image/*" type="file" />
+                    <PhotoCamera />
+                  </IconButton>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12}>
+                  <ProductsTypeSelect
+                    value={TypeProducts}
+                    setValue={setTypeProducts}
                     required
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6}>
                   <TextFieldFilled
+                    label={"Referencia producto"}
                     type={"text"}
-                    label={"Referencia"}
                     value={referencia}
                     setValue={setreferencia}
                     required
@@ -156,9 +157,11 @@ function Products() {
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6}>
-                  <ProductsTypeSelect
-                    value={TypeProducts}
-                    setValue={setTypeProducts}
+                  <TextFieldFilled
+                    label={"Id producto"}
+                    type={"number"}
+                    value={idproducts}
+                    setValue={setidproducts}
                     required
                   />
                 </Grid>
@@ -182,51 +185,48 @@ function Products() {
                     required
                   />
                 </Grid>
-
-                <Grid item xs={12} sm={6} md={6}>
-                  <TextFieldFilled
-                    type={"number"}
-                    label={"id usuario"}
-                    value={descripcion}
-                    setValue={setDescripcion}
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6} md={6}>
-                  falta image y se asigna a balsan
-                </Grid>
               </Grid>
             </DialogContent>
 
-            <DialogActions sx={{ background: "#0B72DE", color: "#FFFFFF" }}>
-              <Button variant={"text"} sx={{ color: "#FFFFFF" }} type="submit">
+            <DialogActions>
+              <Button
+                variant="contained"
+                size="medium"
+                sx={{
+                  background: "2A8AC2",
+                }}
+                type="submit"
+              >
                 Registrar
               </Button>
             </DialogActions>
           </form>
         </Dialog>
         {/* --------------------------------------DIALOG UPDATE ------------------------------------------------------------------------------- */}
-        {/* <Dialog
+        <Dialog
           open={openUpdate}
           onClose={() => setOpenUpdate(false)}
           aria-labelledby="responsive-dialog-title"
-          maxWidth={"lg"}
         >
-          <DialogTitle id="responsive-dialog-title">
-            <Box>
-              <Divider>
-                <Chip
-                  icon={<WorkHistoryIcon />}
-                  label={"Actualizar Productos"}
-                  color={"primary"}
-                />
-              </Divider>
-            </Box>
+          <DialogTitle
+            id="responsive-dialog-title"
+            sx={{ background: "#2A8AC2", color: "#FFFFFF" }}
+          >
+            Actualizar Productos
           </DialogTitle>
 
-          <form onSubmit={hanledUpdate}>
+          <form onSubmit={handleUpdateProducts}>
             <DialogContent>
               <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={12}>
+                  <Box style={stilos.box}>
+                    <img
+                      style={stilos.img}
+                      src={setproducts.products_image}
+                      alt="imagen"
+                    />
+                  </Box>
+                </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                   <TextFieldFilled
                     type={"number"}
@@ -289,7 +289,7 @@ function Products() {
               <Button type="submit">Actualizar</Button>
             </DialogActions>
           </form>
-        </Dialog> */}
+        </Dialog>
         {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}
         {/* <Dialog
           fullScreen
