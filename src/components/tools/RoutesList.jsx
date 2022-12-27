@@ -23,7 +23,7 @@ export default {
       },
     },
     products: {
-      create: `${host}api/products/create`,
+      create: `${host}/api/products/create`,
       read: `${host}/api/products/read`,
       update: `${host}/api/products/update`,
       types: {
