@@ -90,7 +90,9 @@ function Users() {
     form.append("users_address", users_address);
     form.append("idcities", idcities.split("-").shift().trim());
     form.append("users_email", users_email);
-    form.append("users_password", users_password);
+    if (idroles != 3) {
+      form.append("users_password", users_password);
+    }
     form.append("users_contact_name", users_contact_name);
     form.append("users_contact_phone", users_contact_phone);
 
@@ -275,7 +277,7 @@ function Users() {
                     label={"Contraseña"}
                     value={users_password}
                     setValue={setUsers_password}
-                    required
+                    required={idroles === 3 ? false : true}
                   />
                 </Grid>
               </Grid>
