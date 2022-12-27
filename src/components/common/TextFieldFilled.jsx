@@ -9,21 +9,22 @@ function TextFieldFilled({
   disabled,
   event,
   readOnly,
-  defaultValue
+  defaultValue,
 }) {
   return (
     <TextField
-    fullWidth
+      fullWidth
       type={type}
       required={required}
       disabled={disabled}
-     label={label}
+      label={label}
       value={value}
       onChange={(e) => {
         setValue(e.target.value);
         event && event(e);
       }}
-      sx={{color:"primary"}} 
+      variant={"filled"}
+      color={"primary"}
       autoComplete={"off"}
       InputProps={{
         readOnly: readOnly,

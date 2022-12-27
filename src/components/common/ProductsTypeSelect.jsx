@@ -18,14 +18,14 @@ function ProductsTypeSelect({
       setTypeProducts(!res.data.status ? res.data : []);
     });
   }, []);
-  console.log(typeProducts);
+
   return (
-    <FormControl variant="outlined" fullWidth>
-      <InputLabel id="label-Tipo-Productos">{"Tipo de Productos"}</InputLabel>
+    <FormControl variant="filled" fullWidth>
+      <InputLabel id="label-product-types">{"Tipos de Producto"}</InputLabel>
 
       <Select
         id="Tipo de Productos"
-        labelId="label-Tipo-Productos"
+        labelId="label-product-types"
         color={"blue-quinary"}
         value={value}
         onChange={(e) => setValue(e.target.value)}

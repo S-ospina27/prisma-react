@@ -26,7 +26,7 @@ function DialogForm(props) {
 
   const AppBarDialog = (props) => {
     return (
-      <AppBar sx={{ position: "relative" }} color={"blue-quinary"}>
+      <AppBar sx={{ position: "sticky" }} color={"primary"}>
         <Toolbar>
           <IconButton
             edge="start"

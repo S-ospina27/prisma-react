@@ -14,26 +14,23 @@ function LocationsSelect({
   requiredDepartment,
   readOnlyCity,
   readOnlyDepartment,
-  disabledCity = true,
+  disabledCity,
   disabledDepartment,
 }) {
   const [departments, setDepartments] = useState([]);
   const [cities, setCities] = useState([]);
+  const [disabledCityAction, setDisabledCityAction] = useState(false);
 
-  const [disabledCityAction, setDisabledCityAction] = useState(disabledCity);
+  const handleReadDepartments = () => {
+    axios.get(RoutesList.api.locations.read_departments).then((res) => {
+      setDepartments(res.data);
+    });
+  };
 
   const handleReadCities = (iddepartments) => {
     axios
       .get(RoutesList.api.locations.read_cities + iddepartments)
       .then((res) => setCities(res.data));
-  };
-
-  const handleReadDepartments = () => {
-    axios
-      .get(RoutesList.api.locations.read_departments)
-      .then((res) => {
-        setDepartments(res.data);
-      });
   };
 
   const List = ({
@@ -51,6 +48,7 @@ function LocationsSelect({
       <Autocomplete
         disablePortal
         filterSelectedOptions
+        // disableClearable
         disabled={disabled}
         readOnly={readOnly}
         options={options}
@@ -92,11 +90,19 @@ function LocationsSelect({
   };
 
   useEffect(() => {
+    if ([null, ""].includes(department)) {
+      setDisabledCityAction(true);
+    }
+
+    if (![null, ""].includes(department)) {
+      handleReadCities(department);
+    }
+
     handleReadDepartments();
   }, []);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
         <List
           type={"departments"}
