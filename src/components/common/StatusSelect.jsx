@@ -21,7 +21,7 @@ function StatusSelect({
 
   return (
     <FormControl variant="filled" fullWidth>
-      <InputLabel id="label-Tipo-estados">{"Tipo de estados"}</InputLabel>
+      <InputLabel id="label-Tipo-estados">{"Tipos de estado"}</InputLabel>
 
       <Select
         id="document-types"
@@ -33,13 +33,11 @@ function StatusSelect({
         disabled={disabled}
         readOnly={readOnly}
       >
-        {Status.map(
-          (item, index) =>
-              <MenuItem value={item.idstatus} key={index}>
-                {item.status_type}
-              </MenuItem>
-            
-        )}
+        {Status.map((item, index) => (
+          <MenuItem value={item.idstatus} key={index}>
+            {item.status_type}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

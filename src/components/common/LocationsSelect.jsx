@@ -22,11 +22,9 @@ function LocationsSelect({
   const [disabledCityAction, setDisabledCityAction] = useState(false);
 
   const handleReadDepartments = () => {
-    axios
-      .get(RoutesList.api.locations.read_departments)
-      .then((res) => {
-        setDepartments(res.data);
-      });
+    axios.get(RoutesList.api.locations.read_departments).then((res) => {
+      setDepartments(res.data);
+    });
   };
 
   const handleReadCities = (iddepartments) => {
@@ -92,11 +90,11 @@ function LocationsSelect({
   };
 
   useEffect(() => {
-    if ([null, ''].includes(department)) {
+    if ([null, ""].includes(department)) {
       setDisabledCityAction(true);
     }
 
-    if (![null, ''].includes(department)) {
+    if (![null, ""].includes(department)) {
       handleReadCities(department);
     }
 
@@ -104,7 +102,7 @@ function LocationsSelect({
   }, []);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
       <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
         <List
           type={"departments"}
