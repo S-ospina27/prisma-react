@@ -44,16 +44,9 @@ function Products() {
   const [products_reference, setProducts_reference] = useState("");
   const [idproduct_types, setIdproduct_types] = useState("");
   const [products_description, setProducts_description] = useState("");
+  const [idstatus, setIdstatus] = useState("");
   const [products_image, setProducts_image] = useState([]);
-
-  const [strFileInputUpdate, setStrFileInputUpdate] = useState("");
-  const [products_color_a, setProducts_color_a] = useState("");
-  const [products_reference_a, setProducts_reference_a] = useState("");
-  const [idproduct_types_a, setIdproduct_types_a] = useState("");
-  const [products_description_a, setProducts_description_a] = useState("");
-  const [idstatus_a, setIdstatus_a] = useState("");
-  const [products_image_a, setProducts_image_a] = useState([]);
-  const [strProducts_image_a, setStrProducts_image_a] = useState("");
+  const [strProducts_image, setStrProducts_image] = useState("");
 
   const handleReadProducts = () => {
     axios.get(RoutesList.api.products.read).then((res) => {
@@ -61,14 +54,23 @@ function Products() {
     });
   };
 
-  const setFields = (row) => {
-    setProducts_reference_a(row.products_reference);
-    setIdproduct_types_a(row.idproduct_types);
-    setProducts_description_a(row.products_description);
-    setProducts_color_a(row.products_color);
-    setIdstatus_a(row.idstatus);
-    setProducts_image_a([]);
-    setStrProducts_image_a(row.products_image);
+  const setFields = (
+    row = {
+      products_reference: "",
+      idproduct_types: "",
+      products_description: "",
+      products_color: "",
+      idstatus: "",
+      products_image: "",
+    }
+  ) => {
+    setProducts_reference(row.products_reference);
+    setIdproduct_types(row.idproduct_types);
+    setProducts_description(row.products_description);
+    setProducts_color(row.products_color);
+    setIdstatus(row.idstatus);
+    setProducts_image([]);
+    setStrProducts_image(row.products_image);
   };
 
   const handleCreateProducts = (e) => {
@@ -100,8 +102,6 @@ function Products() {
 
   const handleUpdateProducts = (e) => {
     e.preventDefault();
-
-    console.log(products_image_a.length);
   };
 
   useEffect(() => {
@@ -204,7 +204,7 @@ function Products() {
                   <TextFieldFile
                     type={"text"}
                     label={"Subir Archivo"}
-                    value={products_image_a}
+                    value={products_image}
                     setValue={setProducts_image}
                     required
                     accept={[".jpg", ".png", ".jpeg"]}
@@ -248,16 +248,16 @@ function Products() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={6}>
                   <ProductsTypeSelect
-                    value={idproduct_types_a}
-                    setValue={setIdproduct_types_a}
+                    value={idproduct_types}
+                    setValue={setIdproduct_types}
                     required
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6}>
                   <StatusSelect
-                    value={idstatus_a}
-                    setValue={setIdstatus_a}
+                    value={idstatus}
+                    setValue={setIdstatus}
                     required
                   />
                 </Grid>
@@ -274,8 +274,8 @@ function Products() {
                   <TextFieldFilled
                     type={"text"}
                     label={"Referencia"}
-                    value={products_reference_a}
-                    setValue={setProducts_reference_a}
+                    value={products_reference}
+                    setValue={setProducts_reference}
                     required
                   />
                 </Grid>
@@ -284,8 +284,8 @@ function Products() {
                   <TextFieldFilled
                     type={"text"}
                     label={"Descripción"}
-                    value={products_description_a}
-                    setValue={setProducts_description_a}
+                    value={products_description}
+                    setValue={setProducts_description}
                     required
                   />
                 </Grid>
@@ -294,8 +294,8 @@ function Products() {
                   <TextFieldFilled
                     type={"text"}
                     label={"Color"}
-                    value={products_color_a}
-                    setValue={setProducts_color_a}
+                    value={products_color}
+                    setValue={setProducts_color}
                     required
                   />
                 </Grid>
@@ -304,8 +304,8 @@ function Products() {
                   <TextFieldFile
                     type={"text"}
                     label={"Subir Archivo"}
-                    value={products_image_a}
-                    setValue={setProducts_image_a}
+                    value={products_image}
+                    setValue={setProducts_image}
                     required
                     accept={[".jpg", ".png", ".jpeg"]}
                   />
@@ -325,11 +325,11 @@ function Products() {
                     color={"primary"}
                     onClick={() =>
                       window.open(
-                        `${RoutesList.host}/assets/img/products/${strProducts_image_a}`
+                        `${RoutesList.host}/assets/img/products/${strProducts_image}`
                       )
                     }
                   >
-                    {strProducts_image_a}
+                    {strProducts_image}
                   </Button>
                 </Grid>
               </Grid>
