@@ -111,12 +111,12 @@ function DataTable({
           disabled={disabled}
           size="small"
           onClick={handleReload}
-          color={"primary"}
+          color={"blue"}
           startIcon={
             disabled ? (
               <ScheduleIcon color="warning" />
             ) : (
-              <CachedIcon color={"primary"} />
+              <CachedIcon color={"blue"} />
             )
           }
         >
@@ -151,9 +151,9 @@ function DataTable({
         Toolbar: () => {
           return (
             <GridToolbarContainer>
-              <GridToolbarColumnsButton color={"primary"} />
-              <GridToolbarFilterButton color={"primary"} />
-              <GridToolbarDensitySelector color={"primary"} />
+              <GridToolbarColumnsButton color={"blue"} />
+              <GridToolbarFilterButton color={"blue"} />
+              <GridToolbarDensitySelector color={"blue"} />
               <DefaultButtons />
               {toolbar}
             </GridToolbarContainer>

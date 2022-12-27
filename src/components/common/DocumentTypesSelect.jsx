@@ -26,7 +26,7 @@ function DocumentTypesSelect({
       <Select
         id="document-types"
         labelId="label-document-types"
-        color={"primary"}
+        color={"blue"}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         required={required}

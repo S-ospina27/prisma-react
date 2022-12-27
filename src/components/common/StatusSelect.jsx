@@ -26,7 +26,7 @@ function StatusSelect({
       <Select
         id="document-types"
         labelId="label-Tipo-estados"
-        color={"primary"}
+        color={"blue"}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         required={required}

@@ -52,7 +52,7 @@ function UsersSelect({
         <TextField
           {...params}
           label={!label ? "Usuarios" : label}
-          color={"primary"}
+          color={"blue"}
           variant={"filled"}
           required={required}
           InputProps={{

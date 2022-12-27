@@ -76,7 +76,7 @@ function LocationsSelect({
           <TextField
             {...params}
             label={label}
-            color={"primary"}
+            color={"blue"}
             variant={"filled"}
             required={required}
             InputProps={{

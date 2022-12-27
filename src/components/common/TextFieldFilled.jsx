@@ -24,7 +24,7 @@ function TextFieldFilled({
         event && event(e);
       }}
       variant={"filled"}
-      color={"primary"}
+      color={"blue"}
       autoComplete={"off"}
       InputProps={{
         readOnly: readOnly,

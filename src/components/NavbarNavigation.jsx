@@ -18,7 +18,7 @@ import RouteListNavigation from "./tools/RouteListNavigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import  prisma from "./../assets/img/prisma.png"
+import prisma from "./../assets/img/prisma.png";
 // import session, { navigationLinks, remove } from "../tools/SessionSettings";
 // import RouteListNavigation from "../tools/RouteListNavigation";
 
@@ -63,7 +63,7 @@ function NavbarNavigation() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="primary">
+      <AppBar position="static" color="blue">
         <Toolbar>
           <IconButton
             size="large"
@@ -105,11 +105,9 @@ function NavbarNavigation() {
                   </Box>
                 }
               >
-                {/* <Divider /> */}
-
                 <Box mb={3}>
                   <Divider>
-                    <Chip label={"Administrar"} color={"primary"} />
+                    <Chip label={"Administrar"} color={"blue"} />
                   </Divider>
                 </Box>
 
@@ -118,6 +116,14 @@ function NavbarNavigation() {
                     key={text.nombre}
                     disablePadding
                     selected={text.link === location.pathname}
+                    sx={{
+                      "$:hover": {
+                        backgroundColor: "#000000",
+                      },
+                      "&:focus": {
+                        backgroundColor: "#000000",
+                      },
+                    }}
                   >
                     <ListItemButton component={Link} to={text.link}>
                       {text.icon && <ListItemIcon>{text.icon}</ListItemIcon>}

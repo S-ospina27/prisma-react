@@ -3,46 +3,46 @@ import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 
 export default {
   online: {
     administartor: [
       {
         nombre: "Dashboard",
-        icon: <HomeIcon color={"primary"} />,
+        icon: <HomeIcon color={"dark-blue"} />,
         link: "/",
       },
       {
         nombre: "Usuarios",
-        icon: <AssignmentIndIcon color={"primary"} />,
+        icon: <AssignmentIndIcon color={"blue"} />,
         link: "/users",
       },
       {
         nombre: "Portafolios",
-        icon: <WorkRoundedIcon color={"primary"} />,
+        icon: <WorkRoundedIcon color={"dark-blue"} />,
         link: "/products",
       },
       {
         nombre: "Ordenes de Servicios",
-        icon: <MenuBookRoundedIcon color={"primary"} />,
+        icon: <MenuBookRoundedIcon color={"blue"} />,
         link: "/service-orders",
       },
       {
         nombre: "Solicitudes",
-        icon: <AssignmentIcon color={"primary"} />,
+        icon: <AssignmentIcon color={"dark-blue"} />,
         link: "/service-request",
       },
       {
         nombre: "Tecnicos",
-        icon: <SupervisedUserCircleIcon color={"primary"} />,
-        link: "/technical"
+        icon: <SupervisedUserCircleIcon color={"blue"} />,
+        link: "/technical",
       },
     ],
     provider: [
       {
         nombre: "Ordenes de Servicios",
-        icon: <MenuBookRoundedIcon color={"primary"} />,
+        icon: <MenuBookRoundedIcon color={"dark-blue"} />,
         link: "/service-orders",
       },
     ],
@@ -54,7 +54,7 @@ export default {
     },
     {
       nombre: "Solicitudes",
-      icon: <AssignmentIcon color={"primary"} />,
+      icon: <AssignmentIcon color={"dark-blue"} />,
       link: "/service-request",
     },
   ],

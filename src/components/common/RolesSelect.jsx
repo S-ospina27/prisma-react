@@ -26,7 +26,7 @@ function RolesSelect({
       <Select
         id="id-roles"
         labelId="label-id-roles"
-        color={"blue-quinary"}
+        color={"blue"}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         required={required}

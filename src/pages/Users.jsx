@@ -139,7 +139,7 @@ function Users() {
     <Box mx={3} my={3}>
       <Box mb={3}>
         <Divider>
-          <Chip label={"Usuarios"} />
+          <Chip color="blue" label={"Usuarios"} />
         </Divider>
       </Box>
 
@@ -160,9 +160,9 @@ function Users() {
             <Button
               type="button"
               size="small"
-              color={"primary"}
+              color={"blue"}
               onClick={() => setOpenRegister(true)}
-              startIcon={<PersonAddAltRoundedIcon color={"primary"} />}
+              startIcon={<PersonAddAltRoundedIcon color={"blue"} />}
             >
               {"Registrar"}
             </Button>
@@ -182,7 +182,7 @@ function Users() {
             <Container>
               <Box mb={3}>
                 <Divider textAlign="left">
-                  <Chip label="Detalles de Usuario" />
+                  <Chip color="dark-blue" label="Detalles de Usuario" />
                 </Divider>
               </Box>
 
@@ -203,7 +203,7 @@ function Users() {
 
               <Box my={3}>
                 <Divider textAlign="left">
-                  <Chip label="Información de Usuario" />
+                  <Chip color="blue" label="Información de Usuario" />
                 </Divider>
               </Box>
 
@@ -279,7 +279,7 @@ function Users() {
 
               <Box my={3}>
                 <Divider textAlign="left">
-                  <Chip label="Ubicación de Usuario" />
+                  <Chip color="dark-blue" label="Ubicación de Usuario" />
                 </Divider>
               </Box>
 
@@ -308,7 +308,7 @@ function Users() {
 
               <Box my={3}>
                 <Divider textAlign="left">
-                  <Chip label="Información de Contacto" />
+                  <Chip color="blue" label="Información de Contacto" />
                 </Divider>
               </Box>
 
@@ -348,7 +348,7 @@ function Users() {
             <Container>
               <Box mb={3}>
                 <Divider textAlign="left">
-                  <Chip label="Detalles de Usuario" />
+                  <Chip color="dark-blue" label="Detalles de Usuario" />
                 </Divider>
               </Box>
 
@@ -372,7 +372,7 @@ function Users() {
 
               <Box my={3}>
                 <Divider textAlign="left">
-                  <Chip label="Información de Usuario" />
+                  <Chip color="blue" label="Información de Usuario" />
                 </Divider>
               </Box>
 
@@ -441,7 +441,7 @@ function Users() {
 
               <Box my={3}>
                 <Divider textAlign="left">
-                  <Chip label="Ubicación de Usuario" />
+                  <Chip color="dark-blue" label="Ubicación de Usuario" />
                 </Divider>
               </Box>
 
@@ -471,7 +471,7 @@ function Users() {
 
               <Box my={3}>
                 <Divider textAlign="left">
-                  <Chip label="Información de Contacto" />
+                  <Chip color="blue" label="Información de Contacto" />
                 </Divider>
               </Box>
 
