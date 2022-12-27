@@ -143,12 +143,6 @@ function Users() {
             label={"Usuarios"}
             // color={"primary"}
           />
-
-          <Chip
-            // icon={<PermContactCalendarIcon />}
-            label={"Usuarios"}
-            // color={"primary"}
-          />
         </Divider>
       </Box>
 
