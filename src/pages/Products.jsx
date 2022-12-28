@@ -1,43 +1,21 @@
-import {
-  Box,
-  Button,
-  Chip,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { Box, Button, Chip, Container, Divider, Grid } from "@mui/material";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import DataTable from "../Components/DataTable";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 import ProductsTypeSelect from "../components/common/ProductsTypeSelect";
 import StatusSelect from "../components/common/StatusSelect";
 import DialogForm from "../components/common/DialogForm";
-import CloseModal from "../components/common/CloseModal";
+import TextFieldFile from "../components/common/TextFieldFile";
+import MenuItems from "../components/common/MenuItems";
 
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
 
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
-import UnarchiveIcon from "@mui/icons-material/Unarchive";
-import AddHomeWorkIcon from "@mui/icons-material/AddHomeWork";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-import TextFieldFile from "../components/common/TextFieldFile";
-
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import MenuItems from "../components/common/MenuItems";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function Products() {
   const [open, setOpen] = useState(false);
@@ -92,7 +70,10 @@ function Products() {
     form.append("products_reference", products_reference);
     form.append("idproduct_types", idproduct_types);
     form.append("products_description", products_description);
-    form.append("products_image", products_image.length > 0 ? products_image[0] : []);
+    form.append(
+      "products_image",
+      products_image.length > 0 ? products_image[0] : []
+    );
 
     axios
       .post(RoutesList.api.products.create, form, {
@@ -106,7 +87,7 @@ function Products() {
 
         if (res.data.status === "success") {
           handleReadProducts();
-          setOpen(false);
+          setOpenRegister(false);
           console.log("successs");
         }
       });
@@ -123,10 +104,14 @@ function Products() {
     form.append("idproduct_types", idproduct_types);
     form.append("products_description", products_description);
     form.append("idstatus", idstatus);
-    form.append("products_image", products_image.length > 0 ? products_image[0] : []);
+    form.append(
+      "products_image",
+      products_image.length > 0 ? products_image[0] : []
+    );
     form.append("products_image_copy", strProducts_image);
 
-    axios.post(RoutesList.api.products.update, form, {
+    axios
+      .post(RoutesList.api.products.update, form, {
         header: {
           // 'Authorization': `bearer ${jwt}`,
           "Content-Type": "multipart/form-data",
@@ -137,7 +122,7 @@ function Products() {
 
         if (res.data.status === "success") {
           clean_fields();
-          setOpen(false)
+          setOpen(false);
           handleReadProducts();
           console.log("successs actualizado");
         }
@@ -155,22 +140,29 @@ function Products() {
           <Chip icon={<WorkOutlineIcon />} label={"Portafolio"} color="blue" />
         </Divider>
       </Box>
-      {/* <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
         <MenuItems
-          id={"operations"}
+          id={"products"}
           iconButton={true}
-          label={<MoreVertIcon color={"primary"} />}
+          label={<MoreVertIcon color={"dark-blue"} />}
           items={[
             {
               type: "modal",
-              name: "Crear Orden de Servicio",
-              icon: <AssignmentIcon color={"primary"} />,
-              setOpen:openRegister,
+              name: "Registrar Productos",
+              icon: <AddShoppingCartIcon color={"dark-blue"} />,
+              setOpen: setOpenRegister,
+              idroles: [1],
+            },
+            {
+              type: "modal",
+              name: "Tipos de Producto",
+              icon: <AddShoppingCartIcon color={"dark-blue"} />,
+              setOpen: setOpenRegister,
               idroles: [1],
             },
           ]}
         />
-      </Box> */}
+      </Box>
       <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
         <DataTable
           reload={handleReadProducts}
@@ -184,17 +176,6 @@ function Products() {
           sx={{
             height: "450px",
           }}
-          toolbar={
-            <Button
-              type="button"
-              size="small"
-              onClick={() => setOpenRegister(true)}
-              color={"primary"}
-              startIcon={<AddHomeWorkIcon color={"primary"} />}
-            >
-              {"Registrar Producto"}
-            </Button>
-          }
         />
         {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
         <DialogForm
