@@ -26,13 +26,13 @@ function TextFieldFile({
       value={str}
       onClick={() => fileInput.current.click()}
       variant={"filled"}
-      color={"primary"}
+      color={"blue"}
       autoComplete={"off"}
       InputProps={{
         readOnly: true,
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton color="primary" edge="end">
+            <IconButton color="blue" edge="end">
               <PhotoCameraBackIcon />
               <input
                 hidden
