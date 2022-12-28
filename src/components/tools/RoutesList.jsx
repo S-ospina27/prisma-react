@@ -24,8 +24,11 @@ export default {
     },
     products: {
       create: `${host}/api/products/create`,
-      read: `${host}/api/products/read`,
       update: `${host}/api/products/update`,
+      read: {
+        index: `${host}/api/products/read/`,
+        by_status: `${host}/api/products/read/by-status`
+      },
       types: {
         create: `${host}/api/products/types/create`,
         update: `${host}/api/products/types/update`,

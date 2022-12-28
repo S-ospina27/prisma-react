@@ -5,13 +5,16 @@ import MenuItems from "../components/common/MenuItems";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogForm from "../components/common/DialogForm";
+import ProductsSelect from "../components/common/ProductsSelect";
 
 function ServiceOrders() {
-  const [openCreateOrders, setOpenCreateOrders] = useState(false);
+  const [openCreateOrders, setOpenCreateOrders] = useState(true);
+
+  const [idproducts, setIdproducts] = useState("");
 
   const handleCreateServiceOrders = (e) => {
     e.preventDefault();
-    console.log("submitted");
+    console.log(idproducts);
   };
 
   return (
@@ -48,7 +51,14 @@ function ServiceOrders() {
           label: "Registrar",
           onSubmit: handleCreateServiceOrders,
         }}
-        content={<h1>Hola mundo</h1>}
+        content={
+          <ProductsSelect
+            value={idproducts}
+            setValue={setIdproducts}
+            selected={['ACTIVO']}
+            required
+          />
+        }
       />
     </Box>
   );
