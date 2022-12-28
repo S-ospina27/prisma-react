@@ -124,8 +124,7 @@ function Products() {
     form.append("idstatus", idstatus);
     form.append("products_image", products_image[0]);
 
-    axios
-      .post(RoutesList.api.products.update, form, {
+    axios.post(RoutesList.api.products.update, form, {
         header: {
           // 'Authorization': `bearer ${jwt}`,
           "Content-Type": "multipart/form-data",
