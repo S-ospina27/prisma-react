@@ -45,8 +45,8 @@ function Products() {
   const [openTypeRegister, setOpenTypeRegister] = useState(false);
   const [products, setproducts] = useState([]);
 
-  const[idusers,setIdusers]= useState("");
-  const[idproducts,setIdproducts]= useState("");
+  const [idusers, setIdusers] = useState("");
+  const [idproducts, setIdproducts] = useState("");
   const [products_color, setProducts_color] = useState("");
   const [products_reference, setProducts_reference] = useState("");
   const [idproduct_types, setIdproduct_types] = useState("");
@@ -73,7 +73,7 @@ function Products() {
 
   const setFields = (row) => {
     console.log(row.idusers);
-    setIdusers(row.idusers)
+    setIdusers(row.idusers);
     setIdproducts(row.idproducts);
     setProducts_reference(row.products_reference);
     setIdproduct_types(row.idproduct_types);
@@ -115,16 +115,17 @@ function Products() {
     e.preventDefault();
 
     const form = new FormData();
-    form.append("idusers",idusers)
-    form.append("idproducts",idproducts)
-    form.append("products_color",products_color);
-    form.append("products_reference",products_reference);
-    form.append("idproduct_types",idproduct_types);
-    form.append("products_description",products_description);
-    form.append("idstatus",idstatus);
-    form.append("products_image",products_image[0]);
+    form.append("idusers", idusers);
+    form.append("idproducts", idproducts);
+    form.append("products_color", products_color);
+    form.append("products_reference", products_reference);
+    form.append("idproduct_types", idproduct_types);
+    form.append("products_description", products_description);
+    form.append("idstatus", idstatus);
+    form.append("products_image", products_image[0]);
 
-    axios.post(RoutesList.api.products.update, form, {
+    axios
+      .post(RoutesList.api.products.update, form, {
         header: {
           // 'Authorization': `bearer ${jwt}`,
           "Content-Type": "multipart/form-data",
@@ -152,7 +153,7 @@ function Products() {
           <Chip
             icon={<WorkOutlineIcon />}
             label={"Portafolio"}
-            color={"primary"}
+            color="blue"
           />
         </Divider>
       </Box>
@@ -213,7 +214,7 @@ function Products() {
               <Box my={3}>
                 <Box mb={3}>
                   <Divider textAlign="left">
-                    <Chip label={"Detalles de Producto"} />
+                    <Chip color="blue" label={"Detalles de Producto"} />
                   </Divider>
                 </Box>
 
@@ -237,7 +238,7 @@ function Products() {
 
                 <Box my={3}>
                   <Divider textAlign="left">
-                    <Chip label={"Información de Producto"} />
+                    <Chip color="blue" label={"Información de Producto"} />
                   </Divider>
                 </Box>
 
@@ -302,7 +303,7 @@ function Products() {
               <Box my={3}>
                 <Box mb={3}>
                   <Divider textAlign="left">
-                    <Chip label={"Detalles de Producto"} />
+                    <Chip color="blue" label={"Detalles de Producto"} />
                   </Divider>
                 </Box>
 
@@ -326,7 +327,7 @@ function Products() {
 
                 <Box my={3}>
                   <Divider textAlign="left">
-                    <Chip label={"Información de Producto"} />
+                    <Chip color="blue" label={"Información de Producto"} />
                   </Divider>
                 </Box>
 
@@ -375,7 +376,7 @@ function Products() {
 
                 <Box my={3}>
                   <Divider textAlign="left">
-                    <Chip label={"Archivos Cargados"} />
+                    <Chip color="blue" label={"Archivos Cargados"} />
                   </Divider>
                 </Box>
 
