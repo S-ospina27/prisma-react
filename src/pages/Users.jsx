@@ -111,6 +111,7 @@ function Users() {
 
       if (res.data.status === "success") {
         handleReadUsers();
+        setOpenRegister(false);
       }
     });
   };
@@ -127,7 +128,7 @@ function Users() {
     form.append("users_lastname", users_lastname);
     form.append("users_phone", users_phone);
     form.append("users_address", users_address);
-    form.append("idcities", idcities_a.split("-").shift().trim());
+    form.append("idcities", idcities.split("-").shift().trim());
     form.append("users_email", users_email);
     form.append("users_contact_name", users_contact_name);
     form.append("users_contact_phone", users_contact_phone);
@@ -138,6 +139,7 @@ function Users() {
 
       if (res.data.status === "success") {
         handleReadUsers();
+        setOpenUpdate(false);
       }
     });
   };
