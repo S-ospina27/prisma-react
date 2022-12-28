@@ -15,13 +15,14 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 function Products() {
   const [open, setOpen] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [openTypeRegister, setOpenTypeRegister] = useState(false);
   const [products, setproducts] = useState([]);
+  const[typeProducts_read,setTypeProducts_read]= useState([]);
 
   const [idusers, setIdusers] = useState("");
   const [idproducts, setIdproducts] = useState("");
@@ -33,9 +34,16 @@ function Products() {
   const [products_image, setProducts_image] = useState([]);
   const [strProducts_image, setStrProducts_image] = useState("");
 
+  const [product_types_name, setProduct_types_name] = useState("");
+
   const handleReadProducts = () => {
     axios.get(RoutesList.api.products.read).then((res) => {
       setproducts(res.data);
+    });
+  };
+  const handleReadTypeProducts = () => {
+    axios.get(RoutesList.api.products.types.read).then((res) => {
+      setTypeProducts_read(res.data);
     });
   };
 
@@ -132,6 +140,9 @@ function Products() {
   useEffect(() => {
     handleReadProducts();
   }, []);
+  useEffect(() => {
+    handleReadTypeProducts();
+  }, []);
 
   return (
     <Box mx={3} my={3}>
@@ -157,7 +168,7 @@ function Products() {
               type: "modal",
               name: "Tipos de Producto",
               icon: <AddShoppingCartIcon color={"dark-blue"} />,
-              setOpen: setOpenRegister,
+              setOpen: setOpenTypeRegister,
               idroles: [1],
             },
           ]}
@@ -373,6 +384,56 @@ function Products() {
                       {strProducts_image}
                     </Button>
                   </Grid>
+                </Grid>
+              </Box>
+            </Container>
+          }
+        />
+        {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}
+        <DialogForm
+          clean={clean_fields}
+          title={"Tipos de Producto"}
+          open={openTypeRegister}
+          setOpen={setOpenTypeRegister}
+          button={{
+            type: "submit",
+            label: "Registrar",
+            onSubmit: handleCreateProducts,
+          }}
+          content={
+            <Container>
+              <Box my={3}>
+                <Box mb={3}>
+                  <Divider textAlign="left">
+                    <Chip color="blue" label={"Detalles de Producto"} />
+                  </Divider>
+                </Box>
+
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={4}>
+                    <TextFieldFilled
+                      type={"text"}
+                      label={"Nombre "}
+                      value={product_types_name}
+                      setValue={setProduct_types_name}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={8}>
+                  <DataTable
+                    reload={handleReadTypeProducts}
+                    rows={typeProducts_read}
+                    columns={ColumnsTable.type_products}
+                    onRowClick={{
+                      open: setOpen,
+                      set: setFields,
+                    }}
+                    getRowId={"idproduct_types"}
+                    sx={{
+                      height: "600px",
+                    }}
+                  />
+                 </Grid> 
                 </Grid>
               </Box>
             </Container>
