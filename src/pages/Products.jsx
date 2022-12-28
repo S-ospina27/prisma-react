@@ -1,49 +1,28 @@
-import {
-  Box,
-  Button,
-  Chip,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { Box, Button, Chip, Container, Divider, Grid } from "@mui/material";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import DataTable from "../Components/DataTable";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 import ProductsTypeSelect from "../components/common/ProductsTypeSelect";
 import StatusSelect from "../components/common/StatusSelect";
 import DialogForm from "../components/common/DialogForm";
-import CloseModal from "../components/common/CloseModal";
+import TextFieldFile from "../components/common/TextFieldFile";
+import MenuItems from "../components/common/MenuItems";
 
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
 
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
-import UnarchiveIcon from "@mui/icons-material/Unarchive";
-import AddHomeWorkIcon from "@mui/icons-material/AddHomeWork";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-import TextFieldFile from "../components/common/TextFieldFile";
-
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import MenuItems from "../components/common/MenuItems";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 function Products() {
   const [open, setOpen] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [openTypeRegister, setOpenTypeRegister] = useState(false);
   const [products, setproducts] = useState([]);
+  const[typeProducts_read,setTypeProducts_read]= useState([]);
 
   const [idusers, setIdusers] = useState("");
   const [idproducts, setIdproducts] = useState("");
@@ -55,9 +34,16 @@ function Products() {
   const [products_image, setProducts_image] = useState([]);
   const [strProducts_image, setStrProducts_image] = useState("");
 
+  const [product_types_name, setProduct_types_name] = useState("");
+
   const handleReadProducts = () => {
     axios.get(RoutesList.api.products.read).then((res) => {
       setproducts(res.data);
+    });
+  };
+  const handleReadTypeProducts = () => {
+    axios.get(RoutesList.api.products.types.read).then((res) => {
+      setTypeProducts_read(res.data);
     });
   };
 
@@ -92,7 +78,10 @@ function Products() {
     form.append("products_reference", products_reference);
     form.append("idproduct_types", idproduct_types);
     form.append("products_description", products_description);
-    form.append("products_image", products_image.length > 0 ? products_image[0] : []);
+    form.append(
+      "products_image",
+      products_image.length > 0 ? products_image[0] : []
+    );
 
     axios
       .post(RoutesList.api.products.create, form, {
@@ -106,7 +95,7 @@ function Products() {
 
         if (res.data.status === "success") {
           handleReadProducts();
-          setOpen(false);
+          setOpenRegister(false);
           console.log("successs");
         }
       });
@@ -123,7 +112,10 @@ function Products() {
     form.append("idproduct_types", idproduct_types);
     form.append("products_description", products_description);
     form.append("idstatus", idstatus);
-    form.append("products_image", products_image.length > 0 ? products_image[0] : []);
+    form.append(
+      "products_image",
+      products_image.length > 0 ? products_image[0] : []
+    );
     form.append("products_image_copy", strProducts_image);
 
     axios
@@ -138,7 +130,7 @@ function Products() {
 
         if (res.data.status === "success") {
           clean_fields();
-          setOpen(false)
+          setOpen(false);
           handleReadProducts();
           console.log("successs actualizado");
         }
@@ -148,6 +140,9 @@ function Products() {
   useEffect(() => {
     handleReadProducts();
   }, []);
+  useEffect(() => {
+    handleReadTypeProducts();
+  }, []);
 
   return (
     <Box mx={3} my={3}>
@@ -156,22 +151,29 @@ function Products() {
           <Chip icon={<WorkOutlineIcon />} label={"Portafolio"} color="blue" />
         </Divider>
       </Box>
-      {/* <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
         <MenuItems
-          id={"operations"}
+          id={"products"}
           iconButton={true}
-          label={<MoreVertIcon color={"primary"} />}
+          label={<MoreVertIcon color={"dark-blue"} />}
           items={[
             {
               type: "modal",
-              name: "Crear Orden de Servicio",
-              icon: <AssignmentIcon color={"primary"} />,
-              setOpen:openRegister,
+              name: "Registrar Productos",
+              icon: <AddShoppingCartIcon color={"dark-blue"} />,
+              setOpen: setOpenRegister,
+              idroles: [1],
+            },
+            {
+              type: "modal",
+              name: "Tipos de Producto",
+              icon: <AddShoppingCartIcon color={"dark-blue"} />,
+              setOpen: setOpenTypeRegister,
               idroles: [1],
             },
           ]}
         />
-      </Box> */}
+      </Box>
       <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
         <DataTable
           reload={handleReadProducts}
@@ -185,17 +187,6 @@ function Products() {
           sx={{
             height: "450px",
           }}
-          toolbar={
-            <Button
-              type="button"
-              size="small"
-              onClick={() => setOpenRegister(true)}
-              color={"primary"}
-              startIcon={<AddHomeWorkIcon color={"primary"} />}
-            >
-              {"Registrar Producto"}
-            </Button>
-          }
         />
         {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
         <DialogForm
@@ -393,6 +384,56 @@ function Products() {
                       {strProducts_image}
                     </Button>
                   </Grid>
+                </Grid>
+              </Box>
+            </Container>
+          }
+        />
+        {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}
+        <DialogForm
+          clean={clean_fields}
+          title={"Tipos de Producto"}
+          open={openTypeRegister}
+          setOpen={setOpenTypeRegister}
+          button={{
+            type: "submit",
+            label: "Registrar",
+            onSubmit: handleCreateProducts,
+          }}
+          content={
+            <Container>
+              <Box my={3}>
+                <Box mb={3}>
+                  <Divider textAlign="left">
+                    <Chip color="blue" label={"Detalles de Producto"} />
+                  </Divider>
+                </Box>
+
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={4}>
+                    <TextFieldFilled
+                      type={"text"}
+                      label={"Nombre "}
+                      value={product_types_name}
+                      setValue={setProduct_types_name}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={8}>
+                  <DataTable
+                    reload={handleReadTypeProducts}
+                    rows={typeProducts_read}
+                    columns={ColumnsTable.type_products}
+                    onRowClick={{
+                      open: setOpen,
+                      set: setFields,
+                    }}
+                    getRowId={"idproduct_types"}
+                    sx={{
+                      height: "600px",
+                    }}
+                  />
+                 </Grid> 
                 </Grid>
               </Box>
             </Container>
