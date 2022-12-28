@@ -92,7 +92,7 @@ function Products() {
     form.append("products_reference", products_reference);
     form.append("idproduct_types", idproduct_types);
     form.append("products_description", products_description);
-    form.append("products_image", products_image[0]);
+    form.append("products_image", products_image.length > 0 ? products_image[0] : []);
 
     axios
       .post(RoutesList.api.products.create, form, {
@@ -105,12 +105,13 @@ function Products() {
         console.log(res.data);
 
         if (res.data.status === "success") {
-          clean_fields();
           handleReadProducts();
+          setOpen(false);
           console.log("successs");
         }
       });
   };
+
   const handleUpdateProducts = (e) => {
     e.preventDefault();
 
@@ -122,7 +123,8 @@ function Products() {
     form.append("idproduct_types", idproduct_types);
     form.append("products_description", products_description);
     form.append("idstatus", idstatus);
-    form.append("products_image", products_image[0]);
+    form.append("products_image", products_image.length > 0 ? products_image[0] : []);
+    form.append("products_image_copy", strProducts_image);
 
     axios
       .post(RoutesList.api.products.update, form, {
@@ -136,6 +138,7 @@ function Products() {
 
         if (res.data.status === "success") {
           clean_fields();
+          setOpen(false)
           handleReadProducts();
           console.log("successs actualizado");
         }
@@ -150,11 +153,7 @@ function Products() {
     <Box mx={3} my={3}>
       <Box mb={3}>
         <Divider>
-          <Chip
-            icon={<WorkOutlineIcon />}
-            label={"Portafolio"}
-            color="blue"
-          />
+          <Chip icon={<WorkOutlineIcon />} label={"Portafolio"} color="blue" />
         </Divider>
       </Box>
       {/* <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
