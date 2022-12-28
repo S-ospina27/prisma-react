@@ -35,8 +35,12 @@ import AddHomeWorkIcon from "@mui/icons-material/AddHomeWork";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import TextFieldFile from "../components/common/TextFieldFile";
 
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import MenuItems from "../components/common/MenuItems";
+
 function Products() {
-  const [openUpdate, setOpenUpdate] = useState(false);
+  const [open, setOpen] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [openTypeRegister, setOpenTypeRegister] = useState(false);
   const [products, setproducts] = useState([]);
@@ -55,16 +59,18 @@ function Products() {
     });
   };
 
-  const setFields = (
-    row = {
-      products_reference: "",
-      idproduct_types: "",
-      products_description: "",
-      products_color: "",
-      idstatus: "",
-      products_image: "",
-    }
-  ) => {
+  const clean_fields = () => {
+    setProducts_reference("");
+    setIdproduct_types("");
+    setProducts_description("");
+    setProducts_color("");
+    setIdstatus("");
+    setProducts_image("");
+    setStrProducts_image("");
+  };
+
+  const setFields = (row) => {
+    console.log(row)
     setProducts_reference(row.products_reference);
     setIdproduct_types(row.idproduct_types);
     setProducts_description(row.products_description);
@@ -95,16 +101,15 @@ function Products() {
         console.log(res.data);
 
         if (res.data.status === "success") {
+          clean_fields();
           handleReadProducts();
           console.log("successs");
         }
       });
   };
-
   const handleUpdateProducts = (e) => {
     e.preventDefault();
   };
-
   useEffect(() => {
     handleReadProducts();
   }, []);
@@ -120,14 +125,29 @@ function Products() {
           />
         </Divider>
       </Box>
-
+      {/* <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
+        <MenuItems
+          id={"operations"}
+          iconButton={true}
+          label={<MoreVertIcon color={"primary"} />}
+          items={[
+            {
+              type: "modal",
+              name: "Crear Orden de Servicio",
+              icon: <AssignmentIcon color={"primary"} />,
+              setOpen:openRegister,
+              idroles: [1],
+            },
+          ]}
+        />
+      </Box> */}
       <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
         <DataTable
           reload={handleReadProducts}
           rows={products}
           columns={ColumnsTable.products}
           onRowClick={{
-            open: setOpenUpdate,
+            open: setOpen,
             set: setFields,
           }}
           getRowId={"idproducts"}
@@ -148,6 +168,7 @@ function Products() {
         />
         {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
         <DialogForm
+          clean={clean_fields}
           title={"Registrar Productos"}
           open={openRegister}
           setOpen={setOpenRegister}
@@ -238,8 +259,8 @@ function Products() {
         {/* --------------------------------------DIALOG UPDATE ------------------------------------------------------------------------------- */}
         <DialogForm
           title={"Editar Productos"}
-          open={openUpdate}
-          setOpen={setOpenUpdate}
+          open={open}
+          setOpen={setOpen}
           button={{
             type: "submit",
             label: "Actualizar",
