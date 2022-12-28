@@ -22,7 +22,7 @@ function Products() {
   const [openRegister, setOpenRegister] = useState(false);
   const [openTypeRegister, setOpenTypeRegister] = useState(false);
   const [products, setproducts] = useState([]);
-  const[typeProducts_read,setTypeProducts_read]= useState([]);
+  const [typeProducts_read, setTypeProducts_read] = useState([]);
 
   const [idusers, setIdusers] = useState("");
   const [idproducts, setIdproducts] = useState("");
@@ -114,9 +114,8 @@ function Products() {
     form.append("idstatus", idstatus);
     form.append(
       "products_image",
-      products_image.length > 0 ? products_image[0] : []
+      products_image.length > 0 ? products_image[0] : strProducts_image
     );
-    form.append("products_image_copy", strProducts_image);
 
     axios
       .post(RoutesList.api.products.update, form, {
@@ -148,9 +147,10 @@ function Products() {
     <Box mx={3} my={3}>
       <Box mb={3}>
         <Divider>
-          <Chip icon={<WorkOutlineIcon />} label={"Portafolio"} color="blue" />
+          <Chip label={"Portafolio"} color="blue" />
         </Divider>
       </Box>
+
       <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
         <MenuItems
           id={"products"}
@@ -174,6 +174,7 @@ function Products() {
           ]}
         />
       </Box>
+
       <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
         <DataTable
           reload={handleReadProducts}
@@ -188,238 +189,241 @@ function Products() {
             height: "450px",
           }}
         />
-        {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
-        <DialogForm
-          clean={clean_fields}
-          title={"Registrar Productos"}
-          open={openRegister}
-          setOpen={setOpenRegister}
-          button={{
-            type: "submit",
-            label: "Registrar",
-            onSubmit: handleCreateProducts,
-          }}
-          content={
-            <Container>
-              <Box my={3}>
-                <Box mb={3}>
-                  <Divider textAlign="left">
-                    <Chip color="blue" label={"Detalles de Producto"} />
-                  </Divider>
-                </Box>
+      </Box>
 
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={6}>
-                    <ProductsTypeSelect
-                      value={idproduct_types}
-                      setValue={setIdproduct_types}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={6}>
-                    <StatusSelect
-                      value={idstatus}
-                      setValue={setIdstatus}
-                      required
-                    />
-                  </Grid>
-                </Grid>
-
-                <Box my={3}>
-                  <Divider textAlign="left">
-                    <Chip color="blue" label={"Información de Producto"} />
-                  </Divider>
-                </Box>
-
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={6}>
-                    <TextFieldFilled
-                      type={"text"}
-                      label={"Referencia"}
-                      value={products_reference}
-                      setValue={setProducts_reference}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={6}>
-                    <TextFieldFilled
-                      type={"text"}
-                      label={"Descripción"}
-                      value={products_description}
-                      setValue={setProducts_description}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={6}>
-                    <TextFieldFilled
-                      type={"text"}
-                      label={"Color"}
-                      value={products_color}
-                      setValue={setProducts_color}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={6}>
-                    <TextFieldFile
-                      type={"text"}
-                      label={"Subir Archivo"}
-                      value={products_image}
-                      setValue={setProducts_image}
-                      required
-                      accept={[".jpg", ".png", ".jpeg"]}
-                    />
-                  </Grid>
-                </Grid>
+      {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
+      <DialogForm
+        clean={clean_fields}
+        title={"Registrar Productos"}
+        open={openRegister}
+        setOpen={setOpenRegister}
+        button={{
+          type: "submit",
+          label: "Registrar",
+          onSubmit: handleCreateProducts,
+        }}
+        content={
+          <Container>
+            <Box my={3}>
+              <Box mb={3}>
+                <Divider textAlign="left">
+                  <Chip color="blue" label={"Detalles de Producto"} />
+                </Divider>
               </Box>
-            </Container>
-          }
-        />
-        {/* --------------------------------------DIALOG UPDATE ------------------------------------------------------------------------------- */}
-        <DialogForm
-          title={"Editar Productos"}
-          open={open}
-          setOpen={setOpen}
-          button={{
-            type: "submit",
-            label: "Actualizar",
-            onSubmit: handleUpdateProducts,
-          }}
-          content={
-            <Container>
+
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={6}>
+                  <ProductsTypeSelect
+                    value={idproduct_types}
+                    setValue={setIdproduct_types}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <StatusSelect
+                    value={idstatus}
+                    setValue={setIdstatus}
+                    required
+                  />
+                </Grid>
+              </Grid>
+
               <Box my={3}>
-                <Box mb={3}>
-                  <Divider textAlign="left">
-                    <Chip color="blue" label={"Detalles de Producto"} />
-                  </Divider>
-                </Box>
-
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={6}>
-                    <ProductsTypeSelect
-                      value={idproduct_types}
-                      setValue={setIdproduct_types}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={6}>
-                    <StatusSelect
-                      value={idstatus}
-                      setValue={setIdstatus}
-                      required
-                    />
-                  </Grid>
-                </Grid>
-
-                <Box my={3}>
-                  <Divider textAlign="left">
-                    <Chip color="blue" label={"Información de Producto"} />
-                  </Divider>
-                </Box>
-
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={6}>
-                    <TextFieldFilled
-                      type={"text"}
-                      label={"Referencia"}
-                      value={products_reference}
-                      setValue={setProducts_reference}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={6}>
-                    <TextFieldFilled
-                      type={"text"}
-                      label={"Descripción"}
-                      value={products_description}
-                      setValue={setProducts_description}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={6}>
-                    <TextFieldFilled
-                      type={"text"}
-                      label={"Color"}
-                      value={products_color}
-                      setValue={setProducts_color}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={6}>
-                    <TextFieldFile
-                      type={"text"}
-                      label={"Subir Archivo"}
-                      value={products_image}
-                      setValue={setProducts_image}
-                      required
-                      accept={[".jpg", ".png", ".jpeg"]}
-                    />
-                  </Grid>
-                </Grid>
-
-                <Box my={3}>
-                  <Divider textAlign="left">
-                    <Chip color="blue" label={"Archivos Cargados"} />
-                  </Divider>
-                </Box>
-
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Button
-                      variant={"contained"}
-                      color={"primary"}
-                      onClick={() =>
-                        window.open(
-                          `${RoutesList.host}/assets/img/products/${strProducts_image}`
-                        )
-                      }
-                    >
-                      {strProducts_image}
-                    </Button>
-                  </Grid>
-                </Grid>
+                <Divider textAlign="left">
+                  <Chip color="blue" label={"Información de Producto"} />
+                </Divider>
               </Box>
-            </Container>
-          }
-        />
-        {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}
-        <DialogForm
-          clean={clean_fields}
-          title={"Tipos de Producto"}
-          open={openTypeRegister}
-          setOpen={setOpenTypeRegister}
-          button={{
-            type: "submit",
-            label: "Registrar",
-            onSubmit: handleCreateProducts,
-          }}
-          content={
-            <Container>
-              <Box my={3}>
-                <Box mb={3}>
-                  <Divider textAlign="left">
-                    <Chip color="blue" label={"Detalles de Producto"} />
-                  </Divider>
-                </Box>
 
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={12} md={4}>
-                    <TextFieldFilled
-                      type={"text"}
-                      label={"Nombre "}
-                      value={product_types_name}
-                      setValue={setProduct_types_name}
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={8}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Referencia"}
+                    value={products_reference}
+                    setValue={setProducts_reference}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Descripción"}
+                    value={products_description}
+                    setValue={setProducts_description}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Color"}
+                    value={products_color}
+                    setValue={setProducts_color}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFile
+                    type={"text"}
+                    label={"Subir Archivo"}
+                    value={products_image}
+                    setValue={setProducts_image}
+                    required
+                    accept={[".jpg", ".png", ".jpeg"]}
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </Container>
+        }
+      />
+      {/* --------------------------------------DIALOG UPDATE ------------------------------------------------------------------------------- */}
+      <DialogForm
+        title={"Editar Productos"}
+        open={open}
+        setOpen={setOpen}
+        button={{
+          type: "submit",
+          label: "Actualizar",
+          onSubmit: handleUpdateProducts,
+        }}
+        content={
+          <Container>
+            <Box my={3}>
+              <Box mb={3}>
+                <Divider textAlign="left">
+                  <Chip color="blue" label={"Detalles de Producto"} />
+                </Divider>
+              </Box>
+
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={6}>
+                  <ProductsTypeSelect
+                    value={idproduct_types}
+                    setValue={setIdproduct_types}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <StatusSelect
+                    value={idstatus}
+                    setValue={setIdstatus}
+                    required
+                  />
+                </Grid>
+              </Grid>
+
+              <Box my={3}>
+                <Divider textAlign="left">
+                  <Chip color="blue" label={"Información de Producto"} />
+                </Divider>
+              </Box>
+
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Referencia"}
+                    value={products_reference}
+                    setValue={setProducts_reference}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Descripción"}
+                    value={products_description}
+                    setValue={setProducts_description}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Color"}
+                    value={products_color}
+                    setValue={setProducts_color}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={6}>
+                  <TextFieldFile
+                    type={"text"}
+                    label={"Subir Archivo"}
+                    value={products_image}
+                    setValue={setProducts_image}
+                    required
+                    accept={[".jpg", ".png", ".jpeg"]}
+                  />
+                </Grid>
+              </Grid>
+
+              <Box my={3}>
+                <Divider textAlign="left">
+                  <Chip color="blue" label={"Archivos Cargados"} />
+                </Divider>
+              </Box>
+
+              <Grid container>
+                <Grid item xs={12}>
+                  <Button
+                    variant={"contained"}
+                    color={"primary"}
+                    onClick={() =>
+                      window.open(
+                        `${RoutesList.host}/assets/img/products/${strProducts_image}`
+                      )
+                    }
+                  >
+                    {strProducts_image}
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </Container>
+        }
+      />
+      {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}
+      <DialogForm
+        clean={clean_fields}
+        title={"Tipos de Producto"}
+        open={openTypeRegister}
+        setOpen={setOpenTypeRegister}
+        button={{
+          type: "submit",
+          label: "Registrar",
+          onSubmit: handleCreateProducts,
+        }}
+        content={
+          <Container>
+            <Box my={3}>
+              <Box mb={3}>
+                <Divider textAlign="left">
+                  <Chip color="blue" label={"Detalles Tipo de Producto"} />
+                </Divider>
+              </Box>
+
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={4}>
+                  <TextFieldFilled
+                    type={"text"}
+                    label={"Nombre "}
+                    value={product_types_name}
+                    setValue={setProduct_types_name}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={8}>
                   <DataTable
                     reload={handleReadTypeProducts}
                     rows={typeProducts_read}
@@ -430,16 +434,15 @@ function Products() {
                     }}
                     getRowId={"idproduct_types"}
                     sx={{
-                      height: "600px",
+                      height: "450px",
                     }}
                   />
-                 </Grid> 
                 </Grid>
-              </Box>
-            </Container>
-          }
-        />
-      </Box>
+              </Grid>
+            </Box>
+          </Container>
+        }
+      />
     </Box>
   );
 }
