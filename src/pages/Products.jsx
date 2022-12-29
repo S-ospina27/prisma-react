@@ -27,6 +27,7 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import TextFieldOutlined from "../components/common/TextFieldOutlined";
 
 function Products() {
   const [open, setOpen] = useState(false);
@@ -145,7 +146,8 @@ function Products() {
     form.append("product_types_name", product_types_name);
     form.append("idproduct_types", idproduct_types);
 
-    axios.post(RoutesList.api.products.types.update, form, {
+    axios
+      .post(RoutesList.api.products.types.update, form, {
         header: {
           // 'Authorization': `bearer ${jwt}`,
           "Content-Type": "multipart/form-data",
@@ -206,7 +208,6 @@ function Products() {
   useEffect(() => {
     handleReadTypeProducts();
   }, []);
-
 
   return (
     <Box mx={3} my={3}>
@@ -511,31 +512,33 @@ function Products() {
 
       <Dialog
         fullWidth
-        maxWidth={"sm"}
+        maxWidth={"xs"}
         open={openTypeUpdate}
         onClose={handleClose}
       >
-        <DialogTitle  color={"primary"}>
-          Actualizar Tipos de Producto
-        </DialogTitle>
         <form onSubmit={handleUpdateProductsType}>
-        <DialogContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={12}>
-              <TextFieldFilled
+          <DialogTitle>Editar "Tipos de Producto"</DialogTitle>
+
+          <DialogContent dividers>
+            <Box my={3}>
+              <TextFieldOutlined
                 type={"text"}
                 label={"Nombre "}
                 value={product_types_name}
                 setValue={setProduct_types_name}
                 required
               />
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button variant={"contained"} onClick={handleClose}>Close</Button>
-          <Button variant={"contained"} type="submit">Actualizar</Button>
-        </DialogActions>
+            </Box>
+          </DialogContent>
+
+          <DialogActions>
+            <Button variant={"contained"} onClick={handleClose}>
+              Cerrar
+            </Button>
+            <Button variant={"contained"} type="submit">
+              Actualizar
+            </Button>
+          </DialogActions>
         </form>
       </Dialog>
     </Box>
