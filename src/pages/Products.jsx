@@ -1,4 +1,15 @@
-import { Box, Button, Chip, Container, Divider, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "../Components/DataTable";
@@ -16,11 +27,13 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import TextFieldOutlined from "../components/common/TextFieldOutlined";
 
 function Products() {
   const [open, setOpen] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [openTypeRegister, setOpenTypeRegister] = useState(false);
+  const [openTypeUpdate, setOpenTypeUpdate] = useState(false);
   const [products, setproducts] = useState([]);
   const [typeProducts_read, setTypeProducts_read] = useState([]);
 
@@ -58,7 +71,6 @@ function Products() {
   };
 
   const setFields = (row) => {
-    console.log(row.idusers);
     setIdusers(row.idusers);
     setIdproducts(row.idproducts);
     setProducts_reference(row.products_reference);
@@ -68,6 +80,13 @@ function Products() {
     setIdstatus(row.idstatus);
     setProducts_image([]);
     setStrProducts_image(row.products_image);
+  };
+
+  const setFieldsProductTypes = (
+    row = { product_types_name: "", idproduct_types: "" }
+  ) => {
+    setProduct_types_name(row.product_types_name);
+    setIdproduct_types(row.idproduct_types);
   };
 
   const handleCreateProducts = (e) => {
@@ -99,6 +118,53 @@ function Products() {
           console.log("successs");
         }
       });
+  };
+
+  const handleCreateProductsType = (e) => {
+    e.preventDefault();
+    const form = new FormData();
+    form.append("product_types_name", product_types_name);
+    axios
+      .post(RoutesList.api.products.types.create, form, {
+        header: {
+          // 'Authorization': `bearer ${jwt}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data.status === "success") {
+          console.log("successs");
+          setFieldsProductTypes();
+          setOpenTypeRegister(true);
+          handleReadTypeProducts();
+        }
+      });
+  };
+  const handleUpdateProductsType = (e) => {
+    e.preventDefault();
+    const form = new FormData();
+    form.append("product_types_name", product_types_name);
+    form.append("idproduct_types", idproduct_types);
+
+    axios
+      .post(RoutesList.api.products.types.update, form, {
+        header: {
+          // 'Authorization': `bearer ${jwt}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data.status === "success") {
+          console.log("successs");
+          handleClose();
+          handleReadTypeProducts();
+        }
+      });
+  };
+
+  const handleClose = () => {
+    setOpenTypeUpdate(false);
+    setFieldsProductTypes();
   };
 
   const handleUpdateProducts = (e) => {
@@ -401,7 +467,7 @@ function Products() {
         button={{
           type: "submit",
           label: "Registrar",
-          onSubmit: handleCreateProducts,
+          onSubmit: handleCreateProductsType,
         }}
         content={
           <Container>
@@ -429,8 +495,8 @@ function Products() {
                     rows={typeProducts_read}
                     columns={ColumnsTable.type_products}
                     onRowClick={{
-                      open: setOpen,
-                      set: setFields,
+                      open: setOpenTypeUpdate,
+                      set: setFieldsProductTypes,
                     }}
                     getRowId={"idproduct_types"}
                     sx={{
@@ -443,6 +509,38 @@ function Products() {
           </Container>
         }
       />
+
+      <Dialog
+        fullWidth
+        maxWidth={"xs"}
+        open={openTypeUpdate}
+        onClose={handleClose}
+      >
+        <form onSubmit={handleUpdateProductsType}>
+          <DialogTitle>Editar "Tipos de Producto"</DialogTitle>
+
+          <DialogContent dividers>
+            <Box my={3}>
+              <TextFieldOutlined
+                type={"text"}
+                label={"Nombre "}
+                value={product_types_name}
+                setValue={setProduct_types_name}
+                required
+              />
+            </Box>
+          </DialogContent>
+
+          <DialogActions>
+            <Button variant={"contained"} onClick={handleClose}>
+              Cerrar
+            </Button>
+            <Button variant={"contained"} type="submit">
+              Actualizar
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </Box>
   );
 }
