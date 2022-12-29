@@ -21,11 +21,11 @@ function StatusSelect({
 
   return (
     <FormControl variant="filled" fullWidth>
-      <InputLabel id="label-Tipo-estados">{"Tipos de estado"}</InputLabel>
+      <InputLabel id="label-status">{"Tipos de estado"}</InputLabel>
 
       <Select
         id="document-types"
-        labelId="label-Tipo-estados"
+        labelId="label-status"
         color={"blue"}
         value={value}
         onChange={(e) => setValue(e.target.value)}

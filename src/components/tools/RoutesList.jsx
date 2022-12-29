@@ -35,11 +35,11 @@ export default {
       },
     },
     service_orders: {
-      create: `${host}api/service-orders/create`,
-      update: `${host}api/service-orders/update`,
-      export: `${host}api/serice-orders/export`,
+      create: `${host}/api/service-orders/create`,
+      update: `${host}/api/service-orders/update`,
+      export: `${host}/api/serice-orders/export`,
       read: {
-        index: `${host}api/service-orders/read`,
+        index: `${host}/api/service-orders/read`,
         by_provider: `${host}/api/service-orders/by-provider/{idprovider_users}`,
       },
     },

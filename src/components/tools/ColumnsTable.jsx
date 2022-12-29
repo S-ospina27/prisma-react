@@ -1,4 +1,12 @@
 export default {
+  service_order: [
+    { field: "full_consecutive", headerName: "CONSECUTIVO", width: 250 },
+    // { field: "roles_name", headerName: "ROL", width: 250 },
+    // { field: "roles_name", headerName: "ROL", width: 250 },
+    // { field: "roles_name", headerName: "ROL", width: 250 },
+    // { field: "roles_name", headerName: "ROL", width: 250 },
+    // { field: "roles_name", headerName: "ROL", width: 250 }
+  ],
   users: [
     { field: "roles_name", headerName: "ROL", width: 250 },
     {
@@ -32,8 +40,8 @@ export default {
     { field: "idproducts", headerName: "ID PRODUCTO", width: 250 },
     { field: "products_reference", headerName: "REFERENCIA", width: 250 },
     { field: "products_description", headerName: "DESCRIPCIÓN", width: 350 },
-    { field: "products_color", headerName: "COLOR", width:250 },
-    { field: "product_types_name", headerName: "TIPO DE PRODCUTO", width:250 },
+    { field: "products_color", headerName: "COLOR", width: 250 },
+    { field: "product_types_name", headerName: "TIPO DE PRODCUTO", width: 250 },
     { field: "users_name", headerName: "NOMBRE DEL USUARIO", width: 250 },
     { field: "status_type", headerName: "ESTADO ", width: 250 },
   ],
