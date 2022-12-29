@@ -532,10 +532,11 @@ function Products() {
           </DialogContent>
 
           <DialogActions>
-            <Button variant={"contained"} onClick={handleClose}>
+            <Button variant={"contained"} size={'small'} onClick={handleClose}>
               Cerrar
             </Button>
-            <Button variant={"contained"} type="submit">
+
+            <Button variant={"contained"} size={'small'} type="submit">
               Actualizar
             </Button>
           </DialogActions>
