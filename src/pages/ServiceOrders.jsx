@@ -14,6 +14,7 @@ import axios from "axios";
 import RoutesList from "../components/tools/RoutesList";
 import DataTable from "../components/DataTable";
 import ColumnsTable from "../components/tools/ColumnsTable";
+import DateFieldFilled from "../components/common/DateFieldFilled";
 
 function ServiceOrders() {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
@@ -25,12 +26,30 @@ function ServiceOrders() {
   const [idservice_states, setIdservice_states] = useState("");
   const [service_orders_type, setService_orders_type] = useState("");
   const [service_orders_amount, setService_orders_amount] = useState("");
-  const [service_orders_total_price, setService_orders_total_price] =useState("");
+  const [service_orders_total_price, setService_orders_total_price] =
+    useState("");
 
-  const[service_orders_defective_amount,setService_orders_defective_amount]=useState("");
-  const[service_orders_observation,setService_orders_observation]=useState("");
-  const[service_orders_pending_amount,setService_orders_pending_amount]=useState("");
+  const [service_orders_defective_amount, setService_orders_defective_amount] =
+    useState("");
+  const [service_orders_observation, setService_orders_observation] =
+    useState("");
+  const [service_orders_pending_amount, setService_orders_pending_amount] =
+    useState("");
 
+  const [idservice_orders, setIdservice_orders] = useState("");
+  const [service_orders_creation_date, setService_orders_creation_date] =
+    useState(null);
+  const [service_orders_date_delivery, setService_orders_date_delivery] =
+    useState(null);
+  const [service_orders_finished_product, setService_orders_finished_product] =
+    useState("");
+  const [service_orders_consecutive, setService_orders_consecutive] =
+    useState("");
+  const [
+    service_orders_not_defective_amount,
+    setService_orders_not_defective_amount,
+  ] = useState("");
+  const [full_consecutive, setFull_consecutive] = useState("");
 
   const setFields = (
     row = {
@@ -42,19 +61,40 @@ function ServiceOrders() {
       service_orders_defective_amount: "",
       service_orders_observation: "",
       service_orders_pending_amount: "",
+      service_orders_date_delivery: "",
+      service_orders_finished_product: "",
+      service_orders_not_defective_amount: "",
+      service_orders_creation_date: null,
+      full_consecutive: "",
     }
   ) => {
-    setIdproducts(row.idproducts);
-    setIdusers(row.idusers);
+    // console.log(row);
+    setIdservice_orders(row.idservice_orders);
+    setIdproducts(
+      row.idproducts === ""
+        ? ""
+        : `${row.idproducts} - ${row.products_reference}`
+    );
+    setIdusers(row.idusers === "" ? "" : `${row.idusers}- ${row.fullname}`);
     setService_orders_type(row.service_orders_type);
     setService_orders_amount(row.service_orders_amount);
     setService_orders_total_price(row.service_orders_total_price);
     setIdservice_states(row.idservice_states);
+    setService_orders_creation_date(row.service_orders_creation_date);
+    setService_orders_date_delivery(row.service_orders_date_delivery);
+    setService_orders_finished_product(row.service_orders_finished_product);
+    setService_orders_consecutive(row.service_orders_consecutive);
+    setService_orders_not_defective_amount(
+      row.service_orders_not_defective_amount === null
+        ? ""
+        : row.service_orders_not_defective_amount
+    );
+    setFull_consecutive(row.full_consecutive);
   };
 
   const handleReadOrderService = () => {
     axios.get(RoutesList.api.service_orders.read.index).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setOrderService(res.data);
     });
   };
@@ -67,6 +107,10 @@ function ServiceOrders() {
     form.append("service_orders_type", service_orders_type);
     form.append("service_orders_amount", service_orders_amount);
     form.append("service_orders_total_price", service_orders_total_price);
+    form.append(
+      "service_orders_finished_product",
+      service_orders_finished_product
+    );
 
     axios.post(RoutesList.api.service_orders.create, form).then((res) => {
       console.log(res.data);
@@ -74,6 +118,42 @@ function ServiceOrders() {
         setOpenCreateOrders(false);
         handleReadOrderService();
       }
+    });
+  };
+
+  const handleUpdateServiceOrders = (e) => {
+    e.preventDefault();
+
+    const form = new FormData();
+    form.append("idservice_orders", idservice_orders);
+    form.append("idproducts", idproducts.split("-").shift().trim());
+    form.append("idservice_states", idservice_states);
+    form.append("idusers", idusers.split("-").shift().trim());
+    form.append("service_orders_creation_date", service_orders_creation_date);
+    form.append("service_orders_date_delivery", service_orders_date_delivery);
+    form.append(
+      "service_orders_finished_product",
+      service_orders_finished_product
+    );
+    form.append("service_orders_type", service_orders_type);
+    form.append("service_orders_consecutive", service_orders_consecutive);
+    form.append("service_orders_amount", service_orders_amount);
+    form.append(
+      "service_orders_not_defective_amount",
+      service_orders_not_defective_amount
+    );
+    form.append(
+      "service_orders_defective_amount",
+      service_orders_defective_amount
+    );
+    form.append("service_orders_observation", service_orders_observation);
+    form.append("service_orders_total_price", service_orders_total_price);
+    form.append("service_orders_pending_amount", service_orders_pending_amount);
+
+    axios.post(RoutesList.api.service_orders.update, form).then((res) => {
+      console.log(res.data);
+      handleReadOrderService();
+      setOpenUpdateOrders(false);
     });
   };
 
@@ -112,9 +192,9 @@ function ServiceOrders() {
         columns={ColumnsTable.service_order}
         getRowId={"idservice_orders"}
         onRowClick={{
-            open: setOpenUpdateOrders,
-            set: setFields,
-          }}
+          open: setOpenUpdateOrders,
+          set: setFields,
+        }}
         sx={{
           height: "450px",
         }}
@@ -157,16 +237,6 @@ function ServiceOrders() {
                   selected={["PROVEEDOR"]}
                 />
               </Grid>
-
-              {/* <Grid item xs={12} sm={12} md={6}>
-                <ServiceStatesSelect
-                  value={idservice_states}
-                  setValue={setIdservice_states}
-                  required
-                  // ignore={['ACEPTADO', 'RECHAZADO', 'PENDIENTE', 'EN-PROCESO', 'ENVIADO']} // administrador
-                  // ignore={['NO-DESPACHADO', 'DESPACHADO', 'FINALIZADO']} // proveedor
-                />
-              </Grid> */}
             </Grid>
 
             <Box my={3}>
@@ -203,18 +273,29 @@ function ServiceOrders() {
                   required
                 />
               </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Producto Final"}
+                  type={"text"}
+                  value={service_orders_finished_product}
+                  setValue={setService_orders_finished_product}
+                  required
+                />
+              </Grid>
             </Grid>
           </Container>
         }
       />
+
       <DialogForm
-        title={"Actualizar Ordenes de Servicio"}
+        title={"Editar Ordenes de Servicio"}
         open={openUpdateOrders}
         setOpen={setOpenUpdateOrders}
         button={{
           type: "submit",
           label: "Actualizar",
-          onSubmit: handleCreateServiceOrders,
+          onSubmit: handleUpdateServiceOrders,
         }}
         content={
           <Container>
@@ -235,6 +316,22 @@ function ServiceOrders() {
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
+                <ServiceStatesSelect
+                  value={idservice_states}
+                  setValue={setIdservice_states}
+                  required
+                  ignore={[
+                    "ACEPTADO",
+                    "RECHAZADO",
+                    "PENDIENTE",
+                    "EN-PROCESO",
+                    "ENVIADO",
+                  ]}
+                  // ignore={['NO-DESPACHADO', 'DESPACHADO', 'FINALIZADO']} // proveedor
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
                 <UsersSelect
                   label={"Proveedores"}
                   value={idusers}
@@ -244,6 +341,23 @@ function ServiceOrders() {
                 />
               </Grid>
 
+              <Grid item xs={12} sm={12} md={6}>
+                <OrderTypeSelect
+                  value={service_orders_type}
+                  setValue={setService_orders_type}
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Consecutivo"}
+                  type={"text"}
+                  value={full_consecutive}
+                  setValue={setFull_consecutive}
+                  required
+                />
+              </Grid>
             </Grid>
 
             <Box my={3}>
@@ -254,55 +368,12 @@ function ServiceOrders() {
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
-                <OrderTypeSelect
-                  value={service_orders_type}
-                  setValue={setService_orders_type}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} md={6}>
-                <ServiceStatesSelect
-                  value={idservice_states}
-                  setValue={setIdservice_states}
-                  required
-                  // ignore={['ACEPTADO', 'RECHAZADO', 'PENDIENTE', 'EN-PROCESO', 'ENVIADO']} // administrador
-                  // ignore={['NO-DESPACHADO', 'DESPACHADO', 'FINALIZADO']} // proveedor
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
-                  label={"Cantidad"}
+                  label={"Cantidad Productos"}
                   type={"number"}
                   value={service_orders_amount}
                   setValue={setService_orders_amount}
                   required
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Cantidad Malas"}
-                  type={"number"}
-                  value={service_orders_defective_amount}
-                  setValue={setService_orders_defective_amount}
-                />
-                </Grid>
-              <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Cantidad Pendientes"}
-                  type={"number"}
-                  value={service_orders_pending_amount}
-                  setValue={setService_orders_pending_amount}
-                />
-
-              </Grid>
-              <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Observación"}
-                  type={"text"}
-                  value={service_orders_observation}
-                  setValue={setService_orders_observation}
                 />
               </Grid>
 
@@ -313,6 +384,82 @@ function ServiceOrders() {
                   value={service_orders_total_price}
                   setValue={setService_orders_total_price}
                   required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Producto Final"}
+                  type={"text"}
+                  value={service_orders_finished_product}
+                  setValue={setService_orders_finished_product}
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <DateFieldFilled
+                  label={"Fecha de Creación"}
+                  value={service_orders_creation_date}
+                  setValue={setService_orders_creation_date}
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <DateFieldFilled
+                  label={"Fecha de Entrega"}
+                  value={service_orders_date_delivery}
+                  setValue={setService_orders_date_delivery}
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"producto a Entregar"}
+                  type={"text"}
+                  value={service_orders_finished_product}
+                  setValue={setService_orders_finished_product}
+                  required
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label={"Novedades Orden de Servicio"} />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Cantidad Malas"}
+                  type={"number"}
+                  value={service_orders_defective_amount}
+                  setValue={setService_orders_defective_amount}
+                  disabled={idservice_states === 6 ? false : true}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Cantidad Pendientes"}
+                  type={"number"}
+                  value={service_orders_pending_amount}
+                  setValue={setService_orders_pending_amount}
+                  disabled={idservice_states === 6 ? false : true}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={12}>
+                <TextFieldFilled
+                  label={"Observación"}
+                  type={"text"}
+                  value={service_orders_observation}
+                  setValue={setService_orders_observation}
+                  disabled={idservice_states === 6 ? false : true}
                 />
               </Grid>
             </Grid>

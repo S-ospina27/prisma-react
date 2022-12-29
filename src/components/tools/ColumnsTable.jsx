@@ -1,17 +1,17 @@
 export default {
   service_order: [
+    { field: "service_type", headerName: " ESTADO", width: 150 },
     { field: "full_consecutive", headerName: "CONSECUTIVO", width: 150 },
-    { field: "fullname", headerName: "NOMBRE COMPLETO", width: 250 },
-    { field: "service_orders_creation_date", headerName: "FECHA CREACIÓN", width: 250 },
-    { field: "service_ordersproducts_reference_date_delivery", headerName: "PRODUCTO ", width: 250 },
-    { field: "service_orders_date_delivery", headerName: "FECHA DE ENTREGA", width: 250 },
+    { field: "fullname", headerName: "NOMBRE COMPLETO", width: 350 },
+    { field: "service_orders_creation_date", headerName: "FECHA CREACIÓN", width: 170 },
+    { field: "products_reference", headerName: "PRODUCTO", width: 170 },
+    { field: "service_orders_date_delivery", headerName: "FECHA DE ENTREGA", width: 170 },
     { field: "service_orders_finished_product", headerName: "PRODUCTO A ENTREGAR", width: 250 },
     { field: "service_orders_amount", headerName: "CANTIDAD", width: 120 },
     { field: "service_orders_not_defective_amount", headerName: "CANTIDAD BUENAS", width: 180 },
     { field: "service_orders_defective_amount", headerName: "CANTIDAD MALAS", width: 180 },
     { field: "service_orders_pending_amount", headerName: "CANTIDAD PENDIENTES", width: 180 },
-    { field: "service_orders_observation", headerName: " OBSERVACIONES", width: 220 },
-    { field: "products_reference", headerName: " ESTADO", width: 120 },
+    { field: "service_orders_observation", headerName: " OBSERVACIONES", width: 350 },
   ],
   users: [
     { field: "roles_name", headerName: "ROL", width: 250 },
