@@ -54,6 +54,7 @@ function Products() {
       setproducts(res.data);
     });
   };
+  
   const handleReadTypeProducts = () => {
     axios.get(RoutesList.api.products.types.read).then((res) => {
       setTypeProducts_read(res.data);
@@ -140,6 +141,7 @@ function Products() {
         }
       });
   };
+
   const handleUpdateProductsType = (e) => {
     e.preventDefault();
     const form = new FormData();
@@ -259,8 +261,8 @@ function Products() {
 
       {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
       <DialogForm
-        clean={clean_fields}
         title={"Registrar Productos"}
+        clean={clean_fields}
         open={openRegister}
         setOpen={setOpenRegister}
         button={{
@@ -273,7 +275,7 @@ function Products() {
             <Box my={3}>
               <Box mb={3}>
                 <Divider textAlign="left">
-                  <Chip color="blue" label={"Detalles de Producto"} />
+                  <Chip color="dark-blue" label={"Detalles de Producto"} />
                 </Divider>
               </Box>
 
@@ -362,7 +364,7 @@ function Products() {
             <Box my={3}>
               <Box mb={3}>
                 <Divider textAlign="left">
-                  <Chip color="blue" label={"Detalles de Producto"} />
+                  <Chip color="dark-blue" label={"Detalles de Producto"} />
                 </Divider>
               </Box>
 
@@ -435,7 +437,7 @@ function Products() {
 
               <Box my={3}>
                 <Divider textAlign="left">
-                  <Chip color="blue" label={"Archivos Cargados"} />
+                  <Chip color="dark-blue" label={"Archivos Cargados"} />
                 </Divider>
               </Box>
 
@@ -458,10 +460,10 @@ function Products() {
           </Container>
         }
       />
-      {/* --------------------------------------DIALOG REGISTER_TYPE ------------------------------------------------------------------------------- */}
+
       <DialogForm
-        clean={clean_fields}
         title={"Tipos de Producto"}
+        clean={clean_fields}
         open={openTypeRegister}
         setOpen={setOpenTypeRegister}
         button={{
@@ -474,7 +476,7 @@ function Products() {
             <Box my={3}>
               <Box mb={3}>
                 <Divider textAlign="left">
-                  <Chip color="blue" label={"Detalles Tipo de Producto"} />
+                  <Chip color="dark-blue" label={"Detalles Tipo de Producto"} />
                 </Divider>
               </Box>
 
@@ -532,11 +534,11 @@ function Products() {
           </DialogContent>
 
           <DialogActions>
-            <Button variant={"contained"} size={'small'} onClick={handleClose}>
+            <Button variant={"contained"} size={"small"} onClick={handleClose}>
               Cerrar
             </Button>
 
-            <Button variant={"contained"} size={'small'} type="submit">
+            <Button variant={"contained"} size={"small"} type="submit">
               Actualizar
             </Button>
           </DialogActions>
