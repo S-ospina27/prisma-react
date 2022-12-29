@@ -52,7 +52,6 @@ function ServiceOrders() {
 
   const handleCreateServiceOrders = (e) => {
     e.preventDefault();
-
     const form = new FormData();
     form.append("idproducts", idproducts);
     form.append("idusers", idusers);
@@ -62,6 +61,12 @@ function ServiceOrders() {
 
     axios.post(RoutesList.api.service_orders.create, form).then((res) => {
       console.log(res.data);
+      if(res.data.status === "success"){
+        setOpenCreateOrders(false);
+        handleReadOrderService();
+
+
+      }
     });
   };
 
