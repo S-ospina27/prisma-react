@@ -50,7 +50,7 @@ function Products() {
   const [product_types_name, setProduct_types_name] = useState("");
 
   const handleReadProducts = () => {
-    axios.get(RoutesList.api.products.read).then((res) => {
+    axios.get(RoutesList.api.products.read.index).then((res) => {
       setproducts(res.data);
     });
   };
