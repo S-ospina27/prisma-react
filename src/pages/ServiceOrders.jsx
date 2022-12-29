@@ -1,4 +1,4 @@
-import { Box, Chip, Divider } from "@mui/material";
+import { Box, Chip, Container, Divider, Grid } from "@mui/material";
 import { useState } from "react";
 import MenuItems from "../components/common/MenuItems";
 
@@ -6,11 +6,17 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogForm from "../components/common/DialogForm";
 import ProductsSelect from "../components/common/ProductsSelect";
+import UsersSelect from "../components/common/UsersSelect";
+import ServiceStatesSelect from "../components/common/ServiceStatesSelect";
 
 function ServiceOrders() {
   const [openCreateOrders, setOpenCreateOrders] = useState(true);
 
   const [idproducts, setIdproducts] = useState("");
+  const [idusers, setIdusers] = useState("");
+  const [idservice_states, setIdservice_states] = useState("");
+
+  const setFields = (row) => {};
 
   const handleCreateServiceOrders = (e) => {
     e.preventDefault();
@@ -52,12 +58,43 @@ function ServiceOrders() {
           onSubmit: handleCreateServiceOrders,
         }}
         content={
-          <ProductsSelect
-            value={idproducts}
-            setValue={setIdproducts}
-            selected={['ACTIVO']}
-            required
-          />
+          <Container>
+            <Box mb={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label={"Detalles Orden de Servicio"} />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6}>
+                <ProductsSelect
+                  value={idproducts}
+                  setValue={setIdproducts}
+                  selected={["ACTIVO"]}
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <UsersSelect
+                  value={idusers}
+                  setValue={setIdusers}
+                  required
+                  selected={["PROVEEDOR"]}
+                />
+              </Grid>
+
+              {/* <Grid item xs={12} sm={12} md={6}>
+                <ServiceStatesSelect
+                  value={idservice_states}
+                  setValue={setIdservice_states}
+                  required
+                  // ignore={['ACEPTADO', 'RECHAZADO', 'PENDIENTE', 'EN-PROCESO', 'ENVIADO']} // administrador
+                  // ignore={['NO-DESPACHADO', 'DESPACHADO', 'FINALIZADO']} // proveedor
+                />
+              </Grid> */}
+            </Grid>
+          </Container>
         }
       />
     </Box>

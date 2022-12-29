@@ -9,17 +9,16 @@ export default {
   api: {
     read_roles: `${host}/api/read-roles`,
     read_document_types: `${host}/api/read-document-types`,
-    status:{
-      index:`${host}/api/status/`,
+    status: {
+      index: `${host}/api/status/`,
       service: `${host}/api/status/service`,
-
     },
     users: {
       create: `${host}/api/users/create`,
       update: `${host}/api/users/update`,
       read: {
         index: `${host}/api/users/read`,
-        filter: `${host}/api/users/filter`,
+        by_rol: `${host}/api/users/read/by-rol`,
       },
     },
     products: {
@@ -27,7 +26,7 @@ export default {
       update: `${host}/api/products/update`,
       read: {
         index: `${host}/api/products/read/`,
-        by_status: `${host}/api/products/read/by-status`
+        by_status: `${host}/api/products/read/by-status`,
       },
       types: {
         create: `${host}/api/products/types/create`,

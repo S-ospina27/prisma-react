@@ -15,7 +15,7 @@ function UsersSelect({
   const [users, setUsers] = useState([]);
 
   const handleReadUsers = () => {
-    axios.get(RoutesList.api.users.read.filter).then((res) => {
+    axios.get(RoutesList.api.users.read.by_rol).then((res) => {
       const rows = [];
 
       selected.map((rol) => {
