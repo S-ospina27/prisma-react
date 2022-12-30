@@ -1,54 +1,54 @@
 import { Box, Chip, Container, Divider, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import MenuItems from "../components/common/MenuItems";
-
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import AssignmentIcon from "@mui/icons-material/Assignment";
+import axios from "axios";
+import DateFieldFilled from "../components/common/DateFieldFilled";
+import DataTable from "../components/DataTable";
 import DialogForm from "../components/common/DialogForm";
 import ProductsSelect from "../components/common/ProductsSelect";
 import UsersSelect from "../components/common/UsersSelect";
 import ServiceStatesSelect from "../components/common/ServiceStatesSelect";
 import OrderTypeSelect from "../components/common/OrderTypeSelect";
 import TextFieldFilled from "../components/common/TextFieldFilled";
-import axios from "axios";
+
 import RoutesList from "../components/tools/RoutesList";
-import DataTable from "../components/DataTable";
 import ColumnsTable from "../components/tools/ColumnsTable";
-import DateFieldFilled from "../components/common/DateFieldFilled";
+
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 function ServiceOrders() {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
   const [openUpdateOrders, setOpenUpdateOrders] = useState(false);
   const [ordersService, setOrderService] = useState([]);
 
-  const [idproducts, setIdproducts] = useState("");
-  const [idusers, setIdusers] = useState("");
-  const [idservice_states, setIdservice_states] = useState("");
-  const [service_orders_type, setService_orders_type] = useState("");
-  const [service_orders_amount, setService_orders_amount] = useState("");
-  const [service_orders_total_price, setService_orders_total_price] =
-    useState("");
-
-  const [service_orders_defective_amount, setService_orders_defective_amount] =
-    useState("");
-  const [service_orders_observation, setService_orders_observation] =
-    useState("");
-  const [service_orders_pending_amount, setService_orders_pending_amount] =
-    useState("");
-
   const [idservice_orders, setIdservice_orders] = useState("");
+  const [idproducts, setIdproducts] = useState("");
+  const [idservice_states, setIdservice_states] = useState("");
+  const [idusers, setIdusers] = useState("");
   const [service_orders_creation_date, setService_orders_creation_date] =
     useState(null);
   const [service_orders_date_delivery, setService_orders_date_delivery] =
     useState(null);
   const [service_orders_finished_product, setService_orders_finished_product] =
     useState("");
+  const [service_orders_type, setService_orders_type] = useState("");
   const [service_orders_consecutive, setService_orders_consecutive] =
     useState("");
+  const [service_orders_amount, setService_orders_amount] = useState("");
   const [
     service_orders_not_defective_amount,
     setService_orders_not_defective_amount,
   ] = useState("");
+  const [service_orders_defective_amount, setService_orders_defective_amount] =
+    useState("");
+  const [service_orders_observation, setService_orders_observation] =
+    useState("");
+  const [service_orders_total_price, setService_orders_total_price] =
+    useState("");
+  const [service_orders_pending_amount, setService_orders_pending_amount] =
+    useState("");
+
   const [full_consecutive, setFull_consecutive] = useState("");
 
   const setFields = (
@@ -68,14 +68,13 @@ function ServiceOrders() {
       full_consecutive: "",
     }
   ) => {
-    // console.log(row);
     setIdservice_orders(row.idservice_orders);
     setIdproducts(
       row.idproducts === ""
         ? ""
         : `${row.idproducts} - ${row.products_reference}`
     );
-    setIdusers(row.idusers === "" ? "" : `${row.idusers}- ${row.fullname}`);
+    setIdusers(row.idusers === "" ? "" : `${row.idusers} - ${row.fullname}`);
     setService_orders_type(row.service_orders_type);
     setService_orders_amount(row.service_orders_amount);
     setService_orders_total_price(row.service_orders_total_price);
@@ -101,6 +100,7 @@ function ServiceOrders() {
 
   const handleCreateServiceOrders = (e) => {
     e.preventDefault();
+
     const form = new FormData();
     form.append("idproducts", idproducts);
     form.append("idusers", idusers);
@@ -113,11 +113,9 @@ function ServiceOrders() {
     );
 
     axios.post(RoutesList.api.service_orders.create, form).then((res) => {
-      console.log(res.data);
-      if (res.data.status === "success") {
-        setOpenCreateOrders(false);
-        handleReadOrderService();
-      }
+      // console.log(res.data);
+      setOpenCreateOrders(false);
+      handleReadOrderService();
     });
   };
 
@@ -151,7 +149,7 @@ function ServiceOrders() {
     form.append("service_orders_pending_amount", service_orders_pending_amount);
 
     axios.post(RoutesList.api.service_orders.update, form).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       handleReadOrderService();
       setOpenUpdateOrders(false);
     });
@@ -163,7 +161,7 @@ function ServiceOrders() {
 
   return (
     <Box mx={3} my={3}>
-      <Box mb={3}>
+      <Box mb={2}>
         <Divider>
           <Chip color="blue" label={"Ordenes de Servicio"} />
         </Divider>
@@ -356,6 +354,7 @@ function ServiceOrders() {
                   value={full_consecutive}
                   setValue={setFull_consecutive}
                   required
+                  readOnly
                 />
               </Grid>
             </Grid>
