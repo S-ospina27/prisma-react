@@ -1,5 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import { Box, LinearProgress, ThemeProvider } from "@mui/material";
+import {
+  Alert,
+  Box,
+  LinearProgress,
+  Slide,
+  Snackbar,
+  ThemeProvider,
+} from "@mui/material";
 import { useState } from "react";
 
 import Styles from "./components/tools/Styles";
@@ -12,6 +19,11 @@ import ServiceOrders from "./pages/ServiceOrders";
 
 function App() {
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    open: false,
+    severity: "",
+    message: "",
+  });
 
   return (
     <ThemeProvider theme={Styles}>
@@ -19,6 +31,31 @@ function App() {
         <Box sx={{ width: "100%" }}>
           <LinearProgress color="light-blue" />
         </Box>
+      )}
+
+      {alert.open && (
+        <Snackbar
+          open={alert.open}
+          autoHideDuration={5000}
+          onClose={(event, reason) => {
+            if (reason === "clickaway") return;
+            setAlert(false);
+          }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          TransitionComponent={(props) => <Slide {...props} direction="up" />}
+        >
+          <Alert
+            severity={
+              ["error", "route-error", "database-error"].includes(
+                alert.severity
+              )
+                ? "error"
+                : alert.severity
+            }
+          >
+            {alert.message}
+          </Alert>
+        </Snackbar>
       )}
 
       <NavbarNavigation />
@@ -32,7 +69,7 @@ function App() {
 
         <Route
           path="service-orders"
-          element={<ServiceOrders setLoading={setLoading} />}
+          element={<ServiceOrders loading={setLoading} alert={setAlert} />}
         />
       </Routes>
     </ThemeProvider>

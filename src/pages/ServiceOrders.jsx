@@ -30,7 +30,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
 
-function ServiceOrders({ setLoading }) {
+function ServiceOrders({ loading, alert }) {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
   const [openUpdateOrders, setOpenUpdateOrders] = useState(false);
   const [openOrdersDate, setOpenOrdersDate] = useState(false);
@@ -142,7 +142,6 @@ function ServiceOrders({ setLoading }) {
     form.append("idproducts", idproducts.split("-").shift().trim());
     form.append("idservice_states", idservice_states);
     form.append("idusers", idusers.split("-").shift().trim());
-    form.append("service_orders_creation_date", service_orders_creation_date);
     form.append("service_orders_date_delivery", service_orders_date_delivery);
     form.append(
       "service_orders_finished_product",
@@ -173,35 +172,50 @@ function ServiceOrders({ setLoading }) {
   const handleExportServiceOrders = (e) => {
     e.preventDefault();
     setOpenOrdersDate(false);
-    setLoading(true);
+    loading(true);
 
-    // if ([null, ""].includes(date_start)) {
-    //   console.log("fecha inicio vacia");
-    //   setOpenOrdersDate(true);
-    //   setLoading(false);
-    //   return false;
-    // }
+    if ([null, ""].includes(date_start)) {
+      setOpenOrdersDate(true);
+      loading(false);
+      alert({
+        open: true,
+        severity: "error",
+        message: "La fecha inicio es requerida",
+      });
+      return false;
+    }
 
-    // if ([null, ""].includes(date_end)) {
-    //   console.log("fecha fin vacia");
-    //   setOpenOrdersDate(true);
-    //   setLoading(false);
-    //   return false;
-    // }
+    if ([null, ""].includes(date_end)) {
+      setOpenOrdersDate(true);
+      loading(false);
+      alert({
+        open: true,
+        severity: "error",
+        message: "La fecha fin es requerida",
+      });
+      return false;
+    }
 
-    // const form = new FormData();
-    // form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
-    // form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
+    const form = new FormData();
+    form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
+    form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
 
-    // axios.post(RoutesList.api.service_orders.export, form).then((res) => {
-    //   // console.log(res.data);
-    //   setOpenOrdersDate(true);
-    //   setLoading(false);
+    axios.post(RoutesList.api.service_orders.export, form).then((res) => {
+      // console.log(res.data);
+      setOpenOrdersDate(false);
+      loading(false);
+      alert({
+        open: true,
+        severity: res.data.status,
+        message: res.data.message,
+      });
 
-    //   if (res.data.status === "success") {
-    //     window.location.href = res.data.data.url;
-    //   }
-    // });
+      if (res.data.status === "success") {
+        window.location.href = res.data.data.url;
+        setDate_start(null);
+        setDate_end(null);
+      }
+    });
   };
 
   useEffect(() => {
@@ -443,16 +457,6 @@ function ServiceOrders({ setLoading }) {
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Producto Final"}
-                  type={"text"}
-                  value={service_orders_finished_product}
-                  setValue={setService_orders_finished_product}
-                  required
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
                 <DateFieldFilled
                   label={"Fecha de Creación"}
                   value={service_orders_creation_date}
@@ -472,7 +476,7 @@ function ServiceOrders({ setLoading }) {
 
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
-                  label={"producto a Entregar"}
+                  label={"Producto Final"}
                   type={"text"}
                   value={service_orders_finished_product}
                   setValue={setService_orders_finished_product}
