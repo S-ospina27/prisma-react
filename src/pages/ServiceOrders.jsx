@@ -1,4 +1,16 @@
-import { Box, Chip, Container, Divider, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  Grid,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import MenuItems from "../components/common/MenuItems";
 import axios from "axios";
@@ -16,10 +28,12 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import DialogTransition from "../components/common/DialogTransition";
 
 function ServiceOrders() {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
   const [openUpdateOrders, setOpenUpdateOrders] = useState(false);
+  const [openOrdersDate, setOpenOrdersDate] = useState(false);
   const [ordersService, setOrderService] = useState([]);
 
   const [idservice_orders, setIdservice_orders] = useState("");
@@ -48,8 +62,9 @@ function ServiceOrders() {
     useState("");
   const [service_orders_pending_amount, setService_orders_pending_amount] =
     useState("");
-
   const [full_consecutive, setFull_consecutive] = useState("");
+  const [date_start, setDate_start] = useState(null);
+  const [date_end, setDate_end] = useState(null);
 
   const setFields = (
     row = {
@@ -155,6 +170,11 @@ function ServiceOrders() {
     });
   };
 
+  const handleExportServiceOrders = (e) => {
+    e.preventDefault();
+    console.log("submit");
+  };
+
   useEffect(() => {
     handleReadOrderService();
   }, []);
@@ -178,6 +198,13 @@ function ServiceOrders() {
               name: "Crear Orden de Servicio",
               icon: <AssignmentIcon color={"dark-blue"} />,
               setOpen: setOpenCreateOrders,
+              idroles: [1],
+            },
+            {
+              type: "modal",
+              name: "Exportar Ordenes de Servicio",
+              icon: <AssignmentIcon color={"blue"} />,
+              setOpen: setOpenOrdersDate,
               idroles: [1],
             },
           ]}
@@ -465,6 +492,45 @@ function ServiceOrders() {
           </Container>
         }
       />
+
+      <Dialog
+        open={openOrdersDate}
+        onClose={() => setOpenOrdersDate(false)}
+        TransitionComponent={DialogTransition}
+      >
+        <form onSubmit={handleExportServiceOrders}>
+          <DialogTitle>{'Exportar "Ordenes de Servicio"'}</DialogTitle>
+
+          <DialogContent dividers>
+            <Box my={3}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={6}>
+                  <DateFieldFilled
+                    label={"Fecha Inicio"}
+                    value={date_start}
+                    setValue={setDate_start}
+                    required
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12} md={6}>
+                  <DateFieldFilled
+                    label={"Fecha Fin"}
+                    value={date_end}
+                    setValue={setDate_end}
+                    required
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={() => setOpenOrdersDate(false)}>Cancel</Button>
+            <Button type="submit">Exportar</Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </Box>
   );
 }
