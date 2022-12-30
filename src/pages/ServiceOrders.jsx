@@ -98,10 +98,10 @@ function ServiceOrders({ loading, alert }) {
     setService_orders_date_delivery(row.service_orders_date_delivery);
     setService_orders_finished_product(row.service_orders_finished_product);
     setService_orders_consecutive(row.service_orders_consecutive);
-    setService_orders_not_defective_amount(
-      row.service_orders_not_defective_amount === null
+    setService_orders_defective_amount(
+      row.service_orders_defective_amount === null
         ? ""
-        : row.service_orders_not_defective_amount
+        : row.service_orders_defective_amount
     );
     setFull_consecutive(row.full_consecutive);
   };
@@ -138,6 +138,8 @@ function ServiceOrders({ loading, alert }) {
     e.preventDefault();
 
     const form = new FormData();
+  
+    console.log(service_orders_defective_amount)
     form.append("idservice_orders", idservice_orders);
     form.append("idproducts", idproducts.split("-").shift().trim());
     form.append("idservice_states", idservice_states);
@@ -163,7 +165,7 @@ function ServiceOrders({ loading, alert }) {
     form.append("service_orders_pending_amount", service_orders_pending_amount);
 
     axios.post(RoutesList.api.service_orders.update, form).then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
       handleReadOrderService();
       setOpenUpdateOrders(false);
     });
@@ -388,14 +390,14 @@ function ServiceOrders({ loading, alert }) {
                   value={idservice_states}
                   setValue={setIdservice_states}
                   required
-                  ignore={[
-                    "ACEPTADO",
-                    "RECHAZADO",
-                    "PENDIENTE",
-                    "EN-PROCESO",
-                    "ENVIADO",
-                  ]}
-                  // ignore={['NO-DESPACHADO', 'DESPACHADO', 'FINALIZADO']} // proveedor
+                  // ignore={[
+                  //   "ACEPTADO",
+                  //   "RECHAZADO",
+                  //   "PENDIENTE",
+                  //   "EN-PROCESO",
+                  //   "ENVIADO",
+                  // ]}
+                  ignore={['NO-DESPACHADO', 'DESPACHADO', 'FINALIZADO']} 
                 />
               </Grid>
 
