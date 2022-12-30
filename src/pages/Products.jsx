@@ -28,6 +28,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import TextFieldOutlined from "../components/common/TextFieldOutlined";
+import DialogTransition from "../components/common/DialogTransition";
 
 function Products() {
   const [open, setOpen] = useState(false);
@@ -54,7 +55,7 @@ function Products() {
       setproducts(res.data);
     });
   };
-  
+
   const handleReadTypeProducts = () => {
     axios.get(RoutesList.api.products.types.read).then((res) => {
       setTypeProducts_read(res.data);
@@ -517,6 +518,7 @@ function Products() {
         maxWidth={"xs"}
         open={openTypeUpdate}
         onClose={handleClose}
+        TransitionComponent={DialogTransition}
       >
         <form onSubmit={handleUpdateProductsType}>
           <DialogTitle>Editar "Tipos de Producto"</DialogTitle>
