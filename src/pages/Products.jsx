@@ -112,12 +112,12 @@ function Products() {
       })
       .then((res) => {
         console.log(res.data);
+        handleReadProducts();
+        setOpenRegister(false);
+        console.log("successs");
 
-        if (res.data.status === "success") {
-          handleReadProducts();
-          setOpenRegister(false);
-          console.log("successs");
-        }
+        // if (res.data.status === "success") {
+        // }
       });
   };
 
@@ -133,12 +133,12 @@ function Products() {
         },
       })
       .then((res) => {
-        if (res.data.status === "success") {
-          console.log("successs");
-          setFieldsProductTypes();
-          setOpenTypeRegister(true);
-          handleReadTypeProducts();
-        }
+        setFieldsProductTypes();
+        setOpenTypeRegister(true);
+        handleReadTypeProducts();
+        // if (res.data.status === "success") {
+        //   console.log("successs");
+        // }
       });
   };
 
@@ -156,11 +156,11 @@ function Products() {
         },
       })
       .then((res) => {
-        if (res.data.status === "success") {
-          console.log("successs");
-          handleClose();
-          handleReadTypeProducts();
-        }
+        console.log("successs");
+        handleClose();
+        handleReadTypeProducts();
+        // if (res.data.status === "success") {
+        // }
       });
   };
 
@@ -194,13 +194,13 @@ function Products() {
       })
       .then((res) => {
         console.log(res.data);
+        clean_fields();
+        setOpen(false);
+        handleReadProducts();
+        console.log("successs actualizado");
 
-        if (res.data.status === "success") {
-          clean_fields();
-          setOpen(false);
-          handleReadProducts();
-          console.log("successs actualizado");
-        }
+        // if (res.data.status === "success") {
+        // }
       });
   };
 
