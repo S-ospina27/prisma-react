@@ -6,14 +6,14 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Divider,
   Grid,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import MenuItems from "../components/common/MenuItems";
+import dayjs from "dayjs";
 import axios from "axios";
+import MenuItems from "../components/common/MenuItems";
 import DateFieldFilled from "../components/common/DateFieldFilled";
 import DataTable from "../components/DataTable";
 import DialogForm from "../components/common/DialogForm";
@@ -172,7 +172,28 @@ function ServiceOrders() {
 
   const handleExportServiceOrders = (e) => {
     e.preventDefault();
-    console.log("submit");
+
+    if ([null, ""].includes(date_start)) {
+      console.log("fecha inicio vacia");
+      return false;
+    }
+
+    if ([null, ""].includes(date_end)) {
+      console.log("fecha fin vacia");
+      return false;
+    }
+
+    const form = new FormData();
+    form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
+    form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
+
+    axios.post(RoutesList.api.service_orders.export, form).then((res) => {
+      // console.log(res.data);
+
+      if (res.data.status === "success") {
+        window.location.href = res.data.data.url;
+      }
+    });
   };
 
   useEffect(() => {
@@ -526,8 +547,9 @@ function ServiceOrders() {
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={() => setOpenOrdersDate(false)}>Cancel</Button>
-            <Button type="submit">Exportar</Button>
+            <Button type="submit" variant="contained" color="blue" size="small">
+              Exportar
+            </Button>
           </DialogActions>
         </form>
       </Dialog>
