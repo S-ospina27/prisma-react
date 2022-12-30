@@ -30,7 +30,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
 
-function ServiceOrders() {
+function ServiceOrders({ setLoading }) {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
   const [openUpdateOrders, setOpenUpdateOrders] = useState(false);
   const [openOrdersDate, setOpenOrdersDate] = useState(false);
@@ -172,28 +172,36 @@ function ServiceOrders() {
 
   const handleExportServiceOrders = (e) => {
     e.preventDefault();
+    setOpenOrdersDate(false);
+    setLoading(true);
 
-    if ([null, ""].includes(date_start)) {
-      console.log("fecha inicio vacia");
-      return false;
-    }
+    // if ([null, ""].includes(date_start)) {
+    //   console.log("fecha inicio vacia");
+    //   setOpenOrdersDate(true);
+    //   setLoading(false);
+    //   return false;
+    // }
 
-    if ([null, ""].includes(date_end)) {
-      console.log("fecha fin vacia");
-      return false;
-    }
+    // if ([null, ""].includes(date_end)) {
+    //   console.log("fecha fin vacia");
+    //   setOpenOrdersDate(true);
+    //   setLoading(false);
+    //   return false;
+    // }
 
-    const form = new FormData();
-    form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
-    form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
+    // const form = new FormData();
+    // form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
+    // form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
 
-    axios.post(RoutesList.api.service_orders.export, form).then((res) => {
-      // console.log(res.data);
+    // axios.post(RoutesList.api.service_orders.export, form).then((res) => {
+    //   // console.log(res.data);
+    //   setOpenOrdersDate(true);
+    //   setLoading(false);
 
-      if (res.data.status === "success") {
-        window.location.href = res.data.data.url;
-      }
-    });
+    //   if (res.data.status === "success") {
+    //     window.location.href = res.data.data.url;
+    //   }
+    // });
   };
 
   useEffect(() => {

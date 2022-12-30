@@ -1,15 +1,26 @@
 import { Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "@mui/material";
-import NavbarNavigation from "./components/NavbarNavigation";
+import { Box, LinearProgress, ThemeProvider } from "@mui/material";
+import { useState } from "react";
+
 import Styles from "./components/tools/Styles";
+
+import NavbarNavigation from "./components/NavbarNavigation";
 import Users from "./pages/Users";
 import Products from "./pages/Products";
 import "./assets/css/app.css";
 import ServiceOrders from "./pages/ServiceOrders";
 
 function App() {
+  const [loading, setLoading] = useState(false);
+
   return (
     <ThemeProvider theme={Styles}>
+      {loading && (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress color="light-blue" />
+        </Box>
+      )}
+
       <NavbarNavigation />
 
       <Routes>
@@ -18,7 +29,11 @@ function App() {
 
         <Route path="users" element={<Users />} />
         <Route path="products" element={<Products />} />
-        <Route path="service-orders" element={<ServiceOrders />} />
+
+        <Route
+          path="service-orders"
+          element={<ServiceOrders setLoading={setLoading} />}
+        />
       </Routes>
     </ThemeProvider>
   );
