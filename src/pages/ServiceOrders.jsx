@@ -191,7 +191,7 @@ function ServiceOrders({ loading, alert }) {
     form.append("service_orders_pending_amount", service_orders_pending_amount);
 
     axios.post(RoutesList.api.service_orders.update, form).then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
       loading(false);
       alert({
         open: true,
@@ -246,6 +246,12 @@ function ServiceOrders({ loading, alert }) {
         window.location.href = res.data.data.url;
         setDate_start(null);
         setDate_end(null);
+      } else if (res.data.status === "warning") {
+        loading(true);
+        setTimeout(() => {
+          setOpenOrdersDate(true);
+          loading(false);
+        }, 1000);
       }
     });
   };
@@ -484,7 +490,6 @@ function ServiceOrders({ loading, alert }) {
                   type={"number"}
                   value={service_orders_not_defective_amount}
                   setValue={setService_orders_not_defective_amount}
-                  required
                   readOnly
                 />
               </Grid>
@@ -523,7 +528,12 @@ function ServiceOrders({ loading, alert }) {
                   label={"Fecha de Entrega"}
                   value={service_orders_date_delivery}
                   setValue={setService_orders_date_delivery}
-                  readOnly
+                  readOnly={
+                    service_orders_date_delivery === null ? false : true
+                  }
+                  disabled={
+                    service_orders_date_delivery === null ? true : false
+                  }
                 />
               </Grid>
             </Grid>
