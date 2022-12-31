@@ -13,6 +13,7 @@ import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
 
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
+import { SHA256 } from "crypto-js";
 
 function Users() {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -59,6 +60,7 @@ function Users() {
       users_contact_name: "",
       users_contact_phone: "",
       idstatus: 1,
+      users_password: "",
     }
   ) => {
     setIdusers(row.idusers);
@@ -85,6 +87,9 @@ function Users() {
       row.users_contact_phone === null ? "" : row.users_contact_phone
     );
     setIdstatus(row.idstatus);
+    setUsers_password(
+      ![undefined].includes(row.users_password) ? row.users_password : ""
+    );
   };
 
   const handleCreateUsers = (e) => {
@@ -101,7 +106,7 @@ function Users() {
     form.append("idcities", idcities.split("-").shift().trim());
     form.append("users_email", users_email);
     if (idroles != 3) {
-      form.append("users_password", users_password);
+      form.append("users_password", SHA256(users_password));
     }
     form.append("users_contact_name", users_contact_name);
     form.append("users_contact_phone", users_contact_phone);
@@ -183,8 +188,8 @@ function Users() {
         />
 
         <DialogForm
-          clean={setFields}
           title={"Registrar Usuarios"}
+          clean={setFields}
           open={openRegister}
           setOpen={setOpenRegister}
           button={{

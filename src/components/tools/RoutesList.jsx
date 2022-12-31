@@ -7,6 +7,9 @@ const host =
 export default {
   host: host,
   api: {
+    auth: {
+      login: `${host}/api/auth/login`,
+    },
     read_roles: `${host}/api/read-roles`,
     read_document_types: `${host}/api/read-document-types`,
     status: {

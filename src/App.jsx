@@ -16,6 +16,7 @@ import Users from "./pages/Users";
 import Products from "./pages/Products";
 import "./assets/css/app.css";
 import ServiceOrders from "./pages/ServiceOrders";
+import Login from "./pages/Login";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -63,6 +64,13 @@ function App() {
       <Routes>
         <Route path="*" element={<h1>Not Found</h1>} />
         <Route path="/" element={<h1>hola</h1>} />
+
+        <Route path="auth">
+          <Route
+            path="login"
+            element={<Login loading={setLoading} alert={setAlert} />}
+          />
+        </Route>
 
         <Route path="users" element={<Users />} />
         <Route path="products" element={<Products />} />

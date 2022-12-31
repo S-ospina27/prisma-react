@@ -9,7 +9,7 @@ function TextFieldFilled({
   disabled,
   event,
   readOnly,
-  defaultValue,
+  color = "blue",
 }) {
   return (
     <TextField
@@ -24,7 +24,7 @@ function TextFieldFilled({
         event && event(e);
       }}
       variant={"filled"}
-      color={"blue"}
+      color={color}
       autoComplete={"off"}
       InputProps={{
         readOnly: readOnly,
