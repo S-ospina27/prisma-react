@@ -29,6 +29,7 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
+import logo from "./../assets/img/prisma.png";
 
 function ServiceOrders({ loading, alert }) {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
@@ -76,7 +77,7 @@ function ServiceOrders({ loading, alert }) {
       service_orders_defective_amount: "",
       service_orders_observation: "",
       service_orders_pending_amount: "",
-      service_orders_date_delivery: "",
+      service_orders_date_delivery: null,
       service_orders_finished_product: "",
       service_orders_not_defective_amount: "",
       service_orders_creation_date: null,
@@ -103,7 +104,22 @@ function ServiceOrders({ loading, alert }) {
         ? ""
         : row.service_orders_defective_amount
     );
+    setService_orders_not_defective_amount(
+      row.service_orders_not_defective_amount === null
+        ? ""
+        : row.service_orders_not_defective_amount
+    );
+    setService_orders_pending_amount(
+      row.service_orders_pending_amount === null
+        ? ""
+        : row.service_orders_pending_amount
+    );
     setFull_consecutive(row.full_consecutive);
+    setService_orders_observation(
+      row.service_orders_observation === null
+        ? ""
+        : row.service_orders_observation
+    );
   };
 
   const handleReadOrderService = () => {
@@ -115,6 +131,8 @@ function ServiceOrders({ loading, alert }) {
 
   const handleCreateServiceOrders = (e) => {
     e.preventDefault();
+    setOpenCreateOrders(false);
+    loading(true);
 
     const form = new FormData();
     form.append("idproducts", idproducts);
@@ -129,22 +147,30 @@ function ServiceOrders({ loading, alert }) {
 
     axios.post(RoutesList.api.service_orders.create, form).then((res) => {
       // console.log(res.data);
-      setOpenCreateOrders(false);
+      loading(false);
+      alert({
+        open: true,
+        severity: res.data.status,
+        message: res.data.message,
+      });
       handleReadOrderService();
     });
   };
 
   const handleUpdateServiceOrders = (e) => {
     e.preventDefault();
+    setOpenUpdateOrders(false);
+    loading(true);
 
     const form = new FormData();
-  
-    console.log(service_orders_defective_amount)
     form.append("idservice_orders", idservice_orders);
     form.append("idproducts", idproducts.split("-").shift().trim());
     form.append("idservice_states", idservice_states);
     form.append("idusers", idusers.split("-").shift().trim());
-    form.append("service_orders_date_delivery", service_orders_date_delivery);
+    form.append(
+      "service_orders_date_delivery",
+      service_orders_date_delivery === null ? "" : service_orders_date_delivery
+    );
     form.append(
       "service_orders_finished_product",
       service_orders_finished_product
@@ -165,9 +191,14 @@ function ServiceOrders({ loading, alert }) {
     form.append("service_orders_pending_amount", service_orders_pending_amount);
 
     axios.post(RoutesList.api.service_orders.update, form).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
+      loading(false);
+      alert({
+        open: true,
+        severity: res.data.status,
+        message: res.data.message,
+      });
       handleReadOrderService();
-      setOpenUpdateOrders(false);
     });
   };
 
@@ -204,7 +235,6 @@ function ServiceOrders({ loading, alert }) {
 
     axios.post(RoutesList.api.service_orders.export, form).then((res) => {
       // console.log(res.data);
-      setOpenOrdersDate(false);
       loading(false);
       alert({
         open: true,
@@ -397,7 +427,7 @@ function ServiceOrders({ loading, alert }) {
                   //   "EN-PROCESO",
                   //   "ENVIADO",
                   // ]}
-                  ignore={['NO-DESPACHADO', 'DESPACHADO', 'FINALIZADO']} 
+                  // ignore={["DESPACHADO", "FINALIZADO"]}
                 />
               </Grid>
 
@@ -450,10 +480,31 @@ function ServiceOrders({ loading, alert }) {
 
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
+                  label={"Cantidad Buenas"}
+                  type={"number"}
+                  value={service_orders_not_defective_amount}
+                  setValue={setService_orders_not_defective_amount}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
                   label={"Precio"}
                   type={"number"}
                   value={service_orders_total_price}
                   setValue={setService_orders_total_price}
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Producto Final"}
+                  type={"text"}
+                  value={service_orders_finished_product}
+                  setValue={setService_orders_finished_product}
                   required
                 />
               </Grid>
@@ -475,16 +526,6 @@ function ServiceOrders({ loading, alert }) {
                   readOnly
                 />
               </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Producto Final"}
-                  type={"text"}
-                  value={service_orders_finished_product}
-                  setValue={setService_orders_finished_product}
-                  required
-                />
-              </Grid>
             </Grid>
 
             <Box my={3}>
@@ -501,6 +542,7 @@ function ServiceOrders({ loading, alert }) {
                   value={service_orders_defective_amount}
                   setValue={setService_orders_defective_amount}
                   disabled={idservice_states === 6 ? false : true}
+                  required={idservice_states === 6 ? true : false}
                 />
               </Grid>
 
@@ -511,6 +553,7 @@ function ServiceOrders({ loading, alert }) {
                   value={service_orders_pending_amount}
                   setValue={setService_orders_pending_amount}
                   disabled={idservice_states === 6 ? false : true}
+                  required={idservice_states === 6 ? true : false}
                 />
               </Grid>
 
@@ -521,6 +564,7 @@ function ServiceOrders({ loading, alert }) {
                   value={service_orders_observation}
                   setValue={setService_orders_observation}
                   disabled={idservice_states === 6 ? false : true}
+                  required={idservice_states === 6 ? true : false}
                 />
               </Grid>
             </Grid>
