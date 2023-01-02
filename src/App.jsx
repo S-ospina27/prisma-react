@@ -47,7 +47,7 @@ function App() {
         >
           <Alert
             severity={
-              ["error", "route-error", "database-error"].includes(
+              ["error", "route-error", "database-error", "existence-error"].includes(
                 alert.severity
               )
                 ? "error"

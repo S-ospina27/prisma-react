@@ -1,7 +1,6 @@
 import { Box, Button, Container, Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { SHA256 } from "crypto-js";
-import jwtDecode from "jwt-decode";
 import { useState } from "react";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 
@@ -25,8 +24,8 @@ function Login({ loading, alert }) {
 
     axios.post(RoutesList.api.auth.login, form).then((res) => {
       console.log(res.data);
+      console.log(`Intentos: ${count_errors}`);
       loading(false);
-
       alert({
         open: true,
         message: res.data.message,
@@ -34,7 +33,7 @@ function Login({ loading, alert }) {
       });
 
       if (res.data.status === "success") {
-        console.log(jwtDecode(res.data.data.jwt));
+        sessionStorage.setItem("jwt", res.data.data.jwt);
       } else if (res.data.status === "error") {
         setCount_errors(count_errors + 1);
       }
@@ -47,26 +46,28 @@ function Login({ loading, alert }) {
           <Grid container>
             <Grid
               item
-              xs={4}
+              xs={12}
+              sm={8}
+              md={5}
+              lg={4}
               p={3}
               mx={"auto"}
               my={5}
               sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }}
             >
               <Box
-                mb={3}
+                my={3}
                 component={"img"}
                 alt={"Prisma"}
                 src={logo}
                 sx={{
-                  padding: "20px",
                   width: "100%",
                 }}
               />
 
               <Divider />
 
-              <Box mt={3}>
+              <Box my={4}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextFieldFilled
