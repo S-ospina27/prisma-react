@@ -52,27 +52,28 @@ function Products() {
 
   const handleReadProducts = () => {
     axios.get(RoutesList.api.products.read.index).then((res) => {
-      setproducts(res.data);
+      !res.data.status && setproducts(res.data);
     });
   };
 
   const handleReadTypeProducts = () => {
     axios.get(RoutesList.api.products.types.read).then((res) => {
-      setTypeProducts_read(res.data);
+      !res.data.status && setTypeProducts_read(res.data);
     });
   };
 
-  const clean_fields = () => {
-    setProducts_reference("");
-    setIdproduct_types("");
-    setProducts_description("");
-    setProducts_color("");
-    setIdstatus("");
-    setProducts_image("");
-    setStrProducts_image("");
-  };
-
-  const setFields = (row) => {
+  const setFields = (
+    row = {
+      idusers: "",
+      idproducts: "",
+      products_reference: "",
+      idproduct_types: "",
+      products_description: "",
+      products_color: "",
+      idstatus: "",
+      products_image: "",
+    }
+  ) => {
     setIdusers(row.idusers);
     setIdproducts(row.idproducts);
     setProducts_reference(row.products_reference);
@@ -104,70 +105,11 @@ function Products() {
       products_image.length > 0 ? products_image[0] : []
     );
 
-    axios
-      .post(RoutesList.api.products.create, form, {
-        header: {
-          // 'Authorization': `bearer ${jwt}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        handleReadProducts();
-        setOpenRegister(false);
-        console.log("successs");
-
-        // if (res.data.status === "success") {
-        // }
-      });
-  };
-
-  const handleCreateProductsType = (e) => {
-    e.preventDefault();
-    const form = new FormData();
-    form.append("product_types_name", product_types_name);
-    axios
-      .post(RoutesList.api.products.types.create, form, {
-        header: {
-          // 'Authorization': `bearer ${jwt}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setFieldsProductTypes();
-        setOpenTypeRegister(true);
-        handleReadTypeProducts();
-        // if (res.data.status === "success") {
-        //   console.log("successs");
-        // }
-      });
-  };
-
-  const handleUpdateProductsType = (e) => {
-    e.preventDefault();
-    const form = new FormData();
-    form.append("product_types_name", product_types_name);
-    form.append("idproduct_types", idproduct_types);
-
-    axios
-      .post(RoutesList.api.products.types.update, form, {
-        header: {
-          // 'Authorization': `bearer ${jwt}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log("successs");
-        handleClose();
-        handleReadTypeProducts();
-        // if (res.data.status === "success") {
-        // }
-      });
-  };
-
-  const handleClose = () => {
-    setOpenTypeUpdate(false);
-    setFieldsProductTypes();
+    axios.post(RoutesList.api.products.create, form).then((res) => {
+      // console.log(res.data);
+      handleReadProducts();
+      setOpenRegister(false);
+    });
   };
 
   const handleUpdateProducts = (e) => {
@@ -186,29 +128,48 @@ function Products() {
       products_image.length > 0 ? products_image[0] : strProducts_image
     );
 
-    axios
-      .post(RoutesList.api.products.update, form, {
-        header: {
-          // 'Authorization': `bearer ${jwt}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        clean_fields();
-        setOpen(false);
-        handleReadProducts();
-        console.log("successs actualizado");
+    axios.post(RoutesList.api.products.update, form).then((res) => {
+      // console.log(res.data);
+      setOpen(false);
+      handleReadProducts();
+    });
+  };
 
-        // if (res.data.status === "success") {
-        // }
-      });
+  const handleClose = () => {
+    setOpenTypeUpdate(false);
+    setFieldsProductTypes();
+  };
+
+  const handleCreateProductsType = (e) => {
+    e.preventDefault();
+
+    const form = new FormData();
+    form.append("product_types_name", product_types_name);
+
+    axios.post(RoutesList.api.products.types.create, form).then((res) => {
+      // console.log(res.data);
+      setFieldsProductTypes();
+      setOpenTypeRegister(true);
+      handleReadTypeProducts();
+    });
+  };
+
+  const handleUpdateProductsType = (e) => {
+    e.preventDefault();
+
+    const form = new FormData();
+    form.append("product_types_name", product_types_name);
+    form.append("idproduct_types", idproduct_types);
+
+    axios.post(RoutesList.api.products.types.update, form).then((res) => {
+      // console.log(res.data);
+      handleClose();
+      handleReadTypeProducts();
+    });
   };
 
   useEffect(() => {
     handleReadProducts();
-  }, []);
-  useEffect(() => {
     handleReadTypeProducts();
   }, []);
 
@@ -260,10 +221,9 @@ function Products() {
         />
       </Box>
 
-      {/* --------------------------------------DIALOG REGISTER ------------------------------------------------------------------------------- */}
       <DialogForm
         title={"Registrar Productos"}
-        clean={clean_fields}
+        clean={setFields}
         open={openRegister}
         setOpen={setOpenRegister}
         button={{
@@ -350,7 +310,7 @@ function Products() {
           </Container>
         }
       />
-      {/* --------------------------------------DIALOG UPDATE ------------------------------------------------------------------------------- */}
+
       <DialogForm
         title={"Editar Productos"}
         open={open}
@@ -464,7 +424,7 @@ function Products() {
 
       <DialogForm
         title={"Tipos de Producto"}
-        clean={clean_fields}
+        clean={setFieldsProductTypes}
         open={openTypeRegister}
         setOpen={setOpenTypeRegister}
         button={{
@@ -536,10 +496,6 @@ function Products() {
           </DialogContent>
 
           <DialogActions>
-            <Button variant={"contained"} size={"small"} onClick={handleClose}>
-              Cerrar
-            </Button>
-
             <Button variant={"contained"} size={"small"} type="submit">
               Actualizar
             </Button>
