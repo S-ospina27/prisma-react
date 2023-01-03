@@ -20,6 +20,7 @@ import Login from "./pages/Login";
 import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware";
 import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ function App() {
   const AllRoutes = () => {
     return (
       <Routes>
-        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
 
         <Route path="auth">
