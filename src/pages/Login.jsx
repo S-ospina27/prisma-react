@@ -2,13 +2,18 @@ import { Box, Button, Container, Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { SHA256 } from "crypto-js";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 
 import RoutesList from "../components/tools/RoutesList";
+import { set } from "../components/tools/SessionSettings";
 
 import logo from "./../assets/img/prisma.png";
 
 function Login({ loading, alert }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [users_email, setUsers_email] = useState("");
   const [users_password, setUsers_password] = useState("");
   const [count_errors, setCount_errors] = useState(0);
@@ -23,8 +28,6 @@ function Login({ loading, alert }) {
     form.append("count_errors", count_errors);
 
     axios.post(RoutesList.api.auth.login, form).then((res) => {
-      console.log(res.data);
-      console.log(`Intentos: ${count_errors}`);
       loading(false);
       alert({
         open: true,
@@ -33,12 +36,21 @@ function Login({ loading, alert }) {
       });
 
       if (res.data.status === "success") {
-        sessionStorage.setItem("jwt", res.data.data.jwt);
+        set("jwt", res.data.data.jwt);
+        setCount_errors(0);
+        navigate(location.pathname === "/auth/login" ? "/" : location.pathname);
       } else if (res.data.status === "error") {
         setCount_errors(count_errors + 1);
+      } else if (res.data.status === "existence-error") {
+        setCount_errors(0);
+      }
+
+      if (count_errors >= 3) {
+        setCount_errors(0);
       }
     });
   };
+
   return (
     <form onSubmit={handleAuth}>
       <Container>

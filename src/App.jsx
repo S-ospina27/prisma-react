@@ -17,6 +17,9 @@ import Products from "./pages/Products";
 import "./assets/css/app.css";
 import ServiceOrders from "./pages/ServiceOrders";
 import Login from "./pages/Login";
+import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware";
+import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
+import Home from "./pages/Home";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -47,9 +50,12 @@ function App() {
         >
           <Alert
             severity={
-              ["error", "route-error", "database-error", "existence-error"].includes(
-                alert.severity
-              )
+              [
+                "error",
+                "route-error",
+                "database-error",
+                "existence-error",
+              ].includes(alert.severity)
                 ? "error"
                 : alert.severity
             }
@@ -63,21 +69,44 @@ function App() {
 
       <Routes>
         <Route path="*" element={<h1>Not Found</h1>} />
-        <Route path="/" element={<h1>hola</h1>} />
+        <Route path="/" element={<Home />} />
 
         <Route path="auth">
           <Route
             path="login"
-            element={<Login loading={setLoading} alert={setAlert} />}
+            element={
+              <NoAuthenticationMiddleware>
+                <Login loading={setLoading} alert={setAlert} />
+              </NoAuthenticationMiddleware>
+            }
           />
         </Route>
 
-        <Route path="users" element={<Users />} />
-        <Route path="products" element={<Products />} />
+        <Route
+          path="users"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <Users loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
+
+        <Route
+          path="products"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <Products loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
 
         <Route
           path="service-orders"
-          element={<ServiceOrders loading={setLoading} alert={setAlert} />}
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <ServiceOrders loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
         />
       </Routes>
     </ThemeProvider>
