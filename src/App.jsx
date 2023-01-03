@@ -29,44 +29,8 @@ function App() {
     message: "",
   });
 
-  return (
-    <ThemeProvider theme={Styles}>
-      {loading && (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgress color="light-blue" />
-        </Box>
-      )}
-
-      {alert.open && (
-        <Snackbar
-          open={alert.open}
-          autoHideDuration={5000}
-          onClose={(event, reason) => {
-            if (reason === "clickaway") return;
-            setAlert(false);
-          }}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          TransitionComponent={(props) => <Slide {...props} direction="up" />}
-        >
-          <Alert
-            severity={
-              [
-                "error",
-                "route-error",
-                "database-error",
-                "existence-error",
-              ].includes(alert.severity)
-                ? "error"
-                : alert.severity
-            }
-          >
-            {alert.message}
-          </Alert>
-        </Snackbar>
-      )}
-
-      <NavbarNavigation />
-
+  const AllRoutes = () => {
+    return (
       <Routes>
         <Route path="*" element={<h1>Not Found</h1>} />
         <Route path="/" element={<Home />} />
@@ -109,6 +73,48 @@ function App() {
           }
         />
       </Routes>
+    );
+  };
+
+  return (
+    <ThemeProvider theme={Styles}>
+      {loading && (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress color="light-blue" />
+        </Box>
+      )}
+
+      {alert.open && (
+        <Snackbar
+          open={alert.open}
+          autoHideDuration={5000}
+          onClose={(event, reason) => {
+            if (reason === "clickaway") return;
+            setAlert(false);
+          }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          TransitionComponent={(props) => <Slide {...props} direction="up" />}
+        >
+          <Alert
+            severity={
+              [
+                "error",
+                "route-error",
+                "database-error",
+                "existence-error",
+              ].includes(alert.severity)
+                ? "error"
+                : alert.severity
+            }
+          >
+            {alert.message}
+          </Alert>
+        </Snackbar>
+      )}
+
+      <NavbarNavigation />
+
+      <AllRoutes />
     </ThemeProvider>
   );
 }
