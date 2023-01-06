@@ -1,17 +1,8 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import session from "../components/tools/SessionSettings";
+import Home from "../pages/Home";
 
 function NoAuthenticationMiddleware({ children }) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (session()) {
-      navigate('/');
-    }
-  }, []);
-
-  return children;
+  return session() ? <Home /> : children;
 }
 
 export default NoAuthenticationMiddleware;
