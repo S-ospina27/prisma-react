@@ -147,16 +147,15 @@ function ServiceOrders({ loading, alert }) {
 
     axios.post(RoutesList.api.service_orders.create, form).then((res) => {
       // console.log(res.data);
-      if (res.data.status === "success") {
-        alert({
-          open: true,
-          severity: res.data.status,
-          message: res.data.message,
-        });
-        handleReadOrderService();
-        setOpenCreateOrders(false);
-        loading(false);
-      }
+
+      alert({
+        open: true,
+        severity: res.data.status,
+        message: res.data.message,
+      });
+      handleReadOrderService();
+      setOpenCreateOrders(false);
+      loading(false);
     });
   };
 
@@ -194,14 +193,14 @@ function ServiceOrders({ loading, alert }) {
     form.append("service_orders_pending_amount", service_orders_pending_amount);
 
     axios.post(RoutesList.api.service_orders.update, form).then((res) => {
-      console.log(res.data);
-      loading(false);
+      // console.log(res.data);
       alert({
         open: true,
         severity: res.data.status,
         message: res.data.message,
       });
       handleReadOrderService();
+      loading(false);
     });
   };
 

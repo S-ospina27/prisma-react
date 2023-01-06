@@ -93,8 +93,8 @@ function Users({ loading, alert }) {
   };
 
   const handleCreateUsers = (e) => {
-    loading(true);
     e.preventDefault();
+    loading(true);
 
     const form = new FormData();
     form.append("idroles", idroles);
@@ -114,17 +114,14 @@ function Users({ loading, alert }) {
 
     axios.post(RoutesList.api.users.create, form).then((res) => {
       // console.log(res.data);
-
-      if (res.data.status === "success") {
-        alert({
-          open: true,
-          message: res.data.message,
-          severity: res.data.status,
-        });
-        handleReadUsers();
-        setOpenRegister(false);
-        loading(false);
-      }
+      alert({
+        open: true,
+        message: res.data.message,
+        severity: res.data.status,
+      });
+      handleReadUsers();
+      setOpenRegister(false);
+      loading(false);
     });
   };
 
@@ -148,18 +145,16 @@ function Users({ loading, alert }) {
     form.append("idstatus", idstatus);
 
     axios.post(RoutesList.api.users.update, form).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
 
-      if (res.data.status === "success") {
-        alert({
-          open: true,
-          message: res.data.message,
-          severity: res.data.status,
-        });
-        handleReadUsers();
-        setOpenUpdate(false);
-        loading(false);  
-      }
+      alert({
+        open: true,
+        message: res.data.message,
+        severity: res.data.status,
+      });
+      handleReadUsers();
+      setOpenUpdate(false);
+      loading(false);
     });
   };
 
