@@ -23,15 +23,13 @@ import MenuItems from "../components/common/MenuItems";
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
 
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import TextFieldOutlined from "../components/common/TextFieldOutlined";
 import DialogTransition from "../components/common/DialogTransition";
 
-function Products() {
-  const [open, setOpen] = useState(false);
+function Products({ loading, alert }) {
+  const [openUpdate, setOpenUpdate] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [openTypeRegister, setOpenTypeRegister] = useState(false);
   const [openTypeUpdate, setOpenTypeUpdate] = useState(false);
@@ -94,6 +92,8 @@ function Products() {
 
   const handleCreateProducts = (e) => {
     e.preventDefault();
+    loading(true);
+    setOpenRegister(false);
 
     const form = new FormData();
     form.append("products_color", products_color);
@@ -108,12 +108,19 @@ function Products() {
     axios.post(RoutesList.api.products.create, form).then((res) => {
       // console.log(res.data);
       handleReadProducts();
-      setOpenRegister(false);
+      alert({
+        open: true,
+        message: res.data.message,
+        severity: res.data.status,
+      });
+      loading(false);
     });
   };
 
   const handleUpdateProducts = (e) => {
     e.preventDefault();
+    loading(true);
+    setOpenUpdate(false);
 
     const form = new FormData();
     form.append("idusers", idusers);
@@ -130,8 +137,13 @@ function Products() {
 
     axios.post(RoutesList.api.products.update, form).then((res) => {
       // console.log(res.data);
-      setOpen(false);
       handleReadProducts();
+      loading(false);
+      alert({
+        open: true,
+        message: res.data.message,
+        severity: res.data.status,
+      });
     });
   };
 
@@ -148,9 +160,14 @@ function Products() {
 
     axios.post(RoutesList.api.products.types.create, form).then((res) => {
       // console.log(res.data);
-      setFieldsProductTypes();
       setOpenTypeRegister(true);
+      setFieldsProductTypes();
       handleReadTypeProducts();
+      alert({
+        open: true,
+        message: res.data.message,
+        severity: res.data.status,
+      });
     });
   };
 
@@ -211,7 +228,7 @@ function Products() {
           rows={products}
           columns={ColumnsTable.products}
           onRowClick={{
-            open: setOpen,
+            open: setOpenUpdate,
             set: setFields,
           }}
           getRowId={"idproducts"}
@@ -313,8 +330,8 @@ function Products() {
 
       <DialogForm
         title={"Editar Productos"}
-        open={open}
-        setOpen={setOpen}
+        open={openUpdate}
+        setOpen={setOpenUpdate}
         button={{
           type: "submit",
           label: "Actualizar",

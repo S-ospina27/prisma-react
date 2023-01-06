@@ -91,7 +91,12 @@ function App() {
           autoHideDuration={5000}
           onClose={(event, reason) => {
             if (reason === "clickaway") return;
-            setAlert(false);
+
+            setAlert({
+              open: false,
+              severity: "",
+              message: "",
+            });
           }}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           TransitionComponent={(props) => <Slide {...props} direction="up" />}
