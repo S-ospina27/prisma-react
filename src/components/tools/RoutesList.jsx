@@ -1,8 +1,4 @@
-const project = import.meta.env.VITE_PROJECT;
-const host =
-  project === "dev"
-    ? import.meta.env.VITE_SERVER_URL_AUD_DEV
-    : import.meta.env.VITE_SERVER_URL_AUD_PROD;
+const host = import.meta.env.VITE_SERVER_URL_AUD;
 
 export default {
   host: host,

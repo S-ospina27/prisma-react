@@ -49,11 +49,11 @@ export default {
     { field: "status_type", headerName: "ESTADO ", width: 250 },
   ],
   type_products: [
-    { field: "idproduct_types", headerName: "ID TIPO DE PRODUCTO", width: 380 },
+    { field: "idproduct_types", headerName: "ID", width: 100 },
     {
       field: "product_types_name",
-      headerName: "NOMBRE TIPO PRODUCTO",
-      width: 383,
+      headerName: "TIPO PRODUCTO",
+      width: 300,
     },
   ],
 };
