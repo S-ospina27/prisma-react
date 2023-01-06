@@ -15,7 +15,7 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 import { SHA256 } from "crypto-js";
 
-function Users() {
+function Users({ loading, alert }) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [users, setUsers] = useState([]);
@@ -93,6 +93,7 @@ function Users() {
   };
 
   const handleCreateUsers = (e) => {
+    loading(true);
     e.preventDefault();
 
     const form = new FormData();
@@ -115,14 +116,21 @@ function Users() {
       // console.log(res.data);
 
       if (res.data.status === "success") {
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
         handleReadUsers();
         setOpenRegister(false);
+        loading(true);
       }
     });
   };
 
   const handleUpdateUsers = (e) => {
     e.preventDefault();
+    loading(true);
 
     const form = new FormData();
     form.append("idusers", idusers);
@@ -140,11 +148,17 @@ function Users() {
     form.append("idstatus", idstatus);
 
     axios.post(RoutesList.api.users.update, form).then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
 
       if (res.data.status === "success") {
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
         handleReadUsers();
         setOpenUpdate(false);
+        loading(false);  
       }
     });
   };
