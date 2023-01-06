@@ -30,53 +30,6 @@ function App() {
     message: "",
   });
 
-  const AllRoutes = () => {
-    return (
-      <Routes>
-        <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Home />} />
-
-        <Route path="auth">
-          <Route
-            path="login"
-            element={
-              <NoAuthenticationMiddleware>
-                <Login loading={setLoading} alert={setAlert} />
-              </NoAuthenticationMiddleware>
-            }
-          />
-        </Route>
-
-        <Route
-          path="users"
-          element={
-            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <Users loading={setLoading} alert={setAlert} />
-            </WithAuthenticationMiddleware>
-          }
-        />
-
-        <Route
-          path="products"
-          element={
-            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <Products loading={setLoading} alert={setAlert} />
-            </WithAuthenticationMiddleware>
-          }
-        />
-
-        <Route
-          path="service-orders"
-          element={
-            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <ServiceOrders loading={setLoading} alert={setAlert} />
-            </WithAuthenticationMiddleware>
-          }
-        />
-      </Routes>
-    );
-  };
-
   return (
     <ThemeProvider theme={Styles}>
       {loading && (
@@ -120,7 +73,48 @@ function App() {
 
       <NavbarNavigation />
 
-      <AllRoutes />
+      <Routes>
+        <Route path="*" element={<NotFound />} />
+        <Route path="/" element={<Home />} />
+
+        <Route path="auth">
+          <Route
+            path="login"
+            element={
+              <NoAuthenticationMiddleware>
+                <Login loading={setLoading} alert={setAlert} />
+              </NoAuthenticationMiddleware>
+            }
+          />
+        </Route>
+
+        <Route
+          path="users"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <Users loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
+
+        <Route
+          path="products"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <Products loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
+
+        <Route
+          path="service-orders"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <ServiceOrders loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
+      </Routes>
     </ThemeProvider>
   );
 }
