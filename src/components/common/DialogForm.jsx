@@ -66,7 +66,7 @@ function DialogForm({
 
   useEffect(() => {
     clean && clean();
-  }, [ open]);
+  }, [ open ]);
 
   return (
     <Dialog
