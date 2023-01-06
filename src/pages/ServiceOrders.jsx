@@ -147,13 +147,16 @@ function ServiceOrders({ loading, alert }) {
 
     axios.post(RoutesList.api.service_orders.create, form).then((res) => {
       // console.log(res.data);
-      loading(false);
-      alert({
-        open: true,
-        severity: res.data.status,
-        message: res.data.message,
-      });
-      handleReadOrderService();
+      if (res.data.status === "success") {
+        alert({
+          open: true,
+          severity: res.data.status,
+          message: res.data.message,
+        });
+        handleReadOrderService();
+        setOpenCreateOrders(false);
+        loading(false);
+      }
     });
   };
 
