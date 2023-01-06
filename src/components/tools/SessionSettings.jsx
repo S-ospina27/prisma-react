@@ -25,7 +25,7 @@ export function getJWT(key = null) {
   return key === null ? jwt : jwt.data[key];
 }
 
-export function getRol() {
+export function getRol(rol) {
   return roles[rol];
 }
 
