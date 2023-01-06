@@ -1,7 +1,7 @@
 export default {
   service_order: [
-    { field: "service_type", headerName: "ESTADO", width: 200 },
     { field: "full_consecutive", headerName: "CONSECUTIVO", width: 200 },
+    { field: "service_type", headerName: "ESTADO", width: 200 },
     { field: "products_reference", headerName: "PRODUCTO", width: 200 },
     { field: "fullname", headerName: "PROVEEDOR", width: 350 },
     {

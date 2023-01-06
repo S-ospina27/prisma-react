@@ -39,7 +39,10 @@ export default {
       export: `${host}/api/service-orders/export`,
       read: {
         index: `${host}/api/service-orders/read`,
-        by_provider: `${host}/api/service-orders/by-provider/{idprovider_users}`,
+        by_provider: `${host}/api/service-orders/read/by-provider/{idprovider_users}`,
+        graphics: {
+          amount_orders: `${host}/api/service-orders/read/graphics/amount-orders`
+        }
       },
     },
     locations: {
