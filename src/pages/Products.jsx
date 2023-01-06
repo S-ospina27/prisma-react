@@ -182,6 +182,11 @@ function Products({ loading, alert }) {
       // console.log(res.data);
       handleClose();
       handleReadTypeProducts();
+      alert({
+        open: true,
+        message: res.data.message,
+        severity: res.data.status,
+      });
     });
   };
 
