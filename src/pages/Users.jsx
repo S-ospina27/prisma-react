@@ -123,7 +123,7 @@ function Users({ loading, alert }) {
         });
         handleReadUsers();
         setOpenRegister(false);
-        loading(true);
+        loading(false);
       }
     });
   };
