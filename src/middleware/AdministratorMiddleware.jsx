@@ -1,20 +1,10 @@
 import jwtDecode from "jwt-decode";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { get } from "../components/tools/SessionSettings";
+import Home from "../pages/Home";
 
 function AdministratorMiddleware({ children }) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const jwt = jwtDecode(get('jwt'));
-
-    if (jwt.data.idroles != 1) {
-      navigate('/');
-    }
-  }, []);
-
-  return children;
+  const [jwt, setJwt] = useState(jwtDecode(get("jwt")));
+  return jwt.data.idroles != 1 ? <Home /> : children;
 }
 
 export default AdministratorMiddleware;
