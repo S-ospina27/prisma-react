@@ -54,5 +54,8 @@ export default {
       read_departments: `${host}/api/locations/read-departments`,
       read_cities: `${host}/api/locations/read-cities/`,  
     },
+    service_request:{
+      read:`${host}/api/service-request/read`,
+    }
   },
 };
