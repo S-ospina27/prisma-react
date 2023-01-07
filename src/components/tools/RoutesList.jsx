@@ -36,18 +36,23 @@ export default {
     service_orders: {
       create: `${host}/api/service-orders/create`,
       update: `${host}/api/service-orders/update`,
-      export: `${host}/api/service-orders/export`,
+      export: {
+        excel:`${host}/api/service-orders/export/excel`,
+        pdf:`${host}/api/service-orders/export/pdf`,
+      },
       read: {
         index: `${host}/api/service-orders/read`,
         by_provider: `${host}/api/service-orders/read/by-provider/{idprovider_users}`,
         graphics: {
-          amount_orders: `${host}/api/service-orders/read/graphics/amount-orders`
+          amount_orders: `${host}/api/service-orders/read/graphics/amount-orders`,
+          unit_percentages:`${host}/api/service-orders/read/graphics/unit-percentages`,
+
         }
       },
     },
     locations: {
       read_departments: `${host}/api/locations/read-departments`,
-      read_cities: `${host}/api/locations/read-cities/`,
+      read_cities: `${host}/api/locations/read-cities/`,  
     },
   },
 };
