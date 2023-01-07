@@ -33,65 +33,60 @@ import logo from "./../assets/img/prisma.png";
 
 function ServiceRequest({ loading, alert }) {
   const [serviceRequest, setServiceRequest] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [fullnamedealers, setFullnamedealers] = useState("");
 
-  // const setFields = (
-  //   row = {
-  //     idproducts: "",
-  //     idusers: "",
-  //     service_orders_type: "",
-  //     service_orders_amount: "",
-  //     service_orders_total_price: "",
-  //     service_orders_defective_amount: "",
-  //     service_orders_observation: "",
-  //     service_orders_pending_amount: "",
-  //     service_orders_date_delivery: null,
-  //     service_orders_finished_product: "",
-  //     service_orders_not_defective_amount: "",
-  //     service_orders_creation_date: null,
-  //     full_consecutive: "",
-  //   }
-  // ) => {
-  //   setIdservice_orders(row.idservice_orders);
-  //   setIdproducts(
-  //     row.idproducts === ""
-  //       ? ""
-  //       : `${row.idproducts} - ${row.products_reference}`
-  //   );
-  //   setIdusers(row.idusers === "" ? "" : `${row.idusers} - ${row.fullname}`);
-  //   setService_orders_type(row.service_orders_type);
-  //   setService_orders_amount(row.service_orders_amount);
-  //   setService_orders_total_price(row.service_orders_total_price);
-  //   setIdservice_states(row.idservice_states);
-  //   setService_orders_creation_date(row.service_orders_creation_date);
-  //   setService_orders_date_delivery(row.service_orders_date_delivery);
-  //   setService_orders_finished_product(row.service_orders_finished_product);
-  //   setService_orders_consecutive(row.service_orders_consecutive);
-  //   setService_orders_defective_amount(
-  //     row.service_orders_defective_amount === null
-  //       ? ""
-  //       : row.service_orders_defective_amount
-  //   );
-  //   setService_orders_not_defective_amount(
-  //     row.service_orders_not_defective_amount === null
-  //       ? ""
-  //       : row.service_orders_not_defective_amount
-  //   );
-  //   setService_orders_pending_amount(
-  //     row.service_orders_pending_amount === null
-  //       ? ""
-  //       : row.service_orders_pending_amount
-  //   );
-  //   setFull_consecutive(row.full_consecutive);
-  //   setService_orders_observation(
-  //     row.service_orders_observation === null
-  //       ? ""
-  //       : row.service_orders_observation
-  //   );
-  // };
+  const [fullnametechnical, setFullnametechnical] = useState("");
+
+  const [cities_name, setCities_name] = useState("");
+  const [product_types_name, setProduct_types_name] = useState("");
+  const [products_reference, setProducts_reference] = useState("");
+
+  const [service_type, setService_type] = useState("");
+
+  const [service_request_creation_date, setService_request_creation_date] =
+    useState("");
+  const [service_request_date_close, setService_request_date_close] =
+    useState("");
+  const [service_request_client_name, setService_request_client_name] =
+    useState("");
+  const [service_request_address, setService_request_address] = useState("");
+  const [service_request_neighborhood, setService_request_neighborhood] =
+    useState("");
+  const [service_request_phone_contact, setService_request_phone_contact] =
+    useState("");
+  const [service_request_email, setService_request_email] = useState("");
+  const [service_request_trouble_report, setService_request_trouble_report] =
+    useState("");
+  const [service_request_evidence, setService_request_evidence] = useState("");
+  const [service_request_warranty, setService_request_warranty] = useState("");
+  const [service_request_date_visit, setService_request_date_visit] =
+    useState("");
+
+  const setFields = (row = {
+  }) => {
+    setFullnamedealers(row.fullnamedealers);
+    setCities_name(row.cities_name);
+    setProduct_types_name(row.product_types_name);
+    setProducts_reference(row.products_reference);
+    setService_request_creation_date(row.service_request_creation_date);
+    setService_request_date_close(row.service_request_date_close);
+    setService_request_client_name(row.service_request_client_name);
+    setService_request_address(row.service_request_address);
+    setService_request_neighborhood(row.service_request_neighborhood);
+    setService_request_phone_contact(row.service_request_phone_contact);
+    setService_request_email(row.service_request_email);
+    setService_request_trouble_report(row.service_request_trouble_report);
+    setService_request_evidence(row.service_request_evidence);
+    setService_request_warranty(row.service_request_warranty);
+    setService_request_date_visit(row.service_request_date_visit);
+    console.log(row)
+
+  };
 
   const handleReadServiceRequest = () => {
     axios.get(RoutesList.api.service_request.read).then((res) => {
-      // console.log(res.data);
+    //   console.log(res.data);
       setServiceRequest(res.data);
     });
   };
@@ -267,44 +262,44 @@ function ServiceRequest({ loading, alert }) {
         columns={ColumnsTable.service_request}
         getRowId={"idservice_request"}
         onRowClick={{
-        //   open: setOpenUpdateOrders,
-        //   set: setFields,
+          open: setOpen,
+          set: setFields,
         }}
         sx={{
           height: "450px",
         }}
       />
-        
-        <DialogForm
-          title={"Editar Solicitudes"}
-        //   open={openUpdateOrders}
-        //   setOpen={setOpenUpdateOrders}
-          button={{
-            type: "submit",
-            label: "Actualizar",
-            // onSubmit: handleUpdateServiceOrders,
-          }}
-          content={
-            <Container>
-              <Box mb={3}>
-                <Divider textAlign="left">
-                  <Chip color="dark-blue" label={"Detalles Orden de Servicio"} />
-                </Divider>
-              </Box>
-  
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={6}>
-                  {/* <ProductsSelect
+
+      <DialogForm
+        title={"Editar Solicitudes"}
+        open={open}
+        setOpen={setOpen}
+        button={{
+          type: "submit",
+          label: "Actualizar",
+          // onSubmit: handleUpdateServiceOrders,
+        }}
+        content={
+          <Container>
+            <Box mb={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label={"Detalles de ordenes de Solicitudes"} />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6}>
+                {/* <ProductsSelect
                     value={idproducts}
                     setValue={setIdproducts}
                     selected={["ACTIVO"]}
                     required
                   /> */}
-                </Grid>
               </Grid>
-            </Container>
-          }
-        />
+            </Grid>
+          </Container>
+        }
+      />
       {/*   
         <Dialog
           open={openOrdersDate}
