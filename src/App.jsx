@@ -21,6 +21,7 @@ import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware"
 import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import ServiceRequest from "./pages/ServiceRequest";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -114,6 +115,15 @@ function App() {
             </WithAuthenticationMiddleware>
           }
         />
+        <Route
+          path="service-request"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <ServiceRequest loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
+
       </Routes>
     </ThemeProvider>
   );
