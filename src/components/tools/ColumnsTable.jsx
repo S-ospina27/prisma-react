@@ -1,12 +1,12 @@
 export default {
   service_request: [
-    { field: "fullnamedealers", headerName: "NOMBRE COMPLETO DISTRIBUIDOR", width: 200 },
-    { field: "fullnametechnical", headerName: "NOMBRE COMPLETO TECNICO", width: 200 },
+    { field: "fullnamedealers", headerName: "NOMBRE COMPLETO DISTRIBUIDOR", width: 270 },
+    { field: "fullnametechnical", headerName: "NOMBRE COMPLETO TECNICO", width: 270 },
     { field: "service_request_client_name", headerName: "NOMBRE CLIENTE", width: 200 },
     { field: "service_request_phone_contact", headerName: "TELEFONO DE CONTACTO", width: 200 },
-    { field: "service_request_email", headerName: "CORREO ELECTRONICO", width: 200 },
+    { field: "service_request_email", headerName: "CORREO ELECTRONICO", width: 270 },
     { field: "cities_name", headerName: "CIUIDAD", width: 200 },
-    { field: "service_request_address", headerName: "DIRECCIÓN", width: 200 },
+    { field: "service_request_address", headerName: "DIRECCIÓN", width: 250 },
     { field: "service_request_neighborhood", headerName: "BARRIO", width: 200 },
     { field: "product_types_name", headerName: "TIPO DE PRODUCTO", width: 350 },
     {field: "products_reference", headerName: "PRODUCTO",width: 350,},
