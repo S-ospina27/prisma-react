@@ -35,9 +35,7 @@ function ServiceRequest({ loading, alert }) {
   const [serviceRequest, setServiceRequest] = useState([]);
   const [open, setOpen] = useState(false);
   const [fullnamedealers, setFullnamedealers] = useState("");
-
-  const [fullnametechnical, setFullnametechnical] = useState("");
-
+  const [idusers, setIdusers] = useState("");
   const [cities_name, setCities_name] = useState("");
   const [product_types_name, setProduct_types_name] = useState("");
   const [products_reference, setProducts_reference] = useState("");
@@ -74,6 +72,11 @@ function ServiceRequest({ loading, alert }) {
       row.service_request_date_close === null
         ? ""
         : row.service_request_date_close
+    );
+    setService_request_date_visit(
+      row.service_request_date_visit === null
+        ? ""
+        : row.service_request_date_visit
     );
     setService_request_client_name(row.service_request_client_name);
     setService_request_address(row.service_request_address);
@@ -297,7 +300,7 @@ function ServiceRequest({ loading, alert }) {
             </Box>
 
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={6}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextFieldFilled
                   label={"Tipo de Producto"}
                   type={"text"}
@@ -308,7 +311,7 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} md={6}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextFieldFilled
                   label={"Producto"}
                   type={"text"}
@@ -319,7 +322,7 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} md={6}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextFieldFilled
                   label={"¿Cuenta con garantia?"}
                   type={"text"}
@@ -338,6 +341,16 @@ function ServiceRequest({ loading, alert }) {
                   setValue={setService_type}
                   required
                   readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <UsersSelect
+                  label={"Tecnicos"}
+                  value={idusers}
+                  setValue={setIdusers}
+                  required
+                  selected={["TECNICO"]}
                 />
               </Grid>
             </Grid>
@@ -446,13 +459,11 @@ function ServiceRequest({ loading, alert }) {
               </Grid>
 
               <Grid item xs={12} sm={12} md={4}>
-                <TextFieldFilled
+                <DateFieldFilled
                   label={"Fecha de Visita"}
-                  type={"text"}
                   value={service_request_date_visit}
                   setValue={setService_request_date_visit}
                   required
-                  readOnly
                 />
               </Grid>
 
@@ -467,7 +478,7 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
             </Grid>
-          
+
             <Box my={3}>
               <Divider textAlign="left">
                 <Chip color="dark-blue" label={"Novedad de la Solicitud"} />
@@ -475,7 +486,7 @@ function ServiceRequest({ loading, alert }) {
             </Box>
 
             <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={12}>
+              <Grid item xs={12} sm={12} md={12}>
                 <TextFieldFilled
                   label={"reporte del Problema"}
                   type={"text"}
@@ -488,11 +499,11 @@ function ServiceRequest({ loading, alert }) {
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
-              <Box my={3}>
-              <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Evidencia Novedad"} />
-              </Divider>
-            </Box>
+                <Box my={3}>
+                  <Divider textAlign="left">
+                    <Chip color="dark-blue" label={"Evidencia Novedad"} />
+                  </Divider>
+                </Box>
 
                 <Button
                   variant={"contained"}
@@ -508,12 +519,11 @@ function ServiceRequest({ loading, alert }) {
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-
-              <Box my={3}>
-              <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Evidencia Solución"} />
-              </Divider>
-            </Box>
+                <Box my={3}>
+                  <Divider textAlign="left">
+                    <Chip color="dark-blue" label={"Evidencia Solución"} />
+                  </Divider>
+                </Box>
 
                 <Button
                   variant={"contained"}
