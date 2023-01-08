@@ -486,15 +486,14 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
             </Grid>
-
-            <Box my={3}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6}>
+              <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Evidencia Fotografica"} />
+                <Chip color="dark-blue" label={"Evidencia Novedad"} />
               </Divider>
             </Box>
 
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={6}>
                 <Button
                   variant={"contained"}
                   color={"primary"}
@@ -508,7 +507,26 @@ function ServiceRequest({ loading, alert }) {
                 </Button>
               </Grid>
 
-        
+              <Grid item xs={12} sm={12} md={6}>
+
+              <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label={"Evidencia Solución"} />
+              </Divider>
+            </Box>
+
+                <Button
+                  variant={"contained"}
+                  color={"primary"}
+                  onClick={() =>
+                    window.open(
+                      `${RoutesList.host}/assets/img/products/${service_request_evidence}`
+                    )
+                  }
+                >
+                  {service_request_evidence}
+                </Button>
+              </Grid>
             </Grid>
           </Container>
         }
