@@ -63,14 +63,18 @@ function ServiceRequest({ loading, alert }) {
   const [service_request_date_visit, setService_request_date_visit] =
     useState("");
 
-  const setFields = (row = {
-  }) => {
+  const setFields = (row = {}) => {
     setFullnamedealers(row.fullnamedealers);
     setCities_name(row.cities_name);
+    setService_type(row.service_type);
     setProduct_types_name(row.product_types_name);
     setProducts_reference(row.products_reference);
     setService_request_creation_date(row.service_request_creation_date);
-    setService_request_date_close(row.service_request_date_close);
+    setService_request_date_close(
+      row.service_request_date_close === null
+        ? ""
+        : row.service_request_date_close
+    );
     setService_request_client_name(row.service_request_client_name);
     setService_request_address(row.service_request_address);
     setService_request_neighborhood(row.service_request_neighborhood);
@@ -78,15 +82,20 @@ function ServiceRequest({ loading, alert }) {
     setService_request_email(row.service_request_email);
     setService_request_trouble_report(row.service_request_trouble_report);
     setService_request_evidence(row.service_request_evidence);
-    setService_request_warranty(row.service_request_warranty);
-    setService_request_date_visit(row.service_request_date_visit);
-    console.log(row)
-
+    setService_request_warranty(
+      row.service_request_warranty === null ? "" : row.service_request_warranty
+    );
+    setService_request_date_visit(
+      row.service_request_date_visit === null
+        ? ""
+        : row.service_request_date_visit
+    );
+    console.log(row);
   };
 
   const handleReadServiceRequest = () => {
     axios.get(RoutesList.api.service_request.read).then((res) => {
-    //   console.log(res.data);
+      //   console.log(res.data);
       setServiceRequest(res.data);
     });
   };
@@ -283,19 +292,223 @@ function ServiceRequest({ loading, alert }) {
           <Container>
             <Box mb={3}>
               <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Detalles de ordenes de Solicitudes"} />
+                <Chip color="dark-blue" label={"Informacion  de solicitud"} />
               </Divider>
             </Box>
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
-                {/* <ProductsSelect
-                    value={idproducts}
-                    setValue={setIdproducts}
-                    selected={["ACTIVO"]}
-                    required
-                  /> */}
+                <TextFieldFilled
+                  label={"Tipo de Producto"}
+                  type={"text"}
+                  value={product_types_name}
+                  setValue={setProduct_types_name}
+                  required
+                  readOnly
+                />
               </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Producto"}
+                  type={"text"}
+                  value={products_reference}
+                  setValue={setProducts_reference}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"¿Cuenta con garantia?"}
+                  type={"text"}
+                  value={service_request_warranty}
+                  setValue={setService_request_warranty}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Estado del Servicio"}
+                  type={"text"}
+                  value={service_type}
+                  setValue={setService_type}
+                  required
+                  readOnly
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label={"Informacion del Cliente"} />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Nombre del cliente"}
+                  type={"text"}
+                  value={service_request_client_name}
+                  setValue={setService_request_client_name}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Nombre del Distribuidor"}
+                  type={"text"}
+                  value={fullnamedealers}
+                  setValue={setFullnamedealers}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Ciudad"}
+                  type={"text"}
+                  value={cities_name}
+                  setValue={setCities_name}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Barrio del Cliente"}
+                  type={"text"}
+                  value={service_request_neighborhood}
+                  setValue={setService_request_neighborhood}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Dirección Cliente"}
+                  type={"text"}
+                  value={service_request_address}
+                  setValue={setService_request_address}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Telefono del Cliente"}
+                  type={"text"}
+                  value={service_request_phone_contact}
+                  setValue={setService_request_phone_contact}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Correo del Cliente"}
+                  type={"text"}
+                  value={service_request_email}
+                  setValue={setService_request_email}
+                  required
+                  readOnly
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label={"Trazabilidad de Solicitud"} />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={4}>
+                <TextFieldFilled
+                  label={"Fecha de Creación"}
+                  type={"text"}
+                  value={service_request_creation_date}
+                  setValue={setService_request_creation_date}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={4}>
+                <TextFieldFilled
+                  label={"Fecha de Visita"}
+                  type={"text"}
+                  value={service_request_date_visit}
+                  setValue={setService_request_date_visit}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={4}>
+                <TextFieldFilled
+                  label={"Fecha de Cierre"}
+                  type={"text"}
+                  value={service_request_date_close}
+                  setValue={setService_request_date_close}
+                  required
+                  readOnly
+                />
+              </Grid>
+            </Grid>
+          
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label={"Novedad de la Solicitud"} />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={12}>
+                <TextFieldFilled
+                  label={"reporte del Problema"}
+                  type={"text"}
+                  value={service_request_trouble_report}
+                  setValue={setService_request_trouble_report}
+                  required
+                  readOnly
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label={"Evidencia Fotografica"} />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6}>
+                <Button
+                  variant={"contained"}
+                  color={"primary"}
+                  onClick={() =>
+                    window.open(
+                      `${RoutesList.host}/assets/img/products/${service_request_evidence}`
+                    )
+                  }
+                >
+                  {service_request_evidence}
+                </Button>
+              </Grid>
+
+        
             </Grid>
           </Container>
         }
