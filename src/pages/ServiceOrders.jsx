@@ -146,7 +146,7 @@ function ServiceOrders({ loading, alert }) {
     );
 
     axios.post(RoutesList.api.service_orders.create, form).then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
 
       alert({
         open: true,
