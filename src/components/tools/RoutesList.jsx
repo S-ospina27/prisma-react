@@ -56,6 +56,10 @@ export default {
     },
     service_request:{
       read:`${host}/api/service-request/read`,
+      update:`${host}/api/service-request/update`,
+      export: {
+        excel:`${host}/api/service-request/export/excel`,
+      },
     }
   },
 };

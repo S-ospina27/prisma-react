@@ -30,22 +30,34 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
 import logo from "./../assets/img/prisma.png";
+import WarrantySelect from "../components/common/WarrantySelect";
+import ServiceRequestSelect from "../components/common/ServiceRequestSelect";
 
 function ServiceRequest({ loading, alert }) {
-  const [serviceRequest, setServiceRequest] = useState([]);
+  const [openOrdersDate, setOpenOrdersDate] = useState(false);
   const [open, setOpen] = useState(false);
+  const [serviceRequest, setServiceRequest] = useState([]);
+
+  const [date_start, setDate_start] = useState(null);
+  const [date_end, setDate_end] = useState(null);
+
+  const [service_request_payment_methods, setService_request_payment_methods] =
+    useState("");
+  const [service_request_value, setService_request_value] = useState("");
+
+  const [guide, setGuide] = useState("");
+  const [idservice_request, setIdservice_request] = useState("");
   const [fullnamedealers, setFullnamedealers] = useState("");
-  const [idusers, setIdusers] = useState("");
+  const [idusers_technical, setIdusers_technical] = useState("");
   const [cities_name, setCities_name] = useState("");
+  const [departments_name, setDepartments_name] = useState("");
   const [product_types_name, setProduct_types_name] = useState("");
   const [products_reference, setProducts_reference] = useState("");
-
-  const [service_type, setService_type] = useState("");
-
+  const [idservice_states, setIdservice_states] = useState("");
   const [service_request_creation_date, setService_request_creation_date] =
-    useState("");
+    useState(null);
   const [service_request_date_close, setService_request_date_close] =
-    useState("");
+    useState(null);
   const [service_request_client_name, setService_request_client_name] =
     useState("");
   const [service_request_address, setService_request_address] = useState("");
@@ -59,25 +71,34 @@ function ServiceRequest({ loading, alert }) {
   const [service_request_evidence, setService_request_evidence] = useState("");
   const [service_request_warranty, setService_request_warranty] = useState("");
   const [service_request_date_visit, setService_request_date_visit] =
-    useState("");
+    useState(null);
 
   const setFields = (row = {}) => {
+    setGuide(`Guia-${row.idservice_request}`);
+    setIdservice_request(row.idservice_request);
+    setService_request_payment_methods(
+      row.service_request_payment_methods === null
+        ? ""
+        : row.service_request_payment_methods
+    );
+    setService_request_value(
+      row.service_request_value === null ? "" : row.service_request_value
+    );
+    setIdservice_request(row.idservice_request);
+    setIdusers_technical(
+      row.idusers_technical === null
+        ? ""
+        : `${row.idusers_technical} - ${row.fullnametechnical}`
+    );
     setFullnamedealers(row.fullnamedealers);
+    setDepartments_name(row.departments_name);
     setCities_name(row.cities_name);
-    setService_type(row.service_type);
+    setIdservice_states(row.idservice_states);
     setProduct_types_name(row.product_types_name);
     setProducts_reference(row.products_reference);
     setService_request_creation_date(row.service_request_creation_date);
-    setService_request_date_close(
-      row.service_request_date_close === null
-        ? ""
-        : row.service_request_date_close
-    );
-    setService_request_date_visit(
-      row.service_request_date_visit === null
-        ? ""
-        : row.service_request_date_visit
-    );
+    setService_request_date_close(row.service_request_date_close);
+    setService_request_date_visit(row.service_request_date_visit);
     setService_request_client_name(row.service_request_client_name);
     setService_request_address(row.service_request_address);
     setService_request_neighborhood(row.service_request_neighborhood);
@@ -88,11 +109,7 @@ function ServiceRequest({ loading, alert }) {
     setService_request_warranty(
       row.service_request_warranty === null ? "" : row.service_request_warranty
     );
-    setService_request_date_visit(
-      row.service_request_date_visit === null
-        ? ""
-        : row.service_request_date_visit
-    );
+    setService_request_date_visit(row.service_request_date_visit);
     console.log(row);
   };
 
@@ -103,82 +120,36 @@ function ServiceRequest({ loading, alert }) {
     });
   };
 
-  const handleCreateServiceRequest = (e) => {
+  const handleUpdateServiceRequest = (e) => {
     e.preventDefault();
-    setOpenCreateOrders(false);
+    setOpen(false);
     loading(true);
 
     const form = new FormData();
-    form.append("idproducts", idproducts);
-    form.append("idusers", idusers);
-    form.append("service_orders_type", service_orders_type);
-    form.append("service_orders_amount", service_orders_amount);
-    form.append("service_orders_total_price", service_orders_total_price);
     form.append(
-      "service_orders_finished_product",
-      service_orders_finished_product
+      "idusers_technical",
+      idusers_technical.split("-").shift().trim()
     );
-
-    axios.post(RoutesList.api.service_orders.create, form).then((res) => {
-      // console.log(res.data);
-
-      alert({
-        open: true,
-        severity: res.data.status,
-        message: res.data.message,
-      });
-      handleReadOrderService();
-      setOpenCreateOrders(false);
-      loading(false);
-    });
-  };
-
-  const handleUpdateServiceOrders = (e) => {
-    e.preventDefault();
-    setOpenUpdateOrders(false);
-    loading(true);
-
-    const form = new FormData();
-    form.append("idservice_orders", idservice_orders);
-    form.append("idproducts", idproducts.split("-").shift().trim());
+    form.append(
+      "service_request_date_visit",
+      dayjs(service_request_date_visit).format("YYYY-MM-DD")
+    );
     form.append("idservice_states", idservice_states);
-    form.append("idusers", idusers.split("-").shift().trim());
-    form.append(
-      "service_orders_date_delivery",
-      service_orders_date_delivery === null ? "" : service_orders_date_delivery
-    );
-    form.append(
-      "service_orders_finished_product",
-      service_orders_finished_product
-    );
-    form.append("service_orders_type", service_orders_type);
-    form.append("service_orders_consecutive", service_orders_consecutive);
-    form.append("service_orders_amount", service_orders_amount);
-    form.append(
-      "service_orders_not_defective_amount",
-      service_orders_not_defective_amount
-    );
-    form.append(
-      "service_orders_defective_amount",
-      service_orders_defective_amount
-    );
-    form.append("service_orders_observation", service_orders_observation);
-    form.append("service_orders_total_price", service_orders_total_price);
-    form.append("service_orders_pending_amount", service_orders_pending_amount);
+    form.append("idservice_request", idservice_request);
 
-    axios.post(RoutesList.api.service_orders.update, form).then((res) => {
-      // console.log(res.data);
+    axios.post(RoutesList.api.service_request.update, form).then((res) => {
+      console.log(res.data);
       alert({
         open: true,
         severity: res.data.status,
         message: res.data.message,
       });
-      handleReadOrderService();
+      handleReadServiceRequest();
       loading(false);
     });
   };
 
-  const handleExportServiceOrders = (e) => {
+  const handleExportServiceRequest = (e) => {
     e.preventDefault();
     setOpenOrdersDate(false);
     loading(true);
@@ -209,27 +180,29 @@ function ServiceRequest({ loading, alert }) {
     form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
     form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
 
-    axios.post(RoutesList.api.service_orders.export, form).then((res) => {
-      // console.log(res.data);
-      loading(false);
-      alert({
-        open: true,
-        severity: res.data.status,
-        message: res.data.message,
-      });
+    axios
+      .post(RoutesList.api.service_request.export.excel, form)
+      .then((res) => {
+        console.log(res.data);
+        loading(false);
+        alert({
+          open: true,
+          severity: res.data.status,
+          message: res.data.message,
+        });
 
-      if (res.data.status === "success") {
-        window.location.href = res.data.data.url;
-        setDate_start(null);
-        setDate_end(null);
-      } else if (res.data.status === "warning") {
-        loading(true);
-        setTimeout(() => {
-          setOpenOrdersDate(true);
-          loading(false);
-        }, 1000);
-      }
-    });
+        if (res.data.status === "success") {
+          window.location.href = res.data.data.url;
+          setDate_start(null);
+          setDate_end(null);
+        } else if (res.data.status === "warning") {
+          loading(true);
+          setTimeout(() => {
+            setOpenOrdersDate(true);
+            loading(false);
+          }, 1000);
+        }
+      });
   };
 
   useEffect(() => {
@@ -243,31 +216,26 @@ function ServiceRequest({ loading, alert }) {
           <Chip color="dark-blue" label={"Solucitudes"} />
         </Divider>
       </Box>
-      {/*   
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
-          <MenuItems
-            id={"operations"}
-            iconButton={true}
-            label={<MoreVertIcon color={"dark-blue"} />}
-            items={[
-              {
-                type: "modal",
-                name: "Crear Orden de Servicio",
-                icon: <AssignmentIcon color={"dark-blue"} />,
-                setOpen: setOpenCreateOrders,
-                idroles: [1],
-              },
-              {
-                type: "modal",
-                name: "Exportar Ordenes de Servicio",
-                icon: <AssignmentIcon color={"blue"} />,
-                setOpen: setOpenOrdersDate,
-                idroles: [1],
-              },
-            ]}
-          />
-        </Box>
-   */}
+
+      <ServiceRequestSelect />
+
+      <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
+        <MenuItems
+          id={"service"}
+          iconButton={true}
+          label={<MoreVertIcon color={"dark-blue"} />}
+          items={[
+            {
+              type: "modal",
+              name: "Exportar Ordenes de solicitud",
+              icon: <AssignmentIcon color={"blue"} />,
+              setOpen: setOpenOrdersDate,
+              idroles: [1],
+            },
+          ]}
+        />
+      </Box>
+
       <DataTable
         reload={handleReadServiceRequest}
         rows={serviceRequest}
@@ -289,7 +257,7 @@ function ServiceRequest({ loading, alert }) {
         button={{
           type: "submit",
           label: "Actualizar",
-          // onSubmit: handleUpdateServiceOrders,
+          onSubmit: handleUpdateServiceRequest,
         }}
         content={
           <Container>
@@ -300,7 +268,28 @@ function ServiceRequest({ loading, alert }) {
             </Box>
 
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={4}>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Guía"}
+                  type={"text"}
+                  value={guide}
+                  setValue={setGuide}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <UsersSelect
+                  label={"Tecnicos"}
+                  value={idusers_technical}
+                  setValue={setIdusers_technical}
+                  required
+                  selected={["TECNICO"]}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
                   label={"Tipo de Producto"}
                   type={"text"}
@@ -311,7 +300,7 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} md={4}>
+              <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
                   label={"Producto"}
                   type={"text"}
@@ -322,9 +311,23 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} md={4}>
+              <Grid item xs={12} sm={12} md={6}>
+                <ServiceStatesSelect
+                  value={idservice_states}
+                  setValue={setIdservice_states}
+                  required
+                  ignore={[
+                    "DESPACHADO",
+                    "ACEPTADO",
+                    "ENVIADO",
+                    "NO-DESPACHADO",
+                  ]}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
-                  label={"¿Cuenta con garantia?"}
+                  label={"Garantia"}
                   type={"text"}
                   value={service_request_warranty}
                   setValue={setService_request_warranty}
@@ -335,22 +338,22 @@ function ServiceRequest({ loading, alert }) {
 
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
-                  label={"Estado del Servicio"}
-                  type={"text"}
-                  value={service_type}
-                  setValue={setService_type}
+                  label={"valor"}
+                  type={"number"}
+                  value={service_request_value}
+                  setValue={setService_request_value}
                   required
                   readOnly
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} md={6}>
-                <UsersSelect
-                  label={"Tecnicos"}
-                  value={idusers}
-                  setValue={setIdusers}
+                <TextFieldFilled
+                  label={"Metodo de pago"}
+                  type={"text"}
+                  value={service_request_payment_methods}
+                  setValue={setService_request_payment_methods}
                   required
-                  selected={["TECNICO"]}
+                  readOnly
                 />
               </Grid>
             </Grid>
@@ -390,6 +393,17 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={cities_name}
                   setValue={setCities_name}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  label={"Departamento"}
+                  type={"text"}
+                  value={departments_name}
+                  setValue={setDepartments_name}
                   required
                   readOnly
                 />
@@ -448,7 +462,7 @@ function ServiceRequest({ loading, alert }) {
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={4}>
-                <TextFieldFilled
+                <DateFieldFilled
                   label={"Fecha de Creación"}
                   type={"text"}
                   value={service_request_creation_date}
@@ -468,7 +482,7 @@ function ServiceRequest({ loading, alert }) {
               </Grid>
 
               <Grid item xs={12} sm={12} md={4}>
-                <TextFieldFilled
+                <DateFieldFilled
                   label={"Fecha de Cierre"}
                   type={"text"}
                   value={service_request_date_close}
@@ -538,49 +552,96 @@ function ServiceRequest({ loading, alert }) {
                 </Button>
               </Grid>
             </Grid>
+
+            <Grid container spacing={2}>
+              <Dialog
+                open={openOrdersDate}
+                onClose={() => setOpenOrdersDate(false)}
+                TransitionComponent={DialogTransition}
+              >
+                <form>
+                  <DialogTitle>{'Exportar "Ordenes de Servicio"'}</DialogTitle>
+
+                  <DialogContent dividers>
+                    <Box my={3}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12} sm={12} md={6}>
+                          <DateFieldFilled
+                            label={"Fecha Inicio"}
+                            value={date_start}
+                            setValue={setDate_start}
+                            required
+                          />
+                        </Grid>
+
+                        <Grid item xs={12} sm={12} md={6}>
+                          <DateFieldFilled
+                            label={"Fecha Fin"}
+                            value={date_end}
+                            setValue={setDate_end}
+                            required
+                          />
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </DialogContent>
+
+                  <DialogActions>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="blue"
+                      size="small"
+                    >
+                      Exportar
+                    </Button>
+                  </DialogActions>
+                </form>
+              </Dialog>
+            </Grid>
           </Container>
         }
       />
-      {/*   
-        <Dialog
-          open={openOrdersDate}
-          onClose={() => setOpenOrdersDate(false)}
-          TransitionComponent={DialogTransition}
-        >
-          <form onSubmit={handleExportServiceOrders}>
-            <DialogTitle>{'Exportar "Ordenes de Servicio"'}</DialogTitle>
-  
-            <DialogContent dividers>
-              <Box my={3}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={12} md={6}>
-                    <DateFieldFilled
-                      label={"Fecha Inicio"}
-                      value={date_start}
-                      setValue={setDate_start}
-                      required
-                    />
-                  </Grid>
-  
-                  <Grid item xs={12} sm={12} md={6}>
-                    <DateFieldFilled
-                      label={"Fecha Fin"}
-                      value={date_end}
-                      setValue={setDate_end}
-                      required
-                    />
-                  </Grid>
+
+      <Dialog
+        open={openOrdersDate}
+        onClose={() => setOpenOrdersDate(false)}
+        TransitionComponent={DialogTransition}
+      >
+        <form onSubmit={handleExportServiceRequest}>
+          <DialogTitle>{'Exportar "Ordenes de Solicitudes"'}</DialogTitle>
+
+          <DialogContent dividers>
+            <Box my={3}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={6}>
+                  <DateFieldFilled
+                    label={"Fecha Inicio"}
+                    value={date_start}
+                    setValue={setDate_start}
+                    required
+                  />
                 </Grid>
-              </Box>
-            </DialogContent>
-  
-            <DialogActions>
-              <Button type="submit" variant="contained" color="blue" size="small">
-                Exportar
-              </Button>
-            </DialogActions>
-          </form>
-        </Dialog> */}
+
+                <Grid item xs={12} sm={12} md={6}>
+                  <DateFieldFilled
+                    label={"Fecha Fin"}
+                    value={date_end}
+                    setValue={setDate_end}
+                    required
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          </DialogContent>
+
+          <DialogActions>
+            <Button type="submit" variant="contained" color="blue" size="small">
+              Exportar
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </Box>
   );
 }
