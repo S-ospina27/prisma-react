@@ -29,7 +29,6 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
-import logo from "./../assets/img/prisma.png";
 
 function ServiceOrders({ loading, alert }) {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
@@ -235,7 +234,7 @@ function ServiceOrders({ loading, alert }) {
     form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
     form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
 
-    axios.post(RoutesList.api.service_orders.export, form).then((res) => {
+    axios.post(RoutesList.api.service_orders.export.excel, form).then((res) => {
       // console.log(res.data);
       loading(false);
       alert({
