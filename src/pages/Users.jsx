@@ -113,7 +113,7 @@ function Users({ loading, alert }) {
     form.append("users_contact_phone", users_contact_phone);
 
     axios.post(RoutesList.api.users.create, form).then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
       alert({
         open: true,
         message: res.data.message,

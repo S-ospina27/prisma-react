@@ -321,6 +321,7 @@ function ServiceRequest({ loading, alert }) {
                     "ACEPTADO",
                     "ENVIADO",
                     "NO-DESPACHADO",
+                    "FINALIZADO"
                   ]}
                 />
               </Grid>
