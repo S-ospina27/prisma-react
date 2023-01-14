@@ -1,4 +1,12 @@
 export default {
+  Technical: [
+    { field: "TENICO", headerName: "NOMBRE COMPLETO TECNICO", width: 270 },
+    { field: "REPUESTO", headerName: "REPUESTO", width: 200 },
+    { field: "technical_inventory_amount", headerName: "CANTIDAD DE REPUESTO", width: 200 },
+    { field: "technical_inventory_quantity_used", headerName: "CANTIDAD UTILIZADOS", width: 270 },
+    { field: "technical_inventory_quantity_available", headerName: "CANTIDAD DISPONIBLE", width: 200 },
+    { field: "service_type", headerName: "ESTADO", width: 250 }
+  ],
   service_request: [
     { field: "fullnamedealers", headerName: "NOMBRE COMPLETO DISTRIBUIDOR", width: 270 },
     { field: "fullnametechnical", headerName: "NOMBRE COMPLETO TECNICO", width: 270 },

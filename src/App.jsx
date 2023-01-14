@@ -22,6 +22,7 @@ import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddlew
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ServiceRequest from "./pages/ServiceRequest";
+import Technical from "./pages/Technical";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -99,6 +100,15 @@ function App() {
         />
 
         <Route
+          path="Technical"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <Technical loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
+
+        <Route
           path="products"
           element={
             <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
@@ -123,7 +133,6 @@ function App() {
             </WithAuthenticationMiddleware>
           }
         />
-
       </Routes>
     </ThemeProvider>
   );

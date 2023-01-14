@@ -20,6 +20,12 @@ export default {
         by_rol: `${host}/api/users/read/by-rol`,
       },
     },
+    spare_parts: {
+      inventory:{
+        read:`${host}/api/spare-parts/inventory/read`,
+        
+      }
+    },
     products: {
       create: `${host}/api/products/create`,
       update: `${host}/api/products/update`,
