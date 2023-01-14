@@ -23,6 +23,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ServiceRequest from "./pages/ServiceRequest";
 import Technical from "./pages/Technical";
+import SpareParts from "./pages/SpareParts";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -104,6 +105,15 @@ function App() {
           element={
             <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
               <Technical loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
+
+        <Route
+          path="Inventory"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <SpareParts loading={setLoading} alert={setAlert} />
             </WithAuthenticationMiddleware>
           }
         />

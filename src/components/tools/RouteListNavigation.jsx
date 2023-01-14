@@ -4,6 +4,7 @@ import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 export default {
   online: {
@@ -37,6 +38,11 @@ export default {
         nombre: "Tecnicos",
         icon: <SupervisedUserCircleIcon color={"blue"} />,
         link: "/technical",
+      },
+      {
+        nombre: "Inventario",
+        icon: <InventoryIcon color={"blue"} />,
+        link: "/inventory",
       },
     ],
     provider: [

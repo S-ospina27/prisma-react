@@ -21,7 +21,7 @@ import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
 
 
-function Technical({ loading, alert }) {
+function SpareParts({ loading, alert }) {
   const [CreatTechnical, setOpenCreatTechnical] = useState(false);
   const [Technical, setTechnical] = useState([]);
 
@@ -67,7 +67,7 @@ function Technical({ loading, alert }) {
     <Box mx={3} my={3}>
       <Box mb={2}>
         <Divider>
-          <Chip color="blue" label={"Inventario Tecnicos"} />
+          <Chip color="blue" label={"Inventario"} />
         </Divider>
       </Box>
 
@@ -209,4 +209,4 @@ function Technical({ loading, alert }) {
   );
 }
 
-export default Technical;
+export default SpareParts;
