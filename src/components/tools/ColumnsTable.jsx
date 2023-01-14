@@ -1,7 +1,11 @@
 export default {
+  SpareParts: [
+    { field: "spare_parts_name", headerName: "REPUESTO", width: 270 },
+    { field: "spare_parts_amount", headerName: "CANTIDAD", width: 200 },
+  ],
   Technical: [
     { field: "TENICO", headerName: "NOMBRE COMPLETO TECNICO", width: 270 },
-    { field: "REPUESTO", headerName: "REPUESTO", width: 200 },
+    { field: "spare_parts_name", headerName: "REPUESTO", width: 200 },
     { field: "technical_inventory_amount", headerName: "CANTIDAD DE REPUESTO", width: 200 },
     { field: "technical_inventory_quantity_used", headerName: "CANTIDAD UTILIZADOS", width: 270 },
     { field: "technical_inventory_quantity_available", headerName: "CANTIDAD DISPONIBLE", width: 200 },

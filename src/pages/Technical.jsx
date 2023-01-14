@@ -36,6 +36,7 @@ function Technical({ loading, alert }) {
 
   const setFields = (row = { }) => {
     console.log( idservice_states)
+    console.log(row);
     setIdtechnical_inventory(row.idtechnical_inventory);
     setIdusers(row.TENICO);
     setIdspare_parts(row.spare_parts_name);
@@ -48,7 +49,7 @@ function Technical({ loading, alert }) {
 
   const handleReadTechnical = () => {
     axios.get(RoutesList.api.spare_parts.inventory.read).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setTechnical(res.data);
     });
   };
@@ -126,7 +127,6 @@ function Technical({ loading, alert }) {
                     "ENVIADO",
                     "DESPACHADO",
                     "INCREMENTAR-INVENTARIO",
-                    "FINALIZADO",
                     "PENDIENTE"
                   ]}
                 />

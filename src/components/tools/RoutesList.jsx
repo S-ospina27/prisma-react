@@ -21,8 +21,13 @@ export default {
       },
     },
     spare_parts: {
+      read:`${host}/api/spare-parts/read`,
+      create:`${host}/api/spare-parts/create`,
+      update:`${host}/api/spare-parts/update`,
       inventory:{
         read:`${host}/api/spare-parts/inventory/read`,
+        update:`${host}/api/spare-parts/inventory/update`,
+
         
       }
     },

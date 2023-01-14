@@ -41,7 +41,7 @@ export default {
       },
       {
         nombre: "Inventario",
-        icon: <InventoryIcon color={"blue"} />,
+        icon: <InventoryIcon color={"dark-blue"} />,
         link: "/inventory",
       },
     ],

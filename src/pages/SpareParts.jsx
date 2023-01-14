@@ -19,48 +19,87 @@ import ServiceStatesSelect from "../components/common/ServiceStatesSelect";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
-
+import DialogTransition from "../components/common/DialogTransition";
 
 function SpareParts({ loading, alert }) {
-  const [CreatTechnical, setOpenCreatTechnical] = useState(false);
-  const [Technical, setTechnical] = useState([]);
+  const [OpenCreateSpareParts, setOpenCreateSpareParts] = useState(false);
+  const [OpenUpdateSpareParts, setOpenUpdateSpareParts] = useState(false);
+  const [SpareParts, setSpareParts] = useState([]);
 
-  const [idtechnical_inventory,setIdtechnical_inventory]= useState("");
-  const [idspare_parts, setIdspare_parts]= useState("");
-  const [idusers,setIdusers]= useState("");
-  const [technical_inventory_amount, setTechnical_inventory_amount]= useState("");
-  const [technical_inventory_quantity_used,setTechnical_inventory_quantity_used]=useState("");
-  const [technical_inventory_quantity_available,setTechnical_inventory_quantity_available]= useState("");
-  const [idservice_states,setIdservice_states]= useState("");
-  const [technical_inventory_description,setTechnical_inventory_description]= useState("");
+  const [idspare_parts, setIdspare_parts] = useState("");
+  const [spare_parts_name, setSpare_parts_name] = useState("");
+  const [spare_parts_amount, setSpare_parts_amount] = useState("");
+  const [spare_parts_amount_copy , SetSpare_parts_amount_copy ] = useState("");
 
-  const setFields = (row = { }) => {
-    console.log( idservice_states)
-    setIdtechnical_inventory(row.idtechnical_inventory);
-    setIdusers(row.TENICO);
-    setIdspare_parts(row.spare_parts_name);
-    setTechnical_inventory_amount(row.technical_inventory_amount);
-    setTechnical_inventory_quantity_used(row.technical_inventory_quantity_used);
-    setTechnical_inventory_quantity_available(row.technical_inventory_quantity_available)
-    setIdservice_states(row.idservice_states);
-    setTechnical_inventory_description(row.technical_inventory_description == null ?"" :row.technical_inventory_description);
+  const setFields = (
+    row = {
+      spare_parts_name: "",
+      spare_parts_amount: "",
+    }
+  ) => {
+    // console.log(row);
+    setIdspare_parts(row.idspare_parts);
+    setSpare_parts_name(row.spare_parts_name);
+    setSpare_parts_amount(row.spare_parts_amount);
+    SetSpare_parts_amount_copy(row.spare_parts_amount);
   };
 
-  const handleReadTechnical = () => {
-    axios.get(RoutesList.api.spare_parts.inventory.read).then((res) => {
-      console.log(res.data);
-      setTechnical(res.data);
+  const handleClose = () => {
+    setOpenUpdateSpareParts(false);
+  };
+  const handleReadSpareParts = () => {
+    axios.get(RoutesList.api.spare_parts.read).then((res) => {
+      // console.log(res.data);
+      setSpareParts(res.data);
     });
   };
 
-  const handleUpdateinventoryTechnical = (e) => {
+  const handleCreateSpareParts = (e) => {
     e.preventDefault();
-    setOpenCreatTechnical(false);
     loading(true);
+    const form = new FormData();
+    form.append("spare_parts_name", spare_parts_name);
+    form.append("spare_parts_amount", spare_parts_amount);
+    axios.post(RoutesList.api.spare_parts.create, form).then((res) => {
+      console.log(res.data);
+      setSpare_parts_name("");
+      setSpare_parts_amount("");
+
+      handleReadSpareParts();
+      loading(false);
+      alert({
+        open: true,
+        message: res.data.message,
+        severity: res.data.status,
+      });
+    });
+  };
+
+  const handleUpdateSpareParts = (e) => {
+    e.preventDefault();
+    loading(true);
+    setOpenUpdateSpareParts(false);
+    const form = new FormData();
+    form.append("idspare_parts", idspare_parts);
+    form.append("spare_parts_name", spare_parts_name);
+    form.append("spare_parts_amount", spare_parts_amount);
+    form.append("spare_parts_amount_copy", spare_parts_amount_copy);
+    axios.post(RoutesList.api.spare_parts.update, form).then((res) => {
+      console.log(res.data);
+      setFields();
+
+      handleReadSpareParts();
+      loading(false);
+      alert({
+        open: true,
+        message: res.data.message,
+        severity: res.data.status,
+      });
+    });
   };
 
   useEffect(() => {
-    handleReadTechnical();
+    handleReadSpareParts();
   }, []);
 
   return (
@@ -71,140 +110,93 @@ function SpareParts({ loading, alert }) {
         </Divider>
       </Box>
 
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={4}>
+          <form onSubmit={handleCreateSpareParts}>
+            <Grid item xs={12} m={2} sm={12} md={12}>
+              <TextFieldFilled
+                label={"Nombre"}
+                type={"text"}
+                value={spare_parts_name}
+                setValue={setSpare_parts_name}
+                required
+              />
+            </Grid>
 
-      <DataTable
-        reload={handleReadTechnical}
-        rows={Technical}
-        columns={ColumnsTable.Technical}
-        getRowId={"idtechnical_inventory"}
-        onRowClick={{
-          open: setOpenCreatTechnical,
-          set: setFields,
-        }}
-        sx={{
-          height: "450px",
-        }}
-      />
+            <Grid item xs={12} m={2} sm={12} md={12}>
+              <TextFieldFilled
+                label={"Cantidad"}
+                type={"number"}
+                value={spare_parts_amount}
+                setValue={setSpare_parts_amount}
+                required
+              />
+            </Grid>
+            <Grid item xs={12} m={2} sm={12} md={12}>
+              <Button type="submit" variant="contained">
+                Registrar
+              </Button>
+            </Grid>
+          </form>
+        </Grid>
 
-      <DialogForm
-        title={"Actualizar Solicitud de Inventario"}
-        open={CreatTechnical}
-        setOpen={setOpenCreatTechnical}
-        button={{
-          type: "submit",
-          label: "Actualizar",
-          onSubmit: handleUpdateinventoryTechnical,
-        }}
-        content={
-          <Container>
-            <Box mb={3}>
-              <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Detalles de solicitud"} />
-              </Divider>
-            </Box>
+        <Grid item xs={12} sm={12} md={8}>
+          <DataTable
+            reload={handleReadSpareParts}
+            rows={SpareParts}
+            columns={ColumnsTable.SpareParts}
+            getRowId={"idspare_parts"}
+            onRowClick={{
+              open: setOpenUpdateSpareParts,
+              set: setFields,
+            }}
+            sx={{
+              height: "450px",
+            }}
+          />
+        </Grid>
+      </Grid>
 
+      <Dialog
+        fullWidth
+        maxWidth={"xs"}
+        open={OpenUpdateSpareParts}
+        onClose={handleClose}
+        TransitionComponent={DialogTransition}
+      >
+        <form onSubmit={handleUpdateSpareParts}>
+          <DialogTitle>Editar ""</DialogTitle>
+
+          <DialogContent dividers>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
-                  label={"Tecnico"}
                   type={"text"}
-                  value={idusers}
-                  setValue={setIdusers}
+                  label={"Nombre "}
+                  value={spare_parts_name}
+                  setValue={setSpare_parts_name}
                   required
-                  readOnly
                 />
               </Grid>
-
               <Grid item xs={12} sm={12} md={6}>
-                <ServiceStatesSelect
-                  value={idservice_states}
-                  setValue={setIdservice_states}
+                <TextFieldFilled
+                  type={"number"}
+                  label={"Cantidad "}
+                  value={spare_parts_amount}
+                  setValue={setSpare_parts_amount}
                   required
-                  ignore={[
-                    "NO-DESPACHADO",
-                    "ACEPTADO",
-                    "ENVIADO",
-                    "DESPACHADO",
-                    "INCREMENTAR-INVENTARIO",
-                    "FINALIZADO",
-                    "PENDIENTE"
-                  ]}
                 />
               </Grid>
             </Grid>
+          </DialogContent>
 
-            <Box my={3}>
-              <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Información del repuesto"} />
-              </Divider>
-            </Box>
-
-            <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Repuesto"}
-                  type={"text"}
-                  value={idspare_parts}
-                  setValue={setIdspare_parts}
-                  required
-                  readOnly
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Cantidad repuestos"}
-                  type={"number"}
-                  value={technical_inventory_amount}
-                  setValue={setTechnical_inventory_amount}
-                  required
-                  readOnly
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Cantidad repuestos usados"}
-                  type={"number"}
-                  value={technical_inventory_quantity_used}
-                  setValue={setTechnical_inventory_quantity_used}
-                  required
-                  readOnly
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Cantidad repuestos disponibles"}
-                  type={"number"}
-                  value={technical_inventory_quantity_available}
-                  setValue={setTechnical_inventory_quantity_available}
-                  required
-                  readOnly
-                />
-              </Grid>
-            </Grid>
-
-            <Box my={3}>
-              <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Información de solicitud"} />
-              </Divider>
-            </Box>
-
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={12}>
-                <TextFieldFilled
-                  label={"Descripción"}
-                  type={"number"}
-                  value={technical_inventory_description}
-                  setValue={setTechnical_inventory_description}
-                  readOnly
-                />
-              </Grid>
-            </Grid>
-          </Container>
-        }
-      />
+          <DialogActions>
+            <Button variant={"contained"} size={"small"} type="submit">
+              Actualizar
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </Box>
   );
 }
