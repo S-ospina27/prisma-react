@@ -44,7 +44,7 @@ function App() {
       {alert.open && (
         <Snackbar
           open={alert.open}
-          autoHideDuration={5000}
+          autoHideDuration={alert.time ? alert.time : 5000}
           onClose={(event, reason) => {
             if (reason === "clickaway") return;
 
