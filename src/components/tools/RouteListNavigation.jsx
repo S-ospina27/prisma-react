@@ -12,7 +12,7 @@ export default {
       {
         nombre: "Dashboard",
         icon: <HomeIcon color={"dark-blue"} />,
-        link: "/",
+        link: "/dashboard",
       },
       {
         nombre: "Usuarios",

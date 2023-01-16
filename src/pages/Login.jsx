@@ -38,7 +38,7 @@ function Login({ loading, alert }) {
       if (res.data.status === "success") {
         set("jwt", res.data.data.jwt);
         setCount_errors(0);
-        navigate(location.pathname === "/auth/login" ? "/" : location.pathname);
+        navigate(location.pathname === "/auth/login" ? "/dashboard" : location.pathname);
       } else if (res.data.status === "error") {
         setCount_errors(count_errors + 1);
       } else if (res.data.status === "existence-error") {

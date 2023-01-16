@@ -24,6 +24,7 @@ import NotFound from "./pages/NotFound";
 import ServiceRequest from "./pages/ServiceRequest";
 import Technical from "./pages/Technical";
 import SpareParts from "./pages/SpareParts";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -79,6 +80,15 @@ function App() {
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
+
+        <Route
+          path="dashboard"
+          element={
+            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
+              <Dashboard loading={setLoading} alert={setAlert} />
+            </WithAuthenticationMiddleware>
+          }
+        />
 
         <Route path="auth">
           <Route
