@@ -20,31 +20,47 @@ import TextFieldFilled from "../components/common/TextFieldFilled";
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
 
-
 function Technical({ loading, alert }) {
   const [CreatTechnical, setOpenCreatTechnical] = useState(false);
   const [Technical, setTechnical] = useState([]);
 
-  const [idtechnical_inventory,setIdtechnical_inventory]= useState("");
-  const [idspare_parts, setIdspare_parts]= useState("");
-  const [idusers,setIdusers]= useState("");
-  const [technical_inventory_amount, setTechnical_inventory_amount]= useState("");
-  const [technical_inventory_quantity_used,setTechnical_inventory_quantity_used]=useState("");
-  const [technical_inventory_quantity_available,setTechnical_inventory_quantity_available]= useState("");
-  const [idservice_states,setIdservice_states]= useState("");
-  const [technical_inventory_description,setTechnical_inventory_description]= useState("");
+  const [idtechnical_inventory, setIdtechnical_inventory] = useState("");
+  const [idusers, setIdusers] = useState("");
+  const [idspare_parts, setIdspare_parts] = useState("");
+  const [technical_inventory_amount, setTechnical_inventory_amount] =
+    useState("");
+  const [
+    technical_inventory_quantity_used,
+    setTechnical_inventory_quantity_used,
+  ] = useState("");
+  const [
+    technical_inventory_quantity_available,
+    setTechnical_inventory_quantity_available,
+  ] = useState("");
+  const [idservice_states, setIdservice_states] = useState("");
+  const [technical_inventory_description, setTechnical_inventory_description] =
+    useState("");
+  const [
+    technical_inventory_creation_date,
+    setTechnical_inventory_creation_date,
+  ] = useState(null);
 
-  const setFields = (row = { }) => {
-    console.log( idservice_states)
-    console.log(row);
+  const setFields = (row) => {
+    // console.log(row);
     setIdtechnical_inventory(row.idtechnical_inventory);
-    setIdusers(row.TENICO);
+    setIdusers(row.fullname);
     setIdspare_parts(row.spare_parts_name);
     setTechnical_inventory_amount(row.technical_inventory_amount);
     setTechnical_inventory_quantity_used(row.technical_inventory_quantity_used);
-    setTechnical_inventory_quantity_available(row.technical_inventory_quantity_available)
+    setTechnical_inventory_quantity_available(
+      row.technical_inventory_quantity_available
+    );
     setIdservice_states(row.idservice_states);
-    setTechnical_inventory_description(row.technical_inventory_description == null ?"" :row.technical_inventory_description);
+    setTechnical_inventory_description(
+      row.technical_inventory_description == null
+        ? ""
+        : row.technical_inventory_description
+    );
   };
 
   const handleReadTechnical = () => {
@@ -58,6 +74,23 @@ function Technical({ loading, alert }) {
     e.preventDefault();
     setOpenCreatTechnical(false);
     loading(true);
+
+    const form = new FormData();
+    form.append("idservice_states", idservice_states);
+    form.append("idtechnical_inventory", idtechnical_inventory);
+
+    axios
+      .post(RoutesList.api.spare_parts.inventory.update, form)
+      .then((res) => {
+        // console.log(res.data);
+        handleReadTechnical();
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
+        loading(false);
+      });
   };
 
   useEffect(() => {
@@ -71,7 +104,6 @@ function Technical({ loading, alert }) {
           <Chip color="blue" label={"Inventario Tecnicos"} />
         </Divider>
       </Box>
-
 
       <DataTable
         reload={handleReadTechnical}
@@ -121,14 +153,35 @@ function Technical({ loading, alert }) {
                   value={idservice_states}
                   setValue={setIdservice_states}
                   required
-                  ignore={[
-                    "NO-DESPACHADO",
-                    "ACEPTADO",
-                    "ENVIADO",
-                    "DESPACHADO",
-                    "INCREMENTAR-INVENTARIO",
-                    "PENDIENTE"
-                  ]}
+                  ignore={["NO-DESPACHADO", "DESPACHADO"]}
+                  ignoreItems={
+                    idservice_states === 6
+                      ? [
+                          "FINALIZADO",
+                          "PENDIENTE",
+                          "ACEPTADO",
+                          "RECHAZADO",
+                          "ENVIADO",
+                        ]
+                      : idservice_states === 5
+                      ? [
+                          "FINALIZADO",
+                          "EN-PROCESO",
+                          "PENDIENTE",
+                          "ACEPTADO",
+                          "RECHAZADO",
+                        ]
+                      : idservice_states === 7
+                      ? [
+                          "FINALIZADO",
+                          "PENDIENTE",
+                          "ACEPTADO",
+                          "RECHAZADO",
+                          "ENVIADO",
+                          "EN-PROCESO",
+                        ]
+                      : []
+                  }
                 />
               </Grid>
             </Grid>
@@ -140,7 +193,7 @@ function Technical({ loading, alert }) {
             </Box>
 
             <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} md={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
                   label={"Repuesto"}
                   type={"text"}

@@ -10,6 +10,7 @@ function ServiceStatesSelect({
   disabled,
   readOnly,
   ignore = [],
+  ignoreItems = [],
 }) {
   const [Status, setStatus] = useState([]);
 
@@ -36,7 +37,11 @@ function ServiceStatesSelect({
         {Status.map(
           (state, index) =>
             !ignore.includes(state.service_type) && (
-              <MenuItem value={state.idservice_states} key={index}>
+              <MenuItem
+                value={state.idservice_states}
+                key={index}
+                disabled={ignoreItems.includes(state.service_type) ?? true}
+              >
                 {state.service_type}
               </MenuItem>
             )

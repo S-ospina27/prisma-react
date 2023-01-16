@@ -4,12 +4,12 @@ export default {
     { field: "spare_parts_amount", headerName: "CANTIDAD", width: 200 },
   ],
   Technical: [
-    { field: "TENICO", headerName: "NOMBRE COMPLETO TECNICO", width: 270 },
-    { field: "spare_parts_name", headerName: "REPUESTO", width: 200 },
-    { field: "technical_inventory_amount", headerName: "CANTIDAD DE REPUESTO", width: 200 },
-    { field: "technical_inventory_quantity_used", headerName: "CANTIDAD UTILIZADOS", width: 270 },
-    { field: "technical_inventory_quantity_available", headerName: "CANTIDAD DISPONIBLE", width: 200 },
-    { field: "service_type", headerName: "ESTADO", width: 250 }
+    { field: "fullname", headerName: "NOMBRE COMPLETO TECNICO", width: 270 },
+    { field: "spare_parts_name", headerName: "REPUESTO", width: 180 },
+    { field: "technical_inventory_amount", headerName: "CANTIDAD", width: 100 },
+    { field: "technical_inventory_quantity_used", headerName: "UTILIZADOS", width: 100 },
+    { field: "technical_inventory_quantity_available", headerName: "DISPONIBLES", width: 120 },
+    { field: "service_type", headerName: "ESTADO", width: 200 }
   ],
   service_request: [
     { field: "fullnamedealers", headerName: "NOMBRE COMPLETO DISTRIBUIDOR", width: 270 },
