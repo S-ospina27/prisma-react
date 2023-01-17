@@ -18,12 +18,12 @@ import RouteListNavigation from "./tools/RouteListNavigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import prisma from "./../assets/img/prisma.png";
-// import session, { navigationLinks, remove } from "../tools/SessionSettings";
-// import RouteListNavigation from "../tools/RouteListNavigation";
 
-// import logo from "./../assets/img/logo-transparente.png";
+import { remove } from "./tools/SessionSettings";
+
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import prisma from "./../assets/img/prisma.png";
+
 // import AndroidIcon from "@mui/icons-material/Android";
 
 function NavbarNavigation() {
@@ -48,12 +48,12 @@ function NavbarNavigation() {
     setState({ ...state, [anchor]: open });
   };
 
-  // const closeSession = () => {
-  //   setActualSession(false);
-  //   // setLinks(RouteListNavigation.offline);
-  //   remove("jwt");
-  //   navigate("/");
-  // };
+  const closeSession = () => {
+    // setActualSession(false);
+    // setLinks(RouteListNavigation.offline);
+    remove("jwt");
+    navigate("/");
+  };
 
   // const updateSession = () => {
   //   setActualSession(true);
@@ -131,6 +131,15 @@ function NavbarNavigation() {
                     </ListItemButton>
                   </ListItem>
                 ))}
+
+                <ListItem disablePadding>
+                  <ListItemButton onClick={closeSession}>
+                    <ListItemIcon>
+                      <MeetingRoomIcon color="blue" />
+                    </ListItemIcon>
+                    <ListItemText primary={"Cerrar Sesión"} />
+                  </ListItemButton>
+                </ListItem>
               </List>
             </Box>
           </SwipeableDrawer>

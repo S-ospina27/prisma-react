@@ -301,7 +301,7 @@ function Users({ loading, alert }) {
                     label={"Contraseña"}
                     value={users_password}
                     setValue={setUsers_password}
-                    required={idroles === 3 ? false : true}
+                    required
                   />
                 </Grid>
               </Grid>
