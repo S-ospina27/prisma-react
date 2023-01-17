@@ -12,7 +12,9 @@ export default {
     { field: "service_type", headerName: "ESTADO", width: 170 }
   ],
   service_request: [
-    { field: "fullnamedealers", headerName: "NOMBRE COMPLETO DISTRIBUIDOR", width: 270 },
+    { field: "users_identification", headerName: "IDENFITICACION DISTRIBUIDOR", width: 270 },
+    { field: "users_name", headerName: "NOMBRE DISTRIBUIDOR", width: 270 },
+    { field: "users_lastname", headerName: "APELLIDO DISTRIBUIDOR", width: 270 },
     { field: "fullnametechnical", headerName: "NOMBRE COMPLETO TECNICO", width: 270 },
     { field: "service_request_client_name", headerName: "NOMBRE CLIENTE", width: 200 },
     { field: "service_request_phone_contact", headerName: "TELEFONO DE CONTACTO", width: 200 },

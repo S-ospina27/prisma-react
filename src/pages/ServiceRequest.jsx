@@ -47,7 +47,9 @@ function ServiceRequest({ loading, alert }) {
 
   const [guide, setGuide] = useState("");
   const [idservice_request, setIdservice_request] = useState("");
-  const [fullnamedealers, setFullnamedealers] = useState("");
+  const [iddealers, setIdealers] = useState("");
+  const [name_dealers, setName_dealers] = useState("");
+  const [users_lastname_dealers, setUsers_lastname_dealers] = useState("");
   const [idusers_technical, setIdusers_technical] = useState("");
   const [cities_name, setCities_name] = useState("");
   const [departments_name, setDepartments_name] = useState("");
@@ -74,7 +76,7 @@ function ServiceRequest({ loading, alert }) {
     useState(null);
 
   const setFields = (row) => {
-    // console.log(row);
+    //  console.log(row);
     setGuide(`Guia-${row.idservice_request}`);
     setIdservice_request(row.idservice_request);
     setService_request_payment_methods(
@@ -91,7 +93,9 @@ function ServiceRequest({ loading, alert }) {
         ? ""
         : `${row.idusers_technical} - ${row.fullnametechnical}`
     );
-    setFullnamedealers(row.fullnamedealers);
+    setIdealers(row.users_identification);
+    setName_dealers(row.users_name);
+    setUsers_lastname_dealers(row.users_lastname);
     setDepartments_name(row.departments_name);
     setCities_name(row.cities_name);
     setIdservice_states(row.idservice_states);
@@ -115,7 +119,7 @@ function ServiceRequest({ loading, alert }) {
 
   const handleReadServiceRequest = () => {
     axios.get(RoutesList.api.service.request.read).then((res) => {
-      //   console.log(res.data);
+        // console.log(res.data);
       setServiceRequest(res.data);
     });
   };
@@ -367,7 +371,7 @@ function ServiceRequest({ loading, alert }) {
             </Box>
 
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={6}>
+              <Grid item xs={12} sm={12} md={12}>
                 <TextFieldFilled
                   label={"Nombre del cliente"}
                   type={"text"}
@@ -378,16 +382,7 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} md={6}>
-                <TextFieldFilled
-                  label={"Nombre del Distribuidor"}
-                  type={"text"}
-                  value={fullnamedealers}
-                  setValue={setFullnamedealers}
-                  required
-                  readOnly
-                />
-              </Grid>
+             
 
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
@@ -455,6 +450,49 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
             </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="blue" label={"Informacion del Distribidor"} />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={2}>
+             <Grid item xs={12} sm={12} md={4}>
+                <TextFieldFilled
+                  label={"Identificación"}
+                  type={"text"}
+                  value={iddealers}
+                  setValue={setIdealers}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+             <Grid item xs={12} sm={12} md={4}>
+                <TextFieldFilled
+                  label={"Nombre"}
+                  type={"text"}
+                  value={name_dealers}
+                  setValue={setName_dealers}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+             <Grid item xs={12} sm={12} md={4}>
+                <TextFieldFilled
+                  label={"Apellido"}
+                  type={"text"}
+                  value={users_lastname_dealers}
+                  setValue={setUsers_lastname_dealers}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+            </Grid>
+
 
             <Box my={3}>
               <Divider textAlign="left">
