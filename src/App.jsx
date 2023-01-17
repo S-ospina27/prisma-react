@@ -1,3 +1,4 @@
+import "./assets/css/app.css";
 import { Route, Routes } from "react-router-dom";
 import {
   Alert,
@@ -8,23 +9,22 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { useState } from "react";
-
 import Styles from "./components/tools/Styles";
 
 import NavbarNavigation from "./components/NavbarNavigation";
 import Users from "./pages/Users";
 import Products from "./pages/Products";
-import "./assets/css/app.css";
 import ServiceOrders from "./pages/ServiceOrders";
 import Login from "./pages/Login";
-import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware";
-import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ServiceRequest from "./pages/ServiceRequest";
 import Technical from "./pages/Technical";
 import SpareParts from "./pages/SpareParts";
 import Dashboard from "./pages/Dashboard";
+
+import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware";
+import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
 
 function App() {
   const [loading, setLoading] = useState(false);
