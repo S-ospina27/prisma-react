@@ -29,7 +29,7 @@ function Dashboard() {
 
   const hanleReadAmountOrders = () => {
     axios
-      .get(RoutesList.api.service_orders.read.graphics.amount_orders)
+      .get(RoutesList.api.service.orders.read.graphics.amount_orders)
       .then((res) => {
         // console.log(res.data);
 
@@ -50,9 +50,9 @@ function Dashboard() {
 
   const hanleReadUnitPercentages = () => {
     axios
-      .get(RoutesList.api.service_orders.read.graphics.unit_percentages)
+      .get(RoutesList.api.service.orders.read.graphics.unit_percentages)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
 
         if (!res.data.status) {
           const values = [];
@@ -126,12 +126,11 @@ function Dashboard() {
 
         <Grid item xs={12} sm={12} md={6}>
           <Box my={5}>
-            <Divider textAlign="right">
+            <Divider textAlign="left">
               <Chip label="Porcentaje de unidades" color="dark-blue" />
             </Divider>
           </Box>
 
-          {/* // otra grafica  */}
           <Bar
             options={{
               elements: {
@@ -152,7 +151,7 @@ function Dashboard() {
                 {
                   label: "Cantidad Ordenes",
                   data: unitPercentages,
-                  backgroundColor: ["rgb(18, 170, 0)","rgb(255, 0, 0)"],
+                  backgroundColor: ["rgb(18, 170, 0)", "rgb(255, 0, 0)"],
                   borderColor: [
                     "rgba(18, 170, 0, 0.5)",
                     "rgba(255, 0, 0, 0.5)",

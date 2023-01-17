@@ -199,7 +199,7 @@ function Products({ loading, alert }) {
     <Box mx={3} my={3}>
       <Box mb={3}>
         <Divider>
-          <Chip label={"Portafolio"} color="blue" />
+          <Chip label={"Productos"} color="blue" />
         </Divider>
       </Box>
 

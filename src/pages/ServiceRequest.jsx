@@ -214,7 +214,7 @@ function ServiceRequest({ loading, alert }) {
     <Box mx={3} my={3}>
       <Box mb={2}>
         <Divider>
-          <Chip color="dark-blue" label={"Solucitudes"} />
+          <Chip color="blue" label={"Solucitudes"} />
         </Divider>
       </Box>
 
@@ -362,7 +362,7 @@ function ServiceRequest({ loading, alert }) {
 
             <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Informacion del Cliente"} />
+                <Chip color="blue" label={"Informacion del Cliente"} />
               </Divider>
             </Box>
 
@@ -497,7 +497,7 @@ function ServiceRequest({ loading, alert }) {
 
             <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Novedad de la Solicitud"} />
+                <Chip color="blue" label={"Novedad de la Solicitud"} />
               </Divider>
             </Box>
 
@@ -513,6 +513,7 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
             </Grid>
+
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <Box my={3}>
@@ -553,53 +554,6 @@ function ServiceRequest({ loading, alert }) {
                   {service_request_evidence}
                 </Button>
               </Grid>
-            </Grid>
-
-            <Grid container spacing={2}>
-              <Dialog
-                open={openOrdersDate}
-                onClose={() => setOpenOrdersDate(false)}
-                TransitionComponent={DialogTransition}
-              >
-                <form>
-                  <DialogTitle>{'Exportar "Ordenes de Servicio"'}</DialogTitle>
-
-                  <DialogContent dividers>
-                    <Box my={3}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12} md={6}>
-                          <DateFieldFilled
-                            label={"Fecha Inicio"}
-                            value={date_start}
-                            setValue={setDate_start}
-                            required
-                          />
-                        </Grid>
-
-                        <Grid item xs={12} sm={12} md={6}>
-                          <DateFieldFilled
-                            label={"Fecha Fin"}
-                            value={date_end}
-                            setValue={setDate_end}
-                            required
-                          />
-                        </Grid>
-                      </Grid>
-                    </Box>
-                  </DialogContent>
-
-                  <DialogActions>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="blue"
-                      size="small"
-                    >
-                      Exportar
-                    </Button>
-                  </DialogActions>
-                </form>
-              </Dialog>
             </Grid>
           </Container>
         }

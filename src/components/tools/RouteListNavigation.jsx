@@ -30,7 +30,7 @@ export default {
         link: "/service/orders",
       },
       {
-        nombre: "Solicitudes",
+        nombre: "Ordenes de Solicitudes",
         icon: <AssignmentIcon color={"dark-blue"} />,
         link: "/service/request",
       },

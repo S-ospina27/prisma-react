@@ -85,7 +85,7 @@ function NavbarNavigation() {
             <Box
               sx={{
                 paddingTop: 0,
-                width: 250,
+                width: 260,
                 height: "100%",
               }}
               role="presentation"

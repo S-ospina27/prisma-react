@@ -1,17 +1,5 @@
-import {
-  Box,
-  Button,
-  Chip,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-} from "@mui/material";
+import { Box, Chip, Container, Divider, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import axios from "axios";
 import DataTable from "../components/DataTable";
 import DialogForm from "../components/common/DialogForm";
@@ -20,7 +8,7 @@ import TextFieldFilled from "../components/common/TextFieldFilled";
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
 
-function Technical({ loading, alert }) {
+function TechnicalInventory({ loading, alert }) {
   const [CreatTechnical, setOpenCreatTechnical] = useState(false);
   const [Technical, setTechnical] = useState([]);
 
@@ -121,7 +109,7 @@ function Technical({ loading, alert }) {
       />
 
       <DialogForm
-        title={"Actualizar Solicitud de Inventario"}
+        title={"Actualizar Inventario"}
         open={CreatTechnical}
         setOpen={setOpenCreatTechnical}
         button={{
@@ -189,7 +177,7 @@ function Technical({ loading, alert }) {
 
             <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Información del repuesto"} />
+                <Chip color="blue" label={"Información del repuesto"} />
               </Divider>
             </Box>
 
@@ -263,4 +251,4 @@ function Technical({ loading, alert }) {
   );
 }
 
-export default Technical;
+export default TechnicalInventory;

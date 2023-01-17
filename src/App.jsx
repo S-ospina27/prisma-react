@@ -19,7 +19,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ServiceRequest from "./pages/ServiceRequest";
-import Technical from "./pages/Technical";
+import TechnicalInventory from "./pages/TechnicalInventory";
 import SpareParts from "./pages/SpareParts";
 import Dashboard from "./pages/Dashboard";
 
@@ -163,7 +163,7 @@ function App() {
                 loading={setLoading}
                 alert={setAlert}
               >
-                <Technical loading={setLoading} alert={setAlert} />
+                <TechnicalInventory loading={setLoading} alert={setAlert} />
               </WithAuthenticationMiddleware>
             }
           />
