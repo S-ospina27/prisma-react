@@ -5,6 +5,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import InventoryIcon from '@mui/icons-material/Inventory';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 export default {
   online: {
@@ -43,6 +44,11 @@ export default {
         nombre: "Repuestos",
         icon: <InventoryIcon color={"dark-blue"} />,
         link: "/service/spare-parts",
+      },
+      {
+        nombre: "Pagos",
+        icon: <PointOfSaleIcon color={"blue"} />,
+        link: "/service/Payments",
       },
     ],
     provider: [

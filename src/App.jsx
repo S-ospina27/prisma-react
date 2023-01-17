@@ -25,6 +25,7 @@ import Dashboard from "./pages/Dashboard";
 
 import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware";
 import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
+import ServicePayments from "./pages/ServicePayments";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -164,6 +165,17 @@ function App() {
                 alert={setAlert}
               >
                 <TechnicalInventory loading={setLoading} alert={setAlert} />
+              </WithAuthenticationMiddleware>
+            }
+          />
+          <Route
+            path="payments"
+            element={
+              <WithAuthenticationMiddleware
+                loading={setLoading}
+                alert={setAlert}
+              >
+                <ServicePayments loading={setLoading} alert={setAlert} />
               </WithAuthenticationMiddleware>
             }
           />

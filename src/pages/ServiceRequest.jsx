@@ -40,11 +40,6 @@ function ServiceRequest({ loading, alert }) {
 
   const [date_start, setDate_start] = useState(null);
   const [date_end, setDate_end] = useState(null);
-
-  const [service_request_payment_methods, setService_request_payment_methods] =
-    useState("");
-  const [service_request_value, setService_request_value] = useState("");
-
   const [guide, setGuide] = useState("");
   const [idservice_request, setIdservice_request] = useState("");
   const [iddealers, setIdealers] = useState("");
@@ -74,9 +69,16 @@ function ServiceRequest({ loading, alert }) {
   const [service_request_warranty, setService_request_warranty] = useState("");
   const [service_request_date_visit, setService_request_date_visit] =
     useState(null);
+  const [service_request_payment_methods, setService_request_payment_methods] =
+    useState("");
+  const [service_request_value, setService_request_value] = useState("");
+
+  const [
+    service_request_technical_novelty,
+    setService_request_technical_novelty,
+  ] = useState("");
 
   const setFields = (row) => {
-    //  console.log(row);
     setGuide(`Guia-${row.idservice_request}`);
     setIdservice_request(row.idservice_request);
     setService_request_payment_methods(
@@ -115,11 +117,24 @@ function ServiceRequest({ loading, alert }) {
       row.service_request_warranty === null ? "" : row.service_request_warranty
     );
     setService_request_date_visit(row.service_request_date_visit);
+    setService_request_value(
+      row.service_request_value == null ? "" : row.service_request_value
+    );
+    setService_request_payment_methods(
+      row.service_request_payment_methods == null
+        ? ""
+        : row.service_request_payment_methods
+    );
+    setService_request_technical_novelty(
+      row.service_request_technical_novelty == null
+        ? ""
+        : row.service_request_technical_novelty
+    );
   };
 
   const handleReadServiceRequest = () => {
     axios.get(RoutesList.api.service.request.read).then((res) => {
-        // console.log(res.data);
+      // console.log(res.data);
       setServiceRequest(res.data);
     });
   };
@@ -140,9 +155,18 @@ function ServiceRequest({ loading, alert }) {
     );
     form.append("idservice_states", idservice_states);
     form.append("idservice_request", idservice_request);
+    form.append("setService_request_value", setService_request_value);
+    form.append(
+      "service_request_payment_methods",
+      service_request_payment_methods
+    );
+    form.append(
+      "service_request_technical_novelty",
+      service_request_technical_novelty
+    );
 
     axios.post(RoutesList.api.service.request.update, form).then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
 
       alert({
         open: true,
@@ -366,7 +390,7 @@ function ServiceRequest({ loading, alert }) {
 
             <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="blue" label={"Informacion del Cliente"} />
+                <Chip color="dark-blue" label={"Informacion del Cliente"} />
               </Divider>
             </Box>
 
@@ -381,8 +405,6 @@ function ServiceRequest({ loading, alert }) {
                   readOnly
                 />
               </Grid>
-
-             
 
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
@@ -458,7 +480,7 @@ function ServiceRequest({ loading, alert }) {
             </Box>
 
             <Grid container spacing={2}>
-             <Grid item xs={12} sm={12} md={4}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextFieldFilled
                   label={"Identificación"}
                   type={"text"}
@@ -469,7 +491,7 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
 
-             <Grid item xs={12} sm={12} md={4}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextFieldFilled
                   label={"Nombre"}
                   type={"text"}
@@ -480,7 +502,7 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
 
-             <Grid item xs={12} sm={12} md={4}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextFieldFilled
                   label={"Apellido"}
                   type={"text"}
@@ -490,9 +512,7 @@ function ServiceRequest({ loading, alert }) {
                   readOnly
                 />
               </Grid>
-
             </Grid>
-
 
             <Box my={3}>
               <Divider textAlign="left">
@@ -551,6 +571,29 @@ function ServiceRequest({ loading, alert }) {
                 />
               </Grid>
             </Grid>
+
+            {idservice_states === 9 && (
+              <>
+                <Box my={3}>
+                  <Divider textAlign="left">
+                    <Chip color="dark-blue" label={"Novedad del Tecnico"} />
+                  </Divider>
+                </Box>
+
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextFieldFilled
+                      label={"Novedad tecnico"}
+                      type={"text"}
+                      value={service_request_technical_novelty}
+                      setValue={setService_request_technical_novelty}
+                      required
+                      readOnly
+                    />
+                  </Grid>
+                </Grid>
+              </>
+            )}
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
