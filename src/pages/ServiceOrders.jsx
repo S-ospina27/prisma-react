@@ -122,7 +122,7 @@ function ServiceOrders({ loading, alert }) {
   };
 
   const handleReadOrderService = () => {
-    axios.get(RoutesList.api.service_orders.read.index).then((res) => {
+    axios.get(RoutesList.api.service.orders.read.index).then((res) => {
       // console.log(res.data);
       setOrderService(res.data);
     });
@@ -144,7 +144,7 @@ function ServiceOrders({ loading, alert }) {
       service_orders_finished_product
     );
 
-    axios.post(RoutesList.api.service_orders.create, form).then((res) => {
+    axios.post(RoutesList.api.service.orders.create, form).then((res) => {
       // console.log(res.data);
 
       alert({
@@ -191,7 +191,7 @@ function ServiceOrders({ loading, alert }) {
     form.append("service_orders_total_price", service_orders_total_price);
     form.append("service_orders_pending_amount", service_orders_pending_amount);
 
-    axios.post(RoutesList.api.service_orders.update, form).then((res) => {
+    axios.post(RoutesList.api.service.orders.update, form).then((res) => {
       // console.log(res.data);
       alert({
         open: true,
@@ -203,7 +203,7 @@ function ServiceOrders({ loading, alert }) {
     });
   };
 
-  const handleExportServiceOrders = (e) => {
+  const handleExportServiceOrdersExcel = (e) => {
     e.preventDefault();
     setOpenOrdersDate(false);
     loading(true);
@@ -234,7 +234,7 @@ function ServiceOrders({ loading, alert }) {
     form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
     form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
 
-    axios.post(RoutesList.api.service_orders.export.excel, form).then((res) => {
+    axios.post(RoutesList.api.service.orders.export.excel, form).then((res) => {
       // console.log(res.data);
       loading(false);
       alert({
@@ -244,7 +244,7 @@ function ServiceOrders({ loading, alert }) {
       });
 
       if (res.data.status === "success") {
-        window.location.href = res.data.data.url;
+        window.open(res.data.data.url);
         setDate_start(null);
         setDate_end(null);
       } else if (res.data.status === "warning") {
@@ -588,7 +588,7 @@ function ServiceOrders({ loading, alert }) {
         onClose={() => setOpenOrdersDate(false)}
         TransitionComponent={DialogTransition}
       >
-        <form onSubmit={handleExportServiceOrders}>
+        <form onSubmit={handleExportServiceOrdersExcel}>
           <DialogTitle>{'Exportar "Ordenes de Servicio"'}</DialogTitle>
 
           <DialogContent dividers>

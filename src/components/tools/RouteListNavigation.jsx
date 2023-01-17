@@ -27,22 +27,22 @@ export default {
       {
         nombre: "Ordenes de Servicios",
         icon: <MenuBookRoundedIcon color={"blue"} />,
-        link: "/service-orders",
+        link: "/service/orders",
       },
       {
         nombre: "Solicitudes",
         icon: <AssignmentIcon color={"dark-blue"} />,
-        link: "/service-request",
+        link: "/service/request",
       },
       {
-        nombre: "Tecnicos",
+        nombre: "Inventario Tecnicos",
         icon: <SupervisedUserCircleIcon color={"blue"} />,
-        link: "/technical",
+        link: "/service/technical-inventory",
       },
       {
-        nombre: "Inventario",
+        nombre: "Repuestos",
         icon: <InventoryIcon color={"dark-blue"} />,
-        link: "/inventory",
+        link: "/service/spare-parts",
       },
     ],
     provider: [

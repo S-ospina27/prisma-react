@@ -73,7 +73,8 @@ function ServiceRequest({ loading, alert }) {
   const [service_request_date_visit, setService_request_date_visit] =
     useState(null);
 
-  const setFields = (row = {}) => {
+  const setFields = (row) => {
+    // console.log(row);
     setGuide(`Guia-${row.idservice_request}`);
     setIdservice_request(row.idservice_request);
     setService_request_payment_methods(
@@ -110,11 +111,10 @@ function ServiceRequest({ loading, alert }) {
       row.service_request_warranty === null ? "" : row.service_request_warranty
     );
     setService_request_date_visit(row.service_request_date_visit);
-    console.log(row);
   };
 
   const handleReadServiceRequest = () => {
-    axios.get(RoutesList.api.service_request.read).then((res) => {
+    axios.get(RoutesList.api.service.request.read).then((res) => {
       //   console.log(res.data);
       setServiceRequest(res.data);
     });
@@ -137,8 +137,9 @@ function ServiceRequest({ loading, alert }) {
     form.append("idservice_states", idservice_states);
     form.append("idservice_request", idservice_request);
 
-    axios.post(RoutesList.api.service_request.update, form).then((res) => {
-      console.log(res.data);
+    axios.post(RoutesList.api.service.request.update, form).then((res) => {
+      // console.log(res.data);
+
       alert({
         open: true,
         severity: res.data.status,
@@ -149,7 +150,7 @@ function ServiceRequest({ loading, alert }) {
     });
   };
 
-  const handleExportServiceRequest = (e) => {
+  const handleExportServiceRequestExcel = (e) => {
     e.preventDefault();
     setOpenOrdersDate(false);
     loading(true);
@@ -181,9 +182,9 @@ function ServiceRequest({ loading, alert }) {
     form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
 
     axios
-      .post(RoutesList.api.service_request.export.excel, form)
+      .post(RoutesList.api.service.request.export.excel, form)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         loading(false);
         alert({
           open: true,
@@ -192,7 +193,7 @@ function ServiceRequest({ loading, alert }) {
         });
 
         if (res.data.status === "success") {
-          window.location.href = res.data.data.url;
+          window.open(res.data.data.url);
           setDate_start(null);
           setDate_end(null);
         } else if (res.data.status === "warning") {
@@ -321,7 +322,7 @@ function ServiceRequest({ loading, alert }) {
                     "ACEPTADO",
                     "ENVIADO",
                     "NO-DESPACHADO",
-                    "FINALIZADO"
+                    "FINALIZADO",
                   ]}
                 />
               </Grid>
@@ -609,7 +610,7 @@ function ServiceRequest({ loading, alert }) {
         onClose={() => setOpenOrdersDate(false)}
         TransitionComponent={DialogTransition}
       >
-        <form onSubmit={handleExportServiceRequest}>
+        <form onSubmit={handleExportServiceRequestExcel}>
           <DialogTitle>{'Exportar "Ordenes de Solicitudes"'}</DialogTitle>
 
           <DialogContent dividers>

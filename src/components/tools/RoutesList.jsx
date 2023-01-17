@@ -12,22 +12,16 @@ export default {
       index: `${host}/api/status/`,
       service: `${host}/api/status/service`,
     },
+    locations: {
+      read_departments: `${host}/api/locations/read-departments`,
+      read_cities: `${host}/api/locations/read-cities/`,
+    },
     users: {
       create: `${host}/api/users/create`,
       update: `${host}/api/users/update`,
       read: {
         index: `${host}/api/users/read`,
         by_rol: `${host}/api/users/read/by-rol`,
-      },
-    },
-    spare_parts: {
-      read: `${host}/api/spare-parts/read`,
-      create: `${host}/api/spare-parts/create`,
-      update: `${host}/api/spare-parts/update`,
-      inventory: {
-        create: `${host}/api/spare-parts/inventory/create`,
-        read: `${host}/api/spare-parts/inventory/read`,
-        update: `${host}/api/spare-parts/inventory/update`,
       },
     },
     products: {
@@ -43,31 +37,39 @@ export default {
         read: `${host}/api/products/types/read`,
       },
     },
-    service_orders: {
-      create: `${host}/api/service-orders/create`,
-      update: `${host}/api/service-orders/update`,
-      export: {
-        excel: `${host}/api/service-orders/export/excel`,
-        pdf: `${host}/api/service-orders/export/pdf`,
-      },
-      read: {
-        index: `${host}/api/service-orders/read`,
-        by_provider: `${host}/api/service-orders/read/by-provider/{idprovider_users}`,
-        graphics: {
-          amount_orders: `${host}/api/service-orders/read/graphics/amount-orders`,
-          unit_percentages: `${host}/api/service-orders/read/graphics/unit-percentages`,
+    service: {
+      orders: {
+        create: `${host}/api/service/orders/create`,
+        update: `${host}/api/service/orders/update`,
+        export: {
+          excel: `${host}/api/service/orders/export/excel`,
+          pdf: `${host}/api/service/orders/export/pdf`,
+        },
+        read: {
+          index: `${host}/api/service/orders/read`,
+          by_provider: `${host}/api/service/orders/read/by-provider`,
+          graphics: {
+            amount_orders: `${host}/api/service/orders/read/graphics/amount-orders`,
+            unit_percentages: `${host}/api/service/orders/read/graphics/unit-percentages`,
+          },
         },
       },
-    },
-    locations: {
-      read_departments: `${host}/api/locations/read-departments`,
-      read_cities: `${host}/api/locations/read-cities/`,
-    },
-    service_request: {
-      read: `${host}/api/service-request/read`,
-      update: `${host}/api/service-request/update`,
-      export: {
-        excel: `${host}/api/service-request/export/excel`,
+      request: {
+        read: `${host}/api/service/request/read`,
+        update: `${host}/api/service/request/update`,
+        export: {
+          excel: `${host}/api/service/request/export/excel`,
+        },
+      },
+      spare_parts: {
+        read: `${host}/api/service/spare-parts/read`,
+        create: `${host}/api/service/spare-parts/create`,
+        update: `${host}/api/service/spare-parts/update`,
+      },
+      technical_inventory: {
+        create: `${host}/api/service/technical-inventory/create`,
+        read: `${host}/api/service/technical-inventory/read`,
+        update: `${host}/api/service/technical-inventory/update`,
       },
     },
   },

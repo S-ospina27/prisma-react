@@ -111,24 +111,6 @@ function App() {
         />
 
         <Route
-          path="Technical"
-          element={
-            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <Technical loading={setLoading} alert={setAlert} />
-            </WithAuthenticationMiddleware>
-          }
-        />
-
-        <Route
-          path="Inventory"
-          element={
-            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <SpareParts loading={setLoading} alert={setAlert} />
-            </WithAuthenticationMiddleware>
-          }
-        />
-
-        <Route
           path="products"
           element={
             <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
@@ -137,22 +119,55 @@ function App() {
           }
         />
 
-        <Route
-          path="service-orders"
-          element={
-            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <ServiceOrders loading={setLoading} alert={setAlert} />
-            </WithAuthenticationMiddleware>
-          }
-        />
-        <Route
-          path="service-request"
-          element={
-            <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <ServiceRequest loading={setLoading} alert={setAlert} />
-            </WithAuthenticationMiddleware>
-          }
-        />
+        <Route path="service">
+          <Route
+            path="orders"
+            element={
+              <WithAuthenticationMiddleware
+                loading={setLoading}
+                alert={setAlert}
+              >
+                <ServiceOrders loading={setLoading} alert={setAlert} />
+              </WithAuthenticationMiddleware>
+            }
+          />
+
+          <Route
+            path="request"
+            element={
+              <WithAuthenticationMiddleware
+                loading={setLoading}
+                alert={setAlert}
+              >
+                <ServiceRequest loading={setLoading} alert={setAlert} />
+              </WithAuthenticationMiddleware>
+            }
+          />
+
+          <Route
+            path="spare-parts"
+            element={
+              <WithAuthenticationMiddleware
+                loading={setLoading}
+                alert={setAlert}
+              >
+                <SpareParts loading={setLoading} alert={setAlert} />
+              </WithAuthenticationMiddleware>
+            }
+          />
+
+          <Route
+            path="technical-inventory"
+            element={
+              <WithAuthenticationMiddleware
+                loading={setLoading}
+                alert={setAlert}
+              >
+                <Technical loading={setLoading} alert={setAlert} />
+              </WithAuthenticationMiddleware>
+            }
+          />
+        </Route>
       </Routes>
     </ThemeProvider>
   );

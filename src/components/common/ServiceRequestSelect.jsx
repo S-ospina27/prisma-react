@@ -16,15 +16,15 @@ function ServiceRequestSelect({
   useEffect(() => {
     let route =  "";
 
-    if (jwtDecode(get('jwt')).data.idroles === 2) {
-        route = RoutesList.api.service_request.read;
-    } else {
-        route = RoutesList.api.service_request.read;
-    }
+    // if (jwtDecode(get('jwt')).data.idroles === 2) {
+    //     route = RoutesList.api.service_request.read;
+    // } else {
+    //     route = RoutesList.api.service_request.read;
+    // }
 
-    axios.get(route, getHeader()).then(res => {
-        console.log(res.data);
-    });
+    // axios.get(route, getHeader()).then(res => {
+    //     console.log(res.data);
+    // });
   }, []);
 
   return null;

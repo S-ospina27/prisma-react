@@ -64,9 +64,9 @@ function Technical({ loading, alert }) {
   };
 
   const handleReadTechnical = () => {
-    axios.get(RoutesList.api.spare_parts.inventory.read).then((res) => {
+    axios.get(RoutesList.api.service.technical_inventory.read).then((res) => {
       // console.log(res.data);
-      setTechnical(res.data);
+      setTechnical(!res.data.status ? res.data : []);
     });
   };
 
@@ -80,9 +80,10 @@ function Technical({ loading, alert }) {
     form.append("idtechnical_inventory", idtechnical_inventory);
 
     axios
-      .post(RoutesList.api.spare_parts.inventory.update, form)
+      .post(RoutesList.api.service.technical_inventory.update, form)
       .then((res) => {
         // console.log(res.data);
+
         handleReadTechnical();
         alert({
           open: true,

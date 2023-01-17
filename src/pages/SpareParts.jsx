@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Chip,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
@@ -11,18 +10,14 @@ import {
   Grid,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import axios from "axios";
 import DataTable from "../components/DataTable";
-import DialogForm from "../components/common/DialogForm";
-import ServiceStatesSelect from "../components/common/ServiceStatesSelect";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
 import DialogTransition from "../components/common/DialogTransition";
 
 function SpareParts({ loading, alert }) {
-  const [OpenCreateSpareParts, setOpenCreateSpareParts] = useState(false);
   const [OpenUpdateSpareParts, setOpenUpdateSpareParts] = useState(false);
   const [SpareParts, setSpareParts] = useState([]);
 
@@ -52,7 +47,7 @@ function SpareParts({ loading, alert }) {
   };
 
   const handleReadSpareParts = () => {
-    axios.get(RoutesList.api.spare_parts.read).then((res) => {
+    axios.get(RoutesList.api.service.spare_parts.read).then((res) => {
       // console.log(res.data);
       setSpareParts(!res.data.status ? res.data : []);
     });
@@ -66,7 +61,7 @@ function SpareParts({ loading, alert }) {
     form.append("spare_parts_name", spare_parts_name_c);
     form.append("spare_parts_amount", spare_parts_amount_c);
 
-    axios.post(RoutesList.api.spare_parts.create, form).then((res) => {
+    axios.post(RoutesList.api.service.spare_parts.create, form).then((res) => {
       // console.log(res.data);
       setSpare_parts_name_c("");
       setSpare_parts_amount_c("");
@@ -92,8 +87,8 @@ function SpareParts({ loading, alert }) {
     form.append("spare_parts_amount", spare_parts_amount);
     form.append("spare_parts_amount_copy", spare_parts_amount_copy);
 
-    axios.post(RoutesList.api.spare_parts.update, form).then((res) => {
-      console.log(res.data);
+    axios.post(RoutesList.api.service.spare_parts.update, form).then((res) => {
+      // console.log(res.data);
       setFields();
 
       handleReadSpareParts();
@@ -191,19 +186,20 @@ function SpareParts({ loading, alert }) {
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
                   type={"number"}
-                  label={"Cantidad Solicitada"}
-                  value={spare_parts_amount}
-                  setValue={setSpare_parts_amount}
+                  label={"Cantidad Actual"}
+                  value={spare_parts_amount_copy}
+                  setValue={setSpare_parts_amount_copy}
                   required
+                  readOnly
                 />
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
                   type={"number"}
-                  label={"Cantidad Actual"}
-                  value={spare_parts_amount_copy}
-                  setValue={setSpare_parts_amount_copy}
+                  label={"Cantidad Solicitada"}
+                  value={spare_parts_amount}
+                  setValue={setSpare_parts_amount}
                   required
                 />
               </Grid>
