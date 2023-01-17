@@ -25,6 +25,7 @@ import Dashboard from "./pages/Dashboard";
 
 import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware";
 import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
+import ApplicationOrderForm from "./pages/ApplicationOrderForm";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -120,6 +121,13 @@ function App() {
         />
 
         <Route path="service">
+          <Route
+            path="application-order-form/:idusers"
+            element={
+              <ApplicationOrderForm loading={setLoading} alert={setAlert} />
+            }
+          />
+
           <Route
             path="orders"
             element={

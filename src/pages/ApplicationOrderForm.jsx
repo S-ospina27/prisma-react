@@ -1,4 +1,4 @@
-function ApplicationOrderForm() {
+function ApplicationOrderForm({ loading, alert }) {
   return null;
 }
 
