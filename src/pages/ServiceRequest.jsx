@@ -29,8 +29,6 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
-import logo from "./../assets/img/prisma.png";
-import WarrantySelect from "../components/common/WarrantySelect";
 import ServiceRequestSelect from "../components/common/ServiceRequestSelect";
 
 function ServiceRequest({ loading, alert }) {

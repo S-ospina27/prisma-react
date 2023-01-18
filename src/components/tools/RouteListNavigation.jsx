@@ -50,6 +50,11 @@ export default {
         icon: <PointOfSaleIcon color={"blue"} />,
         link: "/service/Payments",
       },
+      {
+        nombre: "Formularios Solicitudes",
+        icon: <PointOfSaleIcon color={"blue"} />,
+        link: "/service/application-order-form/1",
+      },
     ],
     provider: [
       {
