@@ -29,6 +29,9 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import QRCode from "react-qr-code";
 
+
+
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -82,9 +85,7 @@ function Dashboard({ loading, alert }) {
   const [unitPercentages, setUnitPercentages] = useState([]);
   const [warranty, setWarranty] = useState([]);
   const [totalChargesPerMonth, setTotalChargesPerMonth] = useState([]);
-  const [labelsTotalChargesPerMonth, setLabelsTotalChargesPerMonth] = useState(
-    []
-  );
+  const [totalChargesWarranty, settotalChargesWarranty] = useState([]);
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -204,12 +205,40 @@ function Dashboard({ loading, alert }) {
       });
   };
 
+  const handleReadTotalChargesWarranty = () => {
+    axios
+      .get(RoutesList.api.service.request.read.graphics.total_charges_warranty)
+      .then((res) => {
+        const items = [];
+
+        Object.entries(res.data).forEach(([key, year]) => {
+          let values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+          year.forEach((month) => {
+            values[month.month_item - 1] = parseInt(month.total_item);
+          });
+
+          const random = getRandomInt(0, colors.length);
+
+          items.push({
+            label: key,
+            data: values,
+            borderColor: colors[random].borderColor,
+            backgroundColor: colors[random].backgroundColor,
+          });
+        });
+        console.log(items);
+        settotalChargesWarranty(items);
+      });
+  };
+
   useEffect(() => {
     if (idroles === 1) {
       hanleReadAmountOrders();
       hanleReadUnitPercentages();
       hanleReadCountWarranty();
       handleReadTotalChargesPerMonth();
+      handleReadTotalChargesWarranty();
     }
   }, []);
 
@@ -428,6 +457,54 @@ function Dashboard({ loading, alert }) {
                 responsive: true,
               }}
             />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Box mb={5}>
+              <Divider textAlign="left">
+                <Chip
+                  label="Valor total sin garantias ordenes de solicitudes por mes"
+                  color="dark-blue"
+                />
+              </Divider>
+            </Box>
+
+            <Line
+              data={{
+                labels: [
+                  "Enero",
+                  "Febrero",
+                  "Marzo",
+                  "Abril",
+                  "Mayo",
+                  "Junio",
+                  "Julio",
+                  "Agosto",
+                  "Septiembre",
+                  "Octubre",
+                  "Noviembre",
+                  "Diciembre",
+                ],
+                datasets: totalChargesWarranty,
+              }}
+              options={{
+                responsive: true,
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Box mb={5}>
+              <Divider textAlign="left">
+                <Chip
+                  label="Seguimiento de guias ordenes de solicitud"
+                  color="dark-blue"
+                />
+              </Divider>
+            </Box>
+             <form>
+              
+             </form>
           </Grid>
         </Grid>
       )}
