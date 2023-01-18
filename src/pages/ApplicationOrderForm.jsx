@@ -24,6 +24,18 @@ function ApplicationOrderForm({ loading, alert }) {
   const [service_request_trouble_report, setService_request_trouble_report] =
     useState("");
 
+    const ClearFields = ()=>{
+      setIddepartments("");
+      setIdcities("");
+      setIdproducts("");
+      setService_request_client_name("");
+      setService_request_neighborhood("");
+      setService_request_address("");
+      setService_request_phone_contact("");
+      setService_request_email("");
+      setService_request_trouble_report("");
+    }
+
   const handleCreateServiceRequest = (e) => {
     e.preventDefault();
     loading(true);
@@ -44,7 +56,7 @@ function ApplicationOrderForm({ loading, alert }) {
 
     axios.post(RoutesList.api.service.request.create, form).then((res) => {
       // console.log(res.data);
-
+      ClearFields();
       loading(false);
       alert({
         open: true,

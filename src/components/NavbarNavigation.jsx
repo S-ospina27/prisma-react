@@ -132,6 +132,8 @@ function NavbarNavigation() {
                   </ListItem>
                 ))}
 
+                <Divider />
+                
                 <ListItem disablePadding>
                   <ListItemButton onClick={closeSession}>
                     <ListItemIcon>

@@ -4,8 +4,9 @@ import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
-import InventoryIcon from '@mui/icons-material/Inventory';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import InventoryIcon from "@mui/icons-material/Inventory";
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
 
 export default {
   online: {
@@ -52,7 +53,7 @@ export default {
       },
       {
         nombre: "Formularios Solicitudes",
-        icon: <PointOfSaleIcon color={"blue"} />,
+        icon: <FormatAlignLeftIcon color={"dark-blue"} />,
         link: "/service/application-order-form/1",
       },
     ],
@@ -70,9 +71,9 @@ export default {
       link: "/",
     },
     {
-      nombre: "Solicitudes",
-      icon: <AssignmentIcon color={"dark-blue"} />,
-      link: "/service-request",
+      nombre: "Formularios Solicitudes",
+      icon: <FormatAlignLeftIcon color={"dark-blue"} />,
+      link: "/service/application-order-form/1",
     },
   ],
 };
