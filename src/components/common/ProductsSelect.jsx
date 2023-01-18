@@ -11,6 +11,7 @@ function ProductsSelect({
   readOnly,
   selected = [],
   label,
+  showColumns = [],
 }) {
   const [products, setProducts] = useState([]);
 
@@ -38,9 +39,15 @@ function ProductsSelect({
       filterSelectedOptions
       disabled={disabled}
       readOnly={readOnly}
-      options={products.map(
-        (product) => `${product.idproducts} - ${product.products_reference}`
-      )}
+      options={products.map((product) => {
+        if (showColumns.length > 0) {
+          let text = `${product.idproducts} - ${product.products_reference}`;
+          showColumns.forEach((column) => (text += `/${product[column]}`));
+          return text;
+        } else {
+          return `${product.idproducts} - ${product.products_reference}`;
+        }
+      })}
       getOptionLabel={(product) => product}
       getOptionDisabled={(product) => product === value}
       isOptionEqualToValue={(product, value) => product === value}

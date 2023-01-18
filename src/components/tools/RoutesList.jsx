@@ -51,11 +51,13 @@ export default {
           graphics: {
             amount_orders: `${host}/api/service/orders/read/graphics/amount-orders`,
             unit_percentages: `${host}/api/service/orders/read/graphics/unit-percentages`,
-            
+
           },
         },
       },
       request: {
+        create: `${host}/api/service/request/create`,
+        update: `${host}/api/service/request/update`,
         read:{
           index: `${host}/api/service/request/read`,
           graphics:{
@@ -64,11 +66,10 @@ export default {
 
           }
         },
-        update: `${host}/api/service/request/update`,
         export: {
           excel: `${host}/api/service/request/export/excel`,
         },
-        
+
       },
       spare_parts: {
         read: `${host}/api/service/spare-parts/read`,
