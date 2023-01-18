@@ -16,8 +16,10 @@ import {
   Title,
   Tooltip,
   Legend,
+  PointElement,
+  LineElement,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import axios from "axios";
 
 import RoutesList from "../components/tools/RoutesList";
@@ -33,16 +35,62 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  PointElement,
+  LineElement
 );
 
 function Dashboard({ loading, alert }) {
   const [idroles, setIdroles] = useState(getJWT("idroles"));
+  const [colors, setColors] = useState([
+    {
+      borderColor: "rgb(255, 99, 132)",
+      backgroundColor: "rgba(255, 99, 132, 0.5)",
+    },
+    {
+      borderColor: "rgb(29, 238, 165)",
+      backgroundColor: "rgba(29, 238, 165, 0.5)",
+    },
+    {
+      borderColor: "rgb(137, 238, 29)",
+      backgroundColor: "rgba(137, 238, 29, 0.5)",
+    },
+    {
+      borderColor: "rgb(29, 83, 238)",
+      backgroundColor: "rgba(29, 83, 238, 0.5)",
+    },
+    {
+      borderColor: "rgb(254, 78, 185)",
+      backgroundColor: "rgba(254, 78, 185, 0.5)",
+    },
+    {
+      borderColor: "rgb(254, 214, 78)",
+      backgroundColor: "rgba(254, 214, 78, 0.5)",
+    },
+    {
+      borderColor: "rgb(78, 217, 254)",
+      backgroundColor: "rgba(78, 217, 254, 0.5)",
+    },
+    {
+      borderColor: "rgb(181, 13, 148)",
+      backgroundColor: "rgba(181, 13, 148, 0.5)",
+    },
+  ]);
 
   const [amountOrders, setAmountOrders] = useState([]);
   const [labelsAmountOrders, setLabelsAmountOrders] = useState([]);
   const [unitPercentages, setUnitPercentages] = useState([]);
   const [warranty, setWarranty] = useState([]);
+  const [totalChargesPerMonth, setTotalChargesPerMonth] = useState([]);
+  const [labelsTotalChargesPerMonth, setLabelsTotalChargesPerMonth] = useState(
+    []
+  );
+
+  const getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+  };
 
   const hanleReadAmountOrders = () => {
     axios
@@ -129,17 +177,45 @@ function Dashboard({ loading, alert }) {
     window.open(`https://api.whatsapp.com/send?text=${text}`);
   };
 
+  const handleReadTotalChargesPerMonth = () => {
+    axios
+      .get(RoutesList.api.service.request.read.graphics.total_charges_per_month)
+      .then((res) => {
+        const items = [];
+
+        Object.entries(res.data).forEach(([key, year]) => {
+          let values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+          year.forEach((month) => {
+            values[month.month_item - 1] = parseInt(month.total_item);
+          });
+
+          const random = getRandomInt(0, colors.length);
+
+          items.push({
+            label: key,
+            data: values,
+            borderColor: colors[random].borderColor,
+            backgroundColor: colors[random].backgroundColor,
+          });
+        });
+
+        setTotalChargesPerMonth(items);
+      });
+  };
+
   useEffect(() => {
     if (idroles === 1) {
       hanleReadAmountOrders();
       hanleReadUnitPercentages();
       hanleReadCountWarranty();
+      handleReadTotalChargesPerMonth();
     }
   }, []);
 
   return (
-    <Box mx={5}>
-      <Box my={3}>
+    <Box mx={5} my={5}>
+      <Box mb={3}>
         <Divider>
           <Chip label={"Dashboard"} color="blue" />
         </Divider>
@@ -190,7 +266,7 @@ function Dashboard({ loading, alert }) {
 
       {idroles === 1 && (
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <Box mb={3}>
               <Divider textAlign="left">
                 <Chip label="Cantidad Ordenes de servicio" color="dark-blue" />
@@ -233,7 +309,7 @@ function Dashboard({ loading, alert }) {
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <Box mb={3}>
               <Divider textAlign="left">
                 <Chip
@@ -274,7 +350,7 @@ function Dashboard({ loading, alert }) {
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <Box mb={3}>
               <Divider textAlign="left">
                 <Chip
@@ -316,6 +392,40 @@ function Dashboard({ loading, alert }) {
                     ],
                   },
                 ],
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={6} lg={6}>
+            <Box mb={5}>
+              <Divider textAlign="left">
+                <Chip
+                  label="Valor total garantias ordenes de solicitudes por mes"
+                  color="dark-blue"
+                />
+              </Divider>
+            </Box>
+
+            <Line
+              data={{
+                labels: [
+                  "Enero",
+                  "Febrero",
+                  "Marzo",
+                  "Abril",
+                  "Mayo",
+                  "Junio",
+                  "Julio",
+                  "Agosto",
+                  "Septiembre",
+                  "Octubre",
+                  "Noviembre",
+                  "Diciembre",
+                ],
+                datasets: totalChargesPerMonth,
+              }}
+              options={{
+                responsive: true,
               }}
             />
           </Grid>
