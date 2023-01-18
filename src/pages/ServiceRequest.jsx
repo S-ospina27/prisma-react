@@ -131,7 +131,7 @@ function ServiceRequest({ loading, alert }) {
   };
 
   const handleReadServiceRequest = () => {
-    axios.get(RoutesList.api.service.request.read).then((res) => {
+    axios.get(RoutesList.api.service.request.read.index).then((res) => {
       // console.log(res.data);
       setServiceRequest(res.data);
     });
