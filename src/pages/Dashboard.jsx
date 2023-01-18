@@ -89,14 +89,15 @@ function Dashboard({ loading, alert }) {
         }
       });
   };
+
   const hanleReadCountWarranty = () => {
     axios
-      .get(RoutesList.api.service.orders.read.graphics.count_warranty)
+      .get(RoutesList.api.service.request.read.graphics.count_warranty)
       .then((res) => {
         if (!res.data.status) {
           const values = [];
           res.data.forEach((row) => {
-            values.push(row.cont);
+            values.push(row.cont === null ? 0 : row.cont);
           });
           setWarranty(values);
         }
@@ -192,7 +193,7 @@ function Dashboard({ loading, alert }) {
           <Grid item xs={12} sm={12} md={6}>
             <Box mb={3}>
               <Divider textAlign="left">
-                <Chip label="Cantidad Ordenes" color="dark-blue" />
+                <Chip label="Cantidad Ordenes de servicio" color="dark-blue" />
               </Divider>
             </Box>
 
@@ -235,7 +236,10 @@ function Dashboard({ loading, alert }) {
           <Grid item xs={12} sm={12} md={6}>
             <Box mb={3}>
               <Divider textAlign="left">
-                <Chip label="Porcentaje de unidades" color="dark-blue" />
+                <Chip
+                  label="Porcentaje de unidades ordenes de servicio"
+                  color="dark-blue"
+                />
               </Divider>
             </Box>
 
@@ -273,7 +277,10 @@ function Dashboard({ loading, alert }) {
           <Grid item xs={12} sm={12} md={6}>
             <Box mb={3}>
               <Divider textAlign="left">
-                <Chip label="Garantia" color="dark-blue" />
+                <Chip
+                  label="Garantias ordenes de solicitudes"
+                  color="dark-blue"
+                />
               </Divider>
             </Box>
 
@@ -292,13 +299,18 @@ function Dashboard({ loading, alert }) {
                 },
               }}
               data={{
-                labels: ["CON GARANTIA", "SIN GARANTIA"],
+                labels: ["SiN ASIGNAR", "CON GARANTIA", "SIN GARANTIA"],
                 datasets: [
                   {
                     label: "Cantidad garantia",
                     data: warranty,
-                    backgroundColor: ["rgb(18, 170, 0)", "rgb(255, 0, 0)"],
+                    backgroundColor: [
+                      "rgb(183, 167, 167)",
+                      "rgb(18, 170, 0)",
+                      "rgb(255, 0, 0)",
+                    ],
                     borderColor: [
+                      "rgba(183, 167, 167 , 0.5)",
                       "rgba(18, 170, 0, 0.5)",
                       "rgba(255, 0, 0, 0.5)",
                     ],

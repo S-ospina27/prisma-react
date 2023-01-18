@@ -51,16 +51,24 @@ export default {
           graphics: {
             amount_orders: `${host}/api/service/orders/read/graphics/amount-orders`,
             unit_percentages: `${host}/api/service/orders/read/graphics/unit-percentages`,
-            count_warranty: `${host}/api/service/orders/read/graphics/count-warranty`,
+            
           },
         },
       },
       request: {
-        read: `${host}/api/service/request/read`,
+        read:{
+          index: `${host}/api/service/request/read`,
+          graphics:{
+            count_warranty: `${host}/api/service/request/read/graphics/count-warranty`,
+            total_charges_per_month: `${host}/api/service/request/read/graphics/total-charges-per-month`,
+
+          }
+        },
         update: `${host}/api/service/request/update`,
         export: {
           excel: `${host}/api/service/request/export/excel`,
         },
+        
       },
       spare_parts: {
         read: `${host}/api/service/spare-parts/read`,
