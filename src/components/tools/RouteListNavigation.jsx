@@ -7,73 +7,104 @@ import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 export default {
   online: {
-    administartor: [
+    administrator: [
       {
-        nombre: "Dashboard",
-        icon: <HomeIcon color={"dark-blue"} />,
-        link: "/dashboard",
+        type: "title",
+        label: "INICIO",
+        childs: [
+          {
+            label: "Home",
+            icon: <HomeIcon color={"blue"} />,
+            url: "/",
+          },
+          {
+            label: "Dashboard",
+            icon: <DashboardIcon color={"dark-blue"} />,
+            url: "/dashboard",
+          },
+        ],
       },
       {
-        nombre: "Usuarios",
-        icon: <AssignmentIndIcon color={"blue"} />,
-        link: "/users",
+        type: "title",
+        label: "GESTIÓN",
+        childs: [
+          {
+            label: "Usuarios",
+            icon: <AssignmentIndIcon color={"blue"} />,
+            url: "/users",
+          },
+          {
+            label: "Portafolios",
+            icon: <WorkRoundedIcon color={"dark-blue"} />,
+            url: "/products",
+          },
+        ],
       },
       {
-        nombre: "Portafolios",
-        icon: <WorkRoundedIcon color={"dark-blue"} />,
-        link: "/products",
-      },
-      {
-        nombre: "Ordenes de Servicios",
-        icon: <MenuBookRoundedIcon color={"blue"} />,
-        link: "/service/orders",
-      },
-      {
-        nombre: "Ordenes de Solicitudes",
-        icon: <AssignmentIcon color={"dark-blue"} />,
-        link: "/service/request",
-      },
-      {
-        nombre: "Inventario Tecnicos",
-        icon: <SupervisedUserCircleIcon color={"blue"} />,
-        link: "/service/technical-inventory",
-      },
-      {
-        nombre: "Repuestos",
-        icon: <InventoryIcon color={"dark-blue"} />,
-        link: "/service/spare-parts",
-      },
-      {
-        nombre: "Pagos",
-        icon: <PointOfSaleIcon color={"blue"} />,
-        link: "/service/Payments",
-      },
-      {
-        nombre: "Formularios Solicitudes",
-        icon: <FormatAlignLeftIcon color={"dark-blue"} />,
-        link: "/service/application-order-form/1",
+        type: "title",
+        label: "SERVICIOS",
+        childs: [
+          {
+            label: "Ordenes",
+            icon: <MenuBookRoundedIcon color={"blue"} />,
+            url: "/service/orders",
+          },
+          {
+            label: "Solicitudes",
+            icon: <AssignmentIcon color={"dark-blue"} />,
+            url: "/service/request",
+          },
+          {
+            label: "Inventario Tecnicos",
+            icon: <InventoryIcon color={"blue"} />,
+            url: "/service/technical-inventory",
+          },
+          {
+            label: "Repuestos",
+            icon: <InventoryIcon color={"dark-blue"} />,
+            url: "/service/spare-parts",
+          },
+          {
+            label: "Pagos",
+            icon: <PointOfSaleIcon color={"blue"} />,
+            url: "/service/payments",
+          },
+          // {
+          //   label: "Formularios Solicitudes",
+          //   icon: <FormatAlignLeftIcon color={"dark-blue"} />,
+          //   url: "/service/application-order-form/1",
+          // },
+        ],
       },
     ],
     provider: [
       {
-        nombre: "Ordenes de Servicios",
+        label: "Ordenes de Servicios",
         icon: <MenuBookRoundedIcon color={"dark-blue"} />,
-        link: "/service-orders",
+        url: "/service/orders",
       },
     ],
   },
   offline: [
     {
-      nombre: "Loguin",
-      link: "/",
-    },
-    {
-      nombre: "Formularios Solicitudes",
-      icon: <FormatAlignLeftIcon color={"dark-blue"} />,
-      link: "/service/application-order-form/1",
+      type: "title",
+      label: "INICIO",
+      childs: [
+        {
+          label: "Home",
+          icon: <HomeIcon color={"blue"} />,
+          url: "/",
+        },
+        {
+          label: "Dashboard",
+          icon: <DashboardIcon color={"dark-blue"} />,
+          url: "/dashboard",
+        },
+      ],
     },
   ],
 };

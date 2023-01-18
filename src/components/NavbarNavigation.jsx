@@ -10,6 +10,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  ListSubheader,
   SwipeableDrawer,
   Toolbar,
   Typography,
@@ -19,19 +20,21 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { remove } from "./tools/SessionSettings";
+import session, {
+  getJWT,
+  getRol,
+  navigationLinks,
+  remove,
+} from "./tools/SessionSettings";
 
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import prisma from "./../assets/img/prisma.png";
-
-// import AndroidIcon from "@mui/icons-material/Android";
 
 function NavbarNavigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  // const [actualSession, setActualSession] = useState(session());
-  // const [links, setLinks] = useState(navigationLinks());
+  const [links, setLinks] = useState(navigationLinks());
   const [anchor, setAnchor] = useState("left");
   const [state, setState] = useState({
     left: false,
@@ -65,16 +68,18 @@ function NavbarNavigation() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="blue">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={toggleDrawer(anchor, true)}
-          >
-            <MenuIcon />
-          </IconButton>
+          {session() && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+              onClick={toggleDrawer(anchor, true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
 
           <SwipeableDrawer
             anchor={anchor}
@@ -105,50 +110,79 @@ function NavbarNavigation() {
                   </Box>
                 }
               >
-                <Box mb={3}>
-                  <Divider>
-                    <Chip label={"Administrar"} color={"blue"} />
-                  </Divider>
-                </Box>
+                {session() && (
+                  <>
+                    <Box mb={3}>
+                      <Divider>
+                        <Chip
+                          label={getRol(getJWT("idroles"), true)}
+                          color={"blue"}
+                        />
+                      </Divider>
+                    </Box>
 
-                {RouteListNavigation.online.administartor.map((text, index) => (
-                  <ListItem
-                    key={text.nombre}
-                    disablePadding
-                    selected={text.link === location.pathname}
-                    sx={{
-                      "$:hover": {
-                        backgroundColor: "#000000",
-                      },
-                      "&:focus": {
-                        backgroundColor: "#000000",
-                      },
-                    }}
-                  >
-                    <ListItemButton component={Link} to={text.link}>
-                      {text.icon && <ListItemIcon>{text.icon}</ListItemIcon>}
-                      <ListItemText primary={text.nombre} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+                    {RouteListNavigation.online.administrator.map(
+                      (row, keyRow) => (
+                        <div key={keyRow}>
+                          <ListSubheader color="inherit">
+                            {row.label}
+                          </ListSubheader>
 
-                <Divider />
-                
-                <ListItem disablePadding>
-                  <ListItemButton onClick={closeSession}>
-                    <ListItemIcon>
-                      <MeetingRoomIcon color="blue" />
-                    </ListItemIcon>
-                    <ListItemText primary={"Cerrar Sesión"} />
-                  </ListItemButton>
-                </ListItem>
+                          {row.childs.map((child, keyChild) => (
+                            <ListItem
+                              key={`container-${keyChild}`}
+                              selected={child.url === location.pathname}
+                              disablePadding
+                            >
+                              <ListItemButton component={Link} to={child.url}>
+                                {child.icon && (
+                                  <ListItemIcon>{child.icon}</ListItemIcon>
+                                )}
+
+                                <ListItemText primary={child.label} />
+                              </ListItemButton>
+                            </ListItem>
+                          ))}
+                        </div>
+                      )
+                    )}
+                  </>
+                )}
+
+                {session() && (
+                  <>
+                    <ListSubheader>{"CUENTA"}</ListSubheader>
+
+                    <ListItem disablePadding>
+                      <ListItemButton onClick={closeSession}>
+                        <ListItemIcon>
+                          <MeetingRoomIcon color="warning" />
+                        </ListItemIcon>
+
+                        <ListItemText primary={"Cerrar Sesión"} />
+                      </ListItemButton>
+                    </ListItem>
+                  </>
+                )}
               </List>
             </Box>
           </SwipeableDrawer>
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {"Prisma"}
+            {"PRISMA"}
           </Typography>
+
+          {!session() && (
+            <>
+              <Button color="inherit" component={Link} to={"/"}>
+                HOME
+              </Button>
+
+              <Button color="inherit" component={Link} to={"/auth/login"}>
+                INGRESAR
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

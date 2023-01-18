@@ -5,7 +5,14 @@ const roles = {
   administrator: 1,
   technical: 2,
   distributor: 3,
-  provider: 4
+  provider: 4,
+};
+
+const rolesDisplay = {
+  1: "Administrador",
+  2: "Técnico",
+  3: "Distribuidor",
+  4: "Proveedor",
 };
 
 export function remove(item) {
@@ -25,8 +32,12 @@ export function getJWT(key = null) {
   return key === null ? jwt : jwt.data[key];
 }
 
-export function getRol(rol) {
-  return roles[rol];
+export function getRol(rol, display = false) {
+  if (!display) {
+    return roles[rol];
+  }
+
+  return rolesDisplay[rol];
 }
 
 export function navigationLinks() {
@@ -37,7 +48,11 @@ export function navigationLinks() {
 
     return jwt.data.idroles === 1
       ? RouteListNavigation.online.administartor
-      : RouteListNavigation.online.store;
+      : jwt.data.idroles === 2
+      ? []
+      : jwt.data.idroles === 3
+      ? []
+      : [];
   }
 }
 
