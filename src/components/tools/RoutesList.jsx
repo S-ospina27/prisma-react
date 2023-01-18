@@ -51,6 +51,7 @@ export default {
           graphics: {
             amount_orders: `${host}/api/service/orders/read/graphics/amount-orders`,
             unit_percentages: `${host}/api/service/orders/read/graphics/unit-percentages`,
+            count_warranty: `${host}/api/service/orders/read/graphics/count-warranty`,
           },
         },
       },

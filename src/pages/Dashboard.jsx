@@ -42,6 +42,7 @@ function Dashboard({ loading, alert }) {
   const [amountOrders, setAmountOrders] = useState([]);
   const [labelsAmountOrders, setLabelsAmountOrders] = useState([]);
   const [unitPercentages, setUnitPercentages] = useState([]);
+  const [warranty, setWarranty] = useState([]);
 
   const hanleReadAmountOrders = () => {
     axios
@@ -88,6 +89,19 @@ function Dashboard({ loading, alert }) {
         }
       });
   };
+  const hanleReadCountWarranty = () => {
+    axios
+      .get(RoutesList.api.service.orders.read.graphics.count_warranty)
+      .then((res) => {
+        if (!res.data.status) {
+          const values = [];
+          res.data.forEach((row) => {
+            values.push(row.cont);
+          });
+          setWarranty(values);
+        }
+      });
+  };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(
@@ -118,6 +132,7 @@ function Dashboard({ loading, alert }) {
     if (idroles === 1) {
       hanleReadAmountOrders();
       hanleReadUnitPercentages();
+      hanleReadCountWarranty();
     }
   }, []);
 
@@ -244,6 +259,44 @@ function Dashboard({ loading, alert }) {
                   {
                     label: "Cantidad Ordenes",
                     data: unitPercentages,
+                    backgroundColor: ["rgb(18, 170, 0)", "rgb(255, 0, 0)"],
+                    borderColor: [
+                      "rgba(18, 170, 0, 0.5)",
+                      "rgba(255, 0, 0, 0.5)",
+                    ],
+                  },
+                ],
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={6}>
+            <Box mb={3}>
+              <Divider textAlign="left">
+                <Chip label="Garantia" color="dark-blue" />
+              </Divider>
+            </Box>
+
+            <Bar
+              options={{
+                elements: {
+                  bar: {
+                    borderWidth: 2,
+                  },
+                },
+                plugins: {
+                  legend: {
+                    position: "top",
+                    display: false,
+                  },
+                },
+              }}
+              data={{
+                labels: ["CON GARANTIA", "SIN GARANTIA"],
+                datasets: [
+                  {
+                    label: "Cantidad garantia",
+                    data: warranty,
                     backgroundColor: ["rgb(18, 170, 0)", "rgb(255, 0, 0)"],
                     borderColor: [
                       "rgba(18, 170, 0, 0.5)",
