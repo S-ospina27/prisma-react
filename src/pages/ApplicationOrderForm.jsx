@@ -1,14 +1,20 @@
 import { Box, Button, Chip, Container, Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LocationsSelect from "../components/common/LocationsSelect";
 import ProductsSelect from "../components/common/ProductsSelect";
 import TextFieldFilled from "../components/common/TextFieldFilled";
+
 import RoutesList from "../components/tools/RoutesList";
+
+import check_img from "./../assets/svg/check_confirmation.svg";
 
 function ApplicationOrderForm({ loading, alert }) {
   const { idusers } = useParams();
+  const navigate = useNavigate();
+
+  const [blocked, setBlocked] = useState(false);
 
   const [iddepartments, setIddepartments] = useState("");
   const [idcities, setIdcities] = useState("");
@@ -24,21 +30,22 @@ function ApplicationOrderForm({ loading, alert }) {
   const [service_request_trouble_report, setService_request_trouble_report] =
     useState("");
 
-    const ClearFields = ()=>{
-      setIddepartments("");
-      setIdcities("");
-      setIdproducts("");
-      setService_request_client_name("");
-      setService_request_neighborhood("");
-      setService_request_address("");
-      setService_request_phone_contact("");
-      setService_request_email("");
-      setService_request_trouble_report("");
-    }
+  const clearFields = () => {
+    setIddepartments("");
+    setIdcities("");
+    setIdproducts("");
+    setService_request_client_name("");
+    setService_request_neighborhood("");
+    setService_request_address("");
+    setService_request_phone_contact("");
+    setService_request_email("");
+    setService_request_trouble_report("");
+  };
 
   const handleCreateServiceRequest = (e) => {
     e.preventDefault();
     loading(true);
+    setBlocked(true);
 
     const form = new FormData();
     form.append("idusers_dealers", idusers);
@@ -56,13 +63,19 @@ function ApplicationOrderForm({ loading, alert }) {
 
     axios.post(RoutesList.api.service.request.create, form).then((res) => {
       // console.log(res.data);
-      ClearFields();
+
+      setBlocked(false);
       loading(false);
       alert({
         open: true,
         message: res.data.message,
         severity: res.data.status,
       });
+
+      if (res.data.status === "success") {
+        clearFields();
+        setTimeout(() => navigate("/"), 5000);
+      }
     });
   };
 
@@ -170,7 +183,12 @@ function ApplicationOrderForm({ loading, alert }) {
           </Grid>
 
           <Box mt={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button type="submit" variant="contained" color="dark-blue">
+            <Button
+              type="submit"
+              variant="contained"
+              color="dark-blue"
+              disabled={blocked}
+            >
               {"Enviar Solicitud"}
             </Button>
           </Box>

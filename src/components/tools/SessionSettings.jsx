@@ -47,7 +47,7 @@ export function navigationLinks() {
     const jwt = getJWT();
 
     return jwt.data.idroles === 1
-      ? RouteListNavigation.online.administartor
+      ? RouteListNavigation.online.administrator
       : jwt.data.idroles === 2
       ? []
       : jwt.data.idroles === 3
