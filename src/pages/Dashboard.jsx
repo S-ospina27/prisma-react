@@ -43,6 +43,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CheckIcon from "@mui/icons-material/Check";
+import dayjs from "dayjs";
+import Alert from '@mui/material/Alert';
 
 ChartJS.register(
   CategoryScale,
@@ -99,8 +101,9 @@ function Dashboard({ loading, alert }) {
   const [totalChargesPerMonth, setTotalChargesPerMonth] = useState([]);
   const [totalChargesWarranty, settotalChargesWarranty] = useState([]);
   const [timeline, setTimeline] = useState([]);
-
   const [idusers_technical, setIdusers_technical] = useState("");
+  const [percentage, setPercentage] = useState(0);
+  const DaysSolution = [];
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -250,6 +253,7 @@ function Dashboard({ loading, alert }) {
 
   const hanlereadAverageTime = (e) => {
     e.preventDefault();
+
     const route =
       RoutesList.api.service.request.read.graphics.read_average_time;
 
@@ -257,14 +261,27 @@ function Dashboard({ loading, alert }) {
       .get(route + `/${idusers_technical.split("-").shift().trim()}`)
       .then((res) => {
         console.log(res.data);
-
         if (!res.data.status) {
           setIdusers_technical("");
           setTimeline(res.data);
+          let dateSolution1 = 0;
+          let dateSolution2 = 0;
+          let dateAssigment1 = 0;
+          let dateAssigment2 = 0;
 
-          // res.data.forEach((request) => {
-          //   console.log(request);
-          // });
+          res.data.forEach((request) => {
+            dateSolution1 = dayjs(request.service_request_date_visit);
+            dateSolution2 = dayjs(request.service_request_date_close);
+            DaysSolution.push(dateSolution2.diff(dateSolution1, "day"));
+          });
+
+          const result = DaysSolution.reduce(
+            (total, diference) => total + diference,
+            0
+          );
+          const amount = DaysSolution.length;
+          // console.log(ejemplo)
+          setPercentage(Math.round(result / amount));
         }
       });
   };
@@ -576,6 +593,13 @@ function Dashboard({ loading, alert }) {
 
                     {timeline.length > 0 && (
                       <Grid item xs={12}>
+
+                        <Alert variant="filled" severity="info">
+                          {"Tiempo promedio en dar solucion a solicitudes es de " +
+                            percentage +
+                            " días"}
+                        </Alert>
+
                         <Timeline>
                           {timeline.map((request, keyRequest) => (
                             <TimelineItem key={keyRequest}>
