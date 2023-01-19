@@ -1,4 +1,12 @@
-import { Box, Chip, Container, Divider, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Chip,
+  Container,
+  Divider,
+  Grid,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "../components/DataTable";
@@ -7,8 +15,12 @@ import ServiceStatesSelect from "../components/common/ServiceStatesSelect";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
-
+import UsersSelect from "../components/common/UsersSelect";
 function ServicePayments({ loading, alert }) {
+  const [idusers_technical, setIdusers_technical] = useState("");
+  const [disable_left_button, setDisable_left_button] = useState(false);
+  const [disable_right_button, setDisable_right_button] = useState(false);
+
   const [CreatTechnical, setOpenCreatTechnical] = useState(false);
   const [Technical, setTechnical] = useState([]);
 
@@ -81,7 +93,15 @@ function ServicePayments({ loading, alert }) {
         loading(false);
       });
   };
+  const handlePayments = (e) => {
+    e.preventDefault();
 
+    setTimeout(() => {
+      setDisable_left_button(false);
+      setDisable_right_button(false);
+    }, 2000);
+    console.log("gonorrea gonorre");
+  };
   useEffect(() => {
     handleReadTechnical();
   }, []);
@@ -90,24 +110,61 @@ function ServicePayments({ loading, alert }) {
     <Box mx={3} my={3}>
       <Box mb={2}>
         <Divider>
-          <Chip color="blue" label={"Inventario Tecnicos"} />
+          <Chip color="blue" label={"Pagos"} />
         </Divider>
       </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={4}>
+          <form onSubmit={handlePayments}>
+            <Grid item xs={12} m={2} sm={12} md={12}>
+              <UsersSelect
+                label={"Tecnicos"}
+                value={idusers_technical}
+                setValue={setIdusers_technical}
+                required
+                selected={["TECNICO"]}
+              />
+            </Grid>
 
-      <DataTable
-        reload={handleReadTechnical}
-        rows={Technical}
-        columns={ColumnsTable.Technical}
-        getRowId={"idtechnical_inventory"}
-        onRowClick={{
-          open: setOpenCreatTechnical,
-          set: setFields,
-        }}
-        sx={{
-          height: "450px",
-        }}
-      />
+            <Grid item xs={12} m={2} sm={12} md={12}>
+              <ButtonGroup disableElevation variant="contained">
+                <Button
+                  color={"warning"}
+                  disabled={disable_left_button}
+                  onClick={() => setDisable_right_button(true)}
+                  type="submit"
+                >
+                  Con Garantia
+                </Button>
 
+                <Button
+                  disabled={disable_right_button}
+                  onClick={() => setDisable_left_button(true)}
+                  type="submit"
+                >
+                  Sin Garantia
+                </Button>
+              </ButtonGroup>
+            </Grid>
+          </form>
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={8}>
+          <DataTable
+            reload={handleReadTechnical}
+            rows={Technical}
+            columns={ColumnsTable.Technical}
+            getRowId={"idtechnical_inventory"}
+            onRowClick={{
+              open: setOpenCreatTechnical,
+              set: setFields,
+            }}
+            sx={{
+              height: "450px",
+            }}
+          />
+        </Grid>
+      </Grid>
       <DialogForm
         title={"Actualizar Inventario"}
         open={CreatTechnical}
