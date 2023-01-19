@@ -64,7 +64,7 @@ export default {
             count_warranty: `${host}/api/service/request/read/graphics/count-warranty`,
             total_charges_per_month: `${host}/api/service/request/read/graphics/total-charges-per-month`,
             total_charges_warranty: `${host}/api/service/request/read/graphics/read-total-charges-without-warranty`,
-
+            read_average_time: `${host}/api/service/request/read/graphics/read-average-time`,
           }
         },
         export: {
