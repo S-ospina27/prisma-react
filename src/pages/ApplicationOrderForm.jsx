@@ -8,8 +8,6 @@ import TextFieldFilled from "../components/common/TextFieldFilled";
 
 import RoutesList from "../components/tools/RoutesList";
 
-import check_img from "./../assets/svg/check_confirmation.svg";
-
 function ApplicationOrderForm({ loading, alert }) {
   const { idusers } = useParams();
   const navigate = useNavigate();
