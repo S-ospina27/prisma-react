@@ -13,9 +13,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "../components/DataTable";
 import TextFieldFilled from "../components/common/TextFieldFilled";
+import DialogTransition from "../components/common/DialogTransition";
+
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
-import DialogTransition from "../components/common/DialogTransition";
+import { getHeader } from "../components/tools/SessionSettings";
 
 function SpareParts({ loading, alert }) {
   const [OpenUpdateSpareParts, setOpenUpdateSpareParts] = useState(false);
@@ -47,10 +49,12 @@ function SpareParts({ loading, alert }) {
   };
 
   const handleReadSpareParts = () => {
-    axios.get(RoutesList.api.service.spare_parts.read).then((res) => {
-      // console.log(res.data);
-      setSpareParts(!res.data.status ? res.data : []);
-    });
+    axios
+      .get(RoutesList.api.service.spare_parts.read, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        !res.data.status && setSpareParts(res.data);
+      });
   };
 
   const handleCreateSpareParts = (e) => {
