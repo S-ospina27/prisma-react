@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import DialogForm from "../components/common/DialogForm";
 import ServiceRequestSelect from "../components/common/ServiceRequestSelect";
 import DataTable from "../Components/DataTable";
+import TextFieldFilled from "../components/common/TextFieldFilled";
 
 import ColumnsTable from "../components/tools/ColumnsTable";
 import RoutesList from "../components/tools/RoutesList";
-
-import TextFieldFilled from "../components/common/TextFieldFilled";
+import { getHeader } from "../components/tools/SessionSettings";
 
 function Payments({ loading, alert }) {
   const [payments, setPayments] = useState([]);
@@ -28,8 +28,9 @@ function Payments({ loading, alert }) {
   };
 
   const handleReadPayments = () => {
-    axios.get(RoutesList.api.payments.read).then((res) => {
-      setPayments(!res.data.status ? res.data : []);
+    axios.get(RoutesList.api.payments.read, getHeader()).then((res) => {
+      // console.log(res.data);
+      !res.data.status && setPayments(res.data);
     });
   };
 
@@ -41,18 +42,20 @@ function Payments({ loading, alert }) {
     form.append("idservice_request", idservice_request.split("-").pop().trim());
     form.append("payments_value", payments_value);
 
-    axios.post(RoutesList.api.payments.create, form).then((res) => {
-      // console.log(res.data);
+    axios
+      .post(RoutesList.api.payments.create, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
 
-      handleReadPayments();
-      setFields();
-      loading(false);
-      alert({
-        open: true,
-        message: res.data.message,
-        severity: res.data.status,
+        handleReadPayments();
+        setFields();
+        loading(false);
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
       });
-    });
   };
 
   const handleUpdatePayments = (e) => {
