@@ -30,8 +30,6 @@ export default {
       return value === null ? "SIN-ASIGNAR" : value;
     } },
     { field: "service_request_client_name", headerName: "CLIENTE", width: 300 },
-    { field: "departments_name", headerName: "DEPARTAMENTO", width: 200 },
-    { field: "cities_name", headerName: "CIUDAD", width: 200 },
   ],
   service_order: [
     { field: "full_consecutive", headerName: "CONSECUTIVO", width: 200 },

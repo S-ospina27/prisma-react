@@ -245,36 +245,38 @@ function ServiceRequest({ loading, alert }) {
         </Divider>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
-        <MenuItems
-          id={"service"}
-          iconButton={true}
-          label={<MoreVertIcon color={"dark-blue"} />}
-          items={[
-            {
-              type: "modal",
-              name: "Exportar Ordenes de solicitud",
-              icon: <AssignmentIcon color={"blue"} />,
-              setOpen: setOpenOrdersDate,
-              idroles: [1],
-            },
-          ]}
-        />
-      </Box>
+      <Container>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
+          <MenuItems
+            id={"service"}
+            iconButton={true}
+            label={<MoreVertIcon color={"dark-blue"} />}
+            items={[
+              {
+                type: "modal",
+                name: "Exportar Ordenes de solicitud",
+                icon: <AssignmentIcon color={"blue"} />,
+                setOpen: setOpenOrdersDate,
+                idroles: [1],
+              },
+            ]}
+          />
+        </Box>
 
-      <DataTable
-        reload={handleReadServiceRequest}
-        rows={serviceRequest}
-        columns={ColumnsTable.service_request}
-        getRowId={"idservice_request"}
-        onRowClick={{
-          open: setOpen,
-          set: setFields,
-        }}
-        sx={{
-          height: "450px",
-        }}
-      />
+        <DataTable
+          reload={handleReadServiceRequest}
+          rows={serviceRequest}
+          columns={ColumnsTable.service_request}
+          getRowId={"idservice_request"}
+          onRowClick={{
+            open: setOpen,
+            set: setFields,
+          }}
+          sx={{
+            height: "450px",
+          }}
+        />
+      </Container>
 
       <DialogForm
         title={"Editar Solicitudes"}
