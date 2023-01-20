@@ -17,19 +17,17 @@ import MenuItems from "../components/common/MenuItems";
 import DateFieldFilled from "../components/common/DateFieldFilled";
 import DataTable from "../components/DataTable";
 import DialogForm from "../components/common/DialogForm";
-import ProductsSelect from "../components/common/ProductsSelect";
 import UsersSelect from "../components/common/UsersSelect";
 import ServiceStatesSelect from "../components/common/ServiceStatesSelect";
-import OrderTypeSelect from "../components/common/OrderTypeSelect";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
+import { getHeader } from "../components/tools/SessionSettings";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
-import ServiceRequestSelect from "../components/common/ServiceRequestSelect";
 
 function ServiceRequest({ loading, alert }) {
   const [openOrdersDate, setOpenOrdersDate] = useState(false);
@@ -70,7 +68,6 @@ function ServiceRequest({ loading, alert }) {
   const [service_request_payment_methods, setService_request_payment_methods] =
     useState("");
   const [service_request_value, setService_request_value] = useState("");
-
   const [
     service_request_technical_novelty,
     setService_request_technical_novelty,
@@ -131,10 +128,12 @@ function ServiceRequest({ loading, alert }) {
   };
 
   const handleReadServiceRequest = () => {
-    axios.get(RoutesList.api.service.request.read.index).then((res) => {
-      // console.log(res.data);
-      setServiceRequest(res.data);
-    });
+    axios
+      .get(RoutesList.api.service.request.read.index, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        !res.data.status && setServiceRequest(res.data);
+      });
   };
 
   const handleUpdateServiceRequest = (e) => {
@@ -164,17 +163,19 @@ function ServiceRequest({ loading, alert }) {
     );
     form.append("service_request_email", service_request_email);
 
-    axios.post(RoutesList.api.service.request.update, form).then((res) => {
-      // console.log(res.data);
+    axios
+      .post(RoutesList.api.service.request.update, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
 
-      alert({
-        open: true,
-        severity: res.data.status,
-        message: res.data.message,
+        alert({
+          open: true,
+          severity: res.data.status,
+          message: res.data.message,
+        });
+        handleReadServiceRequest();
+        loading(false);
       });
-      handleReadServiceRequest();
-      loading(false);
-    });
   };
 
   const handleExportServiceRequestExcel = (e) => {
@@ -209,7 +210,7 @@ function ServiceRequest({ loading, alert }) {
     form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
 
     axios
-      .post(RoutesList.api.service.request.export.excel, form)
+      .post(RoutesList.api.service.request.export.excel, form, getHeader())
       .then((res) => {
         // console.log(res.data);
         loading(false);
