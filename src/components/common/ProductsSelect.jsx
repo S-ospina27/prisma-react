@@ -2,6 +2,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RoutesList from "../tools/RoutesList";
+import { getHeader } from "../tools/SessionSettings";
 
 function ProductsSelect({
   value,
@@ -16,17 +17,19 @@ function ProductsSelect({
   const [products, setProducts] = useState([]);
 
   const handleReadProducts = () => {
-    axios.get(RoutesList.api.products.read.by_status).then((res) => {
-      const rows = [];
+    axios
+      .get(RoutesList.api.products.read.by_status, getHeader())
+      .then((res) => {
+        const rows = [];
 
-      selected.map((product) => {
-        if (![undefined, false, null, ""].includes(res.data[product])) {
-          rows.push(...res.data[product]);
-        }
+        selected.map((product) => {
+          if (![undefined, false, null, ""].includes(res.data[product])) {
+            rows.push(...res.data[product]);
+          }
+        });
+
+        setProducts(rows);
       });
-
-      setProducts(rows);
-    });
   };
 
   useEffect(() => {
