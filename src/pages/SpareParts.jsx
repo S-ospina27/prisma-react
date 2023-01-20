@@ -65,19 +65,21 @@ function SpareParts({ loading, alert }) {
     form.append("spare_parts_name", spare_parts_name_c);
     form.append("spare_parts_amount", spare_parts_amount_c);
 
-    axios.post(RoutesList.api.service.spare_parts.create, form).then((res) => {
-      // console.log(res.data);
-      setSpare_parts_name_c("");
-      setSpare_parts_amount_c("");
+    axios
+      .post(RoutesList.api.service.spare_parts.create, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        setSpare_parts_name_c("");
+        setSpare_parts_amount_c("");
 
-      handleReadSpareParts();
-      loading(false);
-      alert({
-        open: true,
-        message: res.data.message,
-        severity: res.data.status,
+        handleReadSpareParts();
+        loading(false);
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
       });
-    });
   };
 
   const handleUpdateSpareParts = (e) => {
@@ -91,18 +93,20 @@ function SpareParts({ loading, alert }) {
     form.append("spare_parts_amount", spare_parts_amount);
     form.append("spare_parts_amount_copy", spare_parts_amount_copy);
 
-    axios.post(RoutesList.api.service.spare_parts.update, form).then((res) => {
-      // console.log(res.data);
-      setFields();
+    axios
+      .post(RoutesList.api.service.spare_parts.update, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        setFields();
 
-      handleReadSpareParts();
-      loading(false);
-      alert({
-        open: true,
-        message: res.data.message,
-        severity: res.data.status,
+        handleReadSpareParts();
+        loading(false);
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
       });
-    });
   };
 
   useEffect(() => {
