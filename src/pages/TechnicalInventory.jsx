@@ -94,19 +94,21 @@ function TechnicalInventory({ loading, alert }) {
         </Divider>
       </Box>
 
-      <DataTable
-        reload={handleReadTechnical}
-        rows={Technical}
-        columns={ColumnsTable.Technical}
-        getRowId={"idtechnical_inventory"}
-        onRowClick={{
-          open: setOpenCreatTechnical,
-          set: setFields,
-        }}
-        sx={{
-          height: "450px",
-        }}
-      />
+      <Container>
+        <DataTable
+          reload={handleReadTechnical}
+          rows={Technical}
+          columns={ColumnsTable.Technical}
+          getRowId={"idtechnical_inventory"}
+          onRowClick={{
+            open: setOpenCreatTechnical,
+            set: setFields,
+          }}
+          sx={{
+            height: "450px",
+          }}
+        />
+      </Container>
 
       <DialogForm
         title={"Actualizar Inventario"}
