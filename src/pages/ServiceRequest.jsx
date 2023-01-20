@@ -116,15 +116,15 @@ function ServiceRequest({ loading, alert }) {
     );
     setService_request_date_visit(row.service_request_date_visit);
     setService_request_value(
-      row.service_request_value == null ? "" : row.service_request_value
+      row.service_request_value === null ? "" : row.service_request_value
     );
     setService_request_payment_methods(
-      row.service_request_payment_methods == null
+      row.service_request_payment_methods === null
         ? ""
         : row.service_request_payment_methods
     );
     setService_request_technical_novelty(
-      row.service_request_technical_novelty == null
+      row.service_request_technical_novelty === null
         ? ""
         : row.service_request_technical_novelty
     );
@@ -162,9 +162,10 @@ function ServiceRequest({ loading, alert }) {
       "service_request_technical_novelty",
       service_request_technical_novelty
     );
+    form.append("service_request_email", service_request_email);
 
     axios.post(RoutesList.api.service.request.update, form).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
 
       alert({
         open: true,
@@ -348,7 +349,6 @@ function ServiceRequest({ loading, alert }) {
                     "ACEPTADO",
                     "ENVIADO",
                     "NO-DESPACHADO",
-                    "FINALIZADO",
                   ]}
                 />
               </Grid>
