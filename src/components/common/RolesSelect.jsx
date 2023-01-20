@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RoutesList from "../tools/RoutesList";
+import { getHeader } from "../tools/SessionSettings";
 
 function RolesSelect({
   value,
@@ -14,7 +15,7 @@ function RolesSelect({
   const [roles, setRoles] = useState([]);
 
   useEffect(() => {
-    axios.get(RoutesList.api.read_roles).then((res) => {
+    axios.get(RoutesList.api.read_roles, getHeader()).then((res) => {
       setRoles(res.data);
     });
   }, []);
