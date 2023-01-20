@@ -7,6 +7,7 @@ import ServiceStatesSelect from "../components/common/ServiceStatesSelect";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
+import { getHeader } from "../components/tools/SessionSettings";
 
 function TechnicalInventory({ loading, alert }) {
   const [CreatTechnical, setOpenCreatTechnical] = useState(false);
@@ -28,10 +29,6 @@ function TechnicalInventory({ loading, alert }) {
   const [idservice_states, setIdservice_states] = useState("");
   const [technical_inventory_description, setTechnical_inventory_description] =
     useState("");
-  const [
-    technical_inventory_creation_date,
-    setTechnical_inventory_creation_date,
-  ] = useState(null);
 
   const setFields = (row) => {
     // console.log(row);
@@ -52,10 +49,12 @@ function TechnicalInventory({ loading, alert }) {
   };
 
   const handleReadTechnical = () => {
-    axios.get(RoutesList.api.service.technical_inventory.read).then((res) => {
-      // console.log(res.data);
-      setTechnical(!res.data.status ? res.data : []);
-    });
+    axios
+      .get(RoutesList.api.service.technical_inventory.read, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        !res.data.status && setTechnical(res.data);
+      });
   };
 
   const handleUpdateinventoryTechnical = (e) => {
@@ -68,7 +67,11 @@ function TechnicalInventory({ loading, alert }) {
     form.append("idtechnical_inventory", idtechnical_inventory);
 
     axios
-      .post(RoutesList.api.service.technical_inventory.update, form)
+      .post(
+        RoutesList.api.service.technical_inventory.update,
+        form,
+        getHeader()
+      )
       .then((res) => {
         // console.log(res.data);
 
