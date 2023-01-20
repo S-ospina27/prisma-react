@@ -2,6 +2,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RoutesList from "../tools/RoutesList";
+import { getHeader } from "../tools/SessionSettings";
 
 function UsersSelect({
   value,
@@ -15,7 +16,7 @@ function UsersSelect({
   const [users, setUsers] = useState([]);
 
   const handleReadUsers = () => {
-    axios.get(RoutesList.api.users.read.by_rol).then((res) => {
+    axios.get(RoutesList.api.users.read.by_rol, getHeader()).then((res) => {
       const rows = [];
 
       selected.map((rol) => {

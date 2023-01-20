@@ -34,7 +34,7 @@ import { useEffect, useState } from "react";
 import UsersSelect from "../components/common/UsersSelect";
 
 import RoutesList from "../components/tools/RoutesList";
-import { getJWT } from "../components/tools/SessionSettings";
+import { getHeader, getJWT } from "../components/tools/SessionSettings";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -44,7 +44,7 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CheckIcon from "@mui/icons-material/Check";
 import dayjs from "dayjs";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 
 ChartJS.register(
   CategoryScale,
@@ -113,7 +113,10 @@ function Dashboard({ loading, alert }) {
 
   const hanleReadAmountOrders = () => {
     axios
-      .get(RoutesList.api.service.orders.read.graphics.amount_orders)
+      .get(
+        RoutesList.api.service.orders.read.graphics.amount_orders,
+        getHeader()
+      )
       .then((res) => {
         // console.log(res.data);
 
@@ -134,7 +137,10 @@ function Dashboard({ loading, alert }) {
 
   const hanleReadUnitPercentages = () => {
     axios
-      .get(RoutesList.api.service.orders.read.graphics.unit_percentages)
+      .get(
+        RoutesList.api.service.orders.read.graphics.unit_percentages,
+        getHeader()
+      )
       .then((res) => {
         // console.log(res.data);
 
@@ -159,7 +165,10 @@ function Dashboard({ loading, alert }) {
 
   const hanleReadCountWarranty = () => {
     axios
-      .get(RoutesList.api.service.request.read.graphics.count_warranty)
+      .get(
+        RoutesList.api.service.request.read.graphics.count_warranty,
+        getHeader()
+      )
       .then((res) => {
         if (!res.data.status) {
           const values = [];
@@ -198,7 +207,10 @@ function Dashboard({ loading, alert }) {
 
   const handleReadTotalChargesPerMonth = () => {
     axios
-      .get(RoutesList.api.service.request.read.graphics.total_charges_per_month)
+      .get(
+        RoutesList.api.service.request.read.graphics.total_charges_per_month,
+        getHeader()
+      )
       .then((res) => {
         const items = [];
 
@@ -225,7 +237,10 @@ function Dashboard({ loading, alert }) {
 
   const handleReadTotalChargesWarranty = () => {
     axios
-      .get(RoutesList.api.service.request.read.graphics.total_charges_warranty)
+      .get(
+        RoutesList.api.service.request.read.graphics.total_charges_warranty,
+        getHeader()
+      )
       .then((res) => {
         // console.log(res.data);
         const items = [];
@@ -258,9 +273,13 @@ function Dashboard({ loading, alert }) {
       RoutesList.api.service.request.read.graphics.read_average_time;
 
     axios
-      .get(route + `/${idusers_technical.split("-").shift().trim()}`)
+      .get(
+        route + `/${idusers_technical.split("-").shift().trim()}`,
+        getHeader()
+      )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
+
         if (!res.data.status) {
           setIdusers_technical("");
           setTimeline(res.data);
@@ -593,7 +612,6 @@ function Dashboard({ loading, alert }) {
 
                     {timeline.length > 0 && (
                       <Grid item xs={12}>
-
                         <Alert variant="filled" severity="info">
                           {"Tiempo promedio en dar solucion a solicitudes es de " +
                             percentage +
