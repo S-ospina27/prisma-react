@@ -203,43 +203,45 @@ function Products({ loading, alert }) {
         </Divider>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
-        <MenuItems
-          id={"products"}
-          iconButton={true}
-          label={<MoreVertIcon color={"dark-blue"} />}
-          items={[
-            {
-              type: "modal",
-              name: "Registrar Productos",
-              icon: <AddShoppingCartIcon color={"dark-blue"} />,
-              setOpen: setOpenRegister,
-              idroles: [1],
-            },
-            {
-              type: "modal",
-              name: "Tipos de Producto",
-              icon: <AddShoppingCartIcon color={"dark-blue"} />,
-              setOpen: setOpenTypeRegister,
-              idroles: [1],
-            },
-          ]}
-        />
-      </Box>
+      <Container>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
+          <MenuItems
+            id={"products"}
+            iconButton={true}
+            label={<MoreVertIcon color={"dark-blue"} />}
+            items={[
+              {
+                type: "modal",
+                name: "Registrar Productos",
+                icon: <AddShoppingCartIcon color={"dark-blue"} />,
+                setOpen: setOpenRegister,
+                idroles: [1],
+              },
+              {
+                type: "modal",
+                name: "Tipos de Producto",
+                icon: <AddShoppingCartIcon color={"dark-blue"} />,
+                setOpen: setOpenTypeRegister,
+                idroles: [1],
+              },
+            ]}
+          />
+        </Box>
 
-      <DataTable
-        reload={handleReadProducts}
-        rows={products}
-        columns={ColumnsTable.products}
-        onRowClick={{
-          open: setOpenUpdate,
-          set: setFields,
-        }}
-        getRowId={"idproducts"}
-        sx={{
-          height: "450px",
-        }}
-      />
+        <DataTable
+          reload={handleReadProducts}
+          rows={products}
+          columns={ColumnsTable.products}
+          onRowClick={{
+            open: setOpenUpdate,
+            set: setFields,
+          }}
+          getRowId={"idproducts"}
+          sx={{
+            height: "450px",
+          }}
+        />
+      </Container>
 
       <DialogForm
         title={"Registrar Productos"}
