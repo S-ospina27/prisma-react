@@ -29,6 +29,7 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
+import { getHeader } from "../components/tools/SessionSettings";
 
 function ServiceOrders({ loading, alert }) {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
@@ -122,10 +123,12 @@ function ServiceOrders({ loading, alert }) {
   };
 
   const handleReadOrderService = () => {
-    axios.get(RoutesList.api.service.orders.read.index).then((res) => {
-      // console.log(res.data);
-      setOrderService(res.data);
-    });
+    axios
+      .get(RoutesList.api.service.orders.read.index, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        setOrderService(res.data);
+      });
   };
 
   const handleCreateServiceOrders = (e) => {
@@ -144,18 +147,20 @@ function ServiceOrders({ loading, alert }) {
       service_orders_finished_product
     );
 
-    axios.post(RoutesList.api.service.orders.create, form).then((res) => {
-      // console.log(res.data);
+    axios
+      .post(RoutesList.api.service.orders.create, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
 
-      alert({
-        open: true,
-        severity: res.data.status,
-        message: res.data.message,
+        alert({
+          open: true,
+          severity: res.data.status,
+          message: res.data.message,
+        });
+        handleReadOrderService();
+        setOpenCreateOrders(false);
+        loading(false);
       });
-      handleReadOrderService();
-      setOpenCreateOrders(false);
-      loading(false);
-    });
   };
 
   const handleUpdateServiceOrders = (e) => {
@@ -191,16 +196,18 @@ function ServiceOrders({ loading, alert }) {
     form.append("service_orders_total_price", service_orders_total_price);
     form.append("service_orders_pending_amount", service_orders_pending_amount);
 
-    axios.post(RoutesList.api.service.orders.update, form).then((res) => {
-      // console.log(res.data);
-      alert({
-        open: true,
-        severity: res.data.status,
-        message: res.data.message,
+    axios
+      .post(RoutesList.api.service.orders.update, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        alert({
+          open: true,
+          severity: res.data.status,
+          message: res.data.message,
+        });
+        handleReadOrderService();
+        loading(false);
       });
-      handleReadOrderService();
-      loading(false);
-    });
   };
 
   const handleExportServiceOrdersExcel = (e) => {
@@ -234,27 +241,29 @@ function ServiceOrders({ loading, alert }) {
     form.append("date_start", dayjs(date_start).format("YYYY-MM-DD"));
     form.append("date_end", dayjs(date_end).format("YYYY-MM-DD"));
 
-    axios.post(RoutesList.api.service.orders.export.excel, form).then((res) => {
-      // console.log(res.data);
-      loading(false);
-      alert({
-        open: true,
-        severity: res.data.status,
-        message: res.data.message,
-      });
+    axios
+      .post(RoutesList.api.service.orders.export.excel, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        loading(false);
+        alert({
+          open: true,
+          severity: res.data.status,
+          message: res.data.message,
+        });
 
-      if (res.data.status === "success") {
-        window.open(res.data.data.url);
-        setDate_start(null);
-        setDate_end(null);
-      } else if (res.data.status === "warning") {
-        loading(true);
-        setTimeout(() => {
-          setOpenOrdersDate(true);
-          loading(false);
-        }, 1000);
-      }
-    });
+        if (res.data.status === "success") {
+          window.open(res.data.data.url);
+          setDate_start(null);
+          setDate_end(null);
+        } else if (res.data.status === "warning") {
+          loading(true);
+          setTimeout(() => {
+            setOpenOrdersDate(true);
+            loading(false);
+          }, 1000);
+        }
+      });
   };
 
   useEffect(() => {
