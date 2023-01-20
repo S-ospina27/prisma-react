@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RoutesList from "../tools/RoutesList";
+import { getHeader } from "../tools/SessionSettings";
 
 function DocumentTypesSelect({
   value,
@@ -14,7 +15,7 @@ function DocumentTypesSelect({
   const [document_types, setDocument_types] = useState([]);
 
   useEffect(() => {
-    axios.get(RoutesList.api.read_document_types).then((res) => {
+    axios.get(RoutesList.api.read_document_types, getHeader()).then((res) => {
       setDocument_types(res.data);
     });
   }, []);

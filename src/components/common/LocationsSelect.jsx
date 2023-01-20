@@ -2,6 +2,7 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RoutesList from "../tools/RoutesList";
+import { getHeader } from "../tools/SessionSettings";
 
 function LocationsSelect({
   labelDepartment,
@@ -22,14 +23,16 @@ function LocationsSelect({
   const [disabledCityAction, setDisabledCityAction] = useState(false);
 
   const handleReadDepartments = () => {
-    axios.get(RoutesList.api.locations.read_departments).then((res) => {
-      setDepartments(res.data);
-    });
+    axios
+      .get(RoutesList.api.locations.read_departments, getHeader())
+      .then((res) => {
+        setDepartments(res.data);
+      });
   };
 
   const handleReadCities = (iddepartments) => {
     axios
-      .get(RoutesList.api.locations.read_cities + iddepartments)
+      .get(RoutesList.api.locations.read_cities + iddepartments, getHeader())
       .then((res) => setCities(res.data));
   };
 
