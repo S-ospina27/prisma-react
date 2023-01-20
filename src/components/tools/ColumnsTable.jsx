@@ -23,24 +23,15 @@ export default {
     { field: "service_type", headerName: "ESTADO", width: 170 }
   ],
   service_request: [
-    { field: "users_identification", headerName: "IDENFITICACION DISTRIBUIDOR", width: 270 },
-    { field: "users_name", headerName: "NOMBRE DISTRIBUIDOR", width: 270 },
-    { field: "users_lastname", headerName: "APELLIDO DISTRIBUIDOR", width: 270 },
-    { field: "fullnametechnical", headerName: "NOMBRE COMPLETO TECNICO", width: 270 },
-    { field: "service_request_client_name", headerName: "NOMBRE CLIENTE", width: 200 },
-    { field: "service_request_phone_contact", headerName: "TELEFONO DE CONTACTO", width: 200 },
-    { field: "service_request_email", headerName: "CORREO ELECTRONICO", width: 270 },
-    { field: "cities_name", headerName: "CIUIDAD", width: 200 },
-    { field: "service_request_address", headerName: "DIRECCIÓN", width: 250 },
-    { field: "service_request_neighborhood", headerName: "BARRIO", width: 200 },
-    { field: "product_types_name", headerName: "TIPO DE PRODUCTO", width: 350 },
-    {field: "products_reference", headerName: "PRODUCTO",width: 350,},
-    {field: "service_type", headerName: "ESTADO",width: 350,},
-    {field: "service_request_creation_date", headerName: "FECHA DE CREACIÓN",width: 350,},
-    {field: "service_request_date_visit", headerName: "FECHA DE VISITA",width: 350,},
-    {field: "service_request_date_close", headerName: "FECHA DE CIERRE",width: 350,},
-    {field: "service_request_trouble_report", headerName: "REPORTE DE NOVEDAD",width: 350,},
-    {field: "service_request_warranty", headerName: "GARANTIA",width: 350,},
+    { field: "guide", headerName: "GUIA", width: 100 },
+    { field: "service_type", headerName: "ESTADO", width: 120 },
+    { field: "fullnamedealers", headerName: "DISTRIBUIDOR", width: 300 },
+    { field: "fullnametechnical", headerName: "TECNICO", width: 300, valueFormatter: ({ value }) => {
+      return value === null ? "SIN-ASIGNAR" : value;
+    } },
+    { field: "service_request_client_name", headerName: "CLIENTE", width: 300 },
+    { field: "departments_name", headerName: "DEPARTAMENTO", width: 200 },
+    { field: "cities_name", headerName: "CIUDAD", width: 200 },
   ],
   service_order: [
     { field: "full_consecutive", headerName: "CONSECUTIVO", width: 200 },
