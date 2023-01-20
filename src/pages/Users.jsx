@@ -14,6 +14,7 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 
 import PersonAddAltRoundedIcon from "@mui/icons-material/PersonAddAltRounded";
 import { SHA256 } from "crypto-js";
+import { getHeader } from "../components/tools/SessionSettings";
 
 function Users({ loading, alert }) {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -37,8 +38,9 @@ function Users({ loading, alert }) {
   const [idstatus, setIdstatus] = useState(1);
 
   const handleReadUsers = () => {
-    axios.get(RoutesList.api.users.read.index).then((res) => {
-      setUsers(!res.data.status ? res.data : []);
+    axios.get(RoutesList.api.users.read.index, getHeader()).then((res) => {
+      // console.log(res.data)
+      !res.data.status && setUsers(res.data);
     });
   };
 
@@ -112,7 +114,7 @@ function Users({ loading, alert }) {
     form.append("users_contact_name", users_contact_name);
     form.append("users_contact_phone", users_contact_phone);
 
-    axios.post(RoutesList.api.users.create, form).then((res) => {
+    axios.post(RoutesList.api.users.create, form, getHeader()).then((res) => {
       // console.log(res.data);
 
       alert({
@@ -145,7 +147,7 @@ function Users({ loading, alert }) {
     form.append("users_contact_phone", users_contact_phone);
     form.append("idstatus", idstatus);
 
-    axios.post(RoutesList.api.users.update, form).then((res) => {
+    axios.post(RoutesList.api.users.update, form, getHeader()).then((res) => {
       // console.log(res.data);
 
       alert({
