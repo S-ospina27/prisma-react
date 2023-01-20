@@ -170,7 +170,7 @@ function ServiceRequest({ loading, alert }) {
     axios
       .post(RoutesList.api.service.request.update, form, getHeader())
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
 
         alert({
           open: true,
@@ -354,7 +354,9 @@ function ServiceRequest({ loading, alert }) {
                     "ACEPTADO",
                     "ENVIADO",
                     "NO-DESPACHADO",
+                    "PAGO",
                   ]}
+                  readOnly={idservice_states === 8 ? true : false}
                 />
               </Grid>
 
