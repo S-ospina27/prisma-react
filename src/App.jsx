@@ -67,6 +67,7 @@ function App() {
                 "route-error",
                 "database-error",
                 "existence-error",
+                "session-error",
               ].includes(alert.severity)
                 ? "error"
                 : alert.severity
