@@ -36,7 +36,6 @@ export default {
     { field: "service_type", headerName: "ESTADO", width: 200 },
     { field: "products_reference", headerName: "PRODUCTO", width: 200 },
     { field: "fullname", headerName: "PROVEEDOR", width: 350 },
-    { field: "service_orders_observation", headerName: "OBSERVACIONES", width: 350, },
   ],
   users: [
     { field: "roles_name", headerName: "ROL", width: 250 },

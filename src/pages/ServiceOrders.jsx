@@ -269,43 +269,45 @@ function ServiceOrders({ loading, alert }) {
         </Divider>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
-        <MenuItems
-          id={"operations"}
-          iconButton={true}
-          label={<MoreVertIcon color={"dark-blue"} />}
-          items={[
-            {
-              type: "modal",
-              name: "Crear Orden de Servicio",
-              icon: <AssignmentIcon color={"dark-blue"} />,
-              setOpen: setOpenCreateOrders,
-              idroles: [1],
-            },
-            {
-              type: "modal",
-              name: "Exportar Ordenes de Servicio",
-              icon: <AssignmentIcon color={"blue"} />,
-              setOpen: setOpenOrdersDate,
-              idroles: [1],
-            },
-          ]}
-        />
-      </Box>
+      <Container>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
+          <MenuItems
+            id={"operations"}
+            iconButton={true}
+            label={<MoreVertIcon color={"dark-blue"} />}
+            items={[
+              {
+                type: "modal",
+                name: "Crear Orden de Servicio",
+                icon: <AssignmentIcon color={"dark-blue"} />,
+                setOpen: setOpenCreateOrders,
+                idroles: [1],
+              },
+              {
+                type: "modal",
+                name: "Exportar Ordenes de Servicio",
+                icon: <AssignmentIcon color={"blue"} />,
+                setOpen: setOpenOrdersDate,
+                idroles: [1],
+              },
+            ]}
+          />
+        </Box>
 
-      <DataTable
-        reload={handleReadOrderService}
-        rows={ordersService}
-        columns={ColumnsTable.service_order}
-        getRowId={"idservice_orders"}
-        onRowClick={{
-          open: setOpenUpdateOrders,
-          set: setFields,
-        }}
-        sx={{
-          height: "450px",
-        }}
-      />
+        <DataTable
+          reload={handleReadOrderService}
+          rows={ordersService}
+          columns={ColumnsTable.service_order}
+          getRowId={"idservice_orders"}
+          onRowClick={{
+            open: setOpenUpdateOrders,
+            set: setFields,
+          }}
+          sx={{
+            height: "450px",
+          }}
+        />
+      </Container>
 
       <DialogForm
         title={"Registrar Ordenes de Servicio"}
