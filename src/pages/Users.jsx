@@ -171,7 +171,7 @@ function Users({ loading, alert }) {
         </Divider>
       </Box>
 
-      <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
+      <Container>
         <DataTable
           reload={handleReadUsers}
           rows={users}
@@ -196,333 +196,333 @@ function Users({ loading, alert }) {
             </Button>
           }
         />
+      </Container>
 
-        <DialogForm
-          title={"Registrar Usuarios"}
-          clean={setFields}
-          open={openRegister}
-          setOpen={setOpenRegister}
-          button={{
-            label: "Crear",
-            type: "submit",
-            onSubmit: handleCreateUsers,
-          }}
-          content={
-            <Container>
-              <Box mb={3}>
-                <Divider textAlign="left">
-                  <Chip color="dark-blue" label="Detalles de Usuario" />
-                </Divider>
-              </Box>
+      <DialogForm
+        title={"Registrar Usuarios"}
+        clean={setFields}
+        open={openRegister}
+        setOpen={setOpenRegister}
+        button={{
+          label: "Crear",
+          type: "submit",
+          onSubmit: handleCreateUsers,
+        }}
+        content={
+          <Container>
+            <Box mb={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label="Detalles de Usuario" />
+              </Divider>
+            </Box>
 
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={6}>
-                  <RolesSelect value={idroles} setValue={setIdroles} required />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <StatusSelect
-                    value={idstatus}
-                    setValue={setIdstatus}
-                    required
-                    readOnly
-                  />
-                </Grid>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={6}>
+                <RolesSelect value={idroles} setValue={setIdroles} required />
               </Grid>
 
-              <Box my={3}>
-                <Divider textAlign="left">
-                  <Chip color="blue" label="Información de Usuario" />
-                </Divider>
-              </Box>
+              <Grid item xs={12} sm={12} md={6}>
+                <StatusSelect
+                  value={idstatus}
+                  setValue={setIdstatus}
+                  required
+                  readOnly
+                />
+              </Grid>
+            </Grid>
 
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={6}>
-                  <DocumentTypesSelect
-                    value={iddocument_types}
-                    setValue={setIddocument_types}
-                    required
-                  />
-                </Grid>
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="blue" label="Información de Usuario" />
+              </Divider>
+            </Box>
 
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"number"}
-                    label={"Identificación"}
-                    value={users_identification}
-                    setValue={setUsers_identification}
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Nombres"}
-                    value={users_name}
-                    setValue={setUsers_name}
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Apellidos"}
-                    value={users_lastname}
-                    setValue={setUsers_lastname}
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"number"}
-                    label={"Télefono"}
-                    value={users_phone}
-                    setValue={setUsers_phone}
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Correo"}
-                    value={users_email}
-                    setValue={setUsers_email}
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"password"}
-                    label={"Contraseña"}
-                    value={users_password}
-                    setValue={setUsers_password}
-                    required
-                  />
-                </Grid>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={6}>
+                <DocumentTypesSelect
+                  value={iddocument_types}
+                  setValue={setIddocument_types}
+                  required
+                />
               </Grid>
 
-              <Box my={3}>
-                <Divider textAlign="left">
-                  <Chip color="dark-blue" label="Ubicación de Usuario" />
-                </Divider>
-              </Box>
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={12}>
-                  <LocationsSelect
-                    department={iddepartments}
-                    setDepartment={setIddepartments}
-                    requiredDepartment={true}
-                    city={idcities}
-                    setCity={setIdcities}
-                    requiredCity={true}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Dirección"}
-                    value={users_address}
-                    setValue={setUsers_address}
-                    required
-                  />
-                </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"number"}
+                  label={"Identificación"}
+                  value={users_identification}
+                  setValue={setUsers_identification}
+                  required
+                />
               </Grid>
 
-              <Box my={3}>
-                <Divider textAlign="left">
-                  <Chip color="blue" label="Información de Contacto" />
-                </Divider>
-              </Box>
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Nombre"}
-                    value={users_contact_name}
-                    setValue={setUsers_contact_name}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"number"}
-                    label={"Télefono"}
-                    value={users_contact_phone}
-                    setValue={setUsers_contact_phone}
-                  />
-                </Grid>
-              </Grid>
-            </Container>
-          }
-        />
-
-        <DialogForm
-          title={"Editar Usuarios"}
-          open={openUpdate}
-          setOpen={setOpenUpdate}
-          button={{
-            label: "Actualizar",
-            type: "submit",
-            onSubmit: handleUpdateUsers,
-          }}
-          content={
-            <Container>
-              <Box mb={3}>
-                <Divider textAlign="left">
-                  <Chip color="dark-blue" label="Detalles de Usuario" />
-                </Divider>
-              </Box>
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={6}>
-                  <RolesSelect value={idroles} setValue={setIdroles} required />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <StatusSelect
-                    value={idstatus}
-                    setValue={setIdstatus}
-                    required
-                  />
-                </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Nombres"}
+                  value={users_name}
+                  setValue={setUsers_name}
+                  required
+                />
               </Grid>
 
-              <Box my={3}>
-                <Divider textAlign="left">
-                  <Chip color="blue" label="Información de Usuario" />
-                </Divider>
-              </Box>
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={6}>
-                  <DocumentTypesSelect
-                    value={iddocument_types}
-                    setValue={setIddocument_types}
-                    readOnly
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"number"}
-                    label={"Identificación"}
-                    value={users_identification}
-                    setValue={setUsers_identification}
-                    required
-                    readOnly
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Nombres"}
-                    value={users_name}
-                    setValue={setUsers_name}
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Apellidos"}
-                    value={users_lastname}
-                    setValue={setUsers_lastname}
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"number"}
-                    label={"Télefono"}
-                    value={users_phone}
-                    setValue={setUsers_phone}
-                    required
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Correo"}
-                    value={users_email}
-                    setValue={setUsers_email}
-                    required
-                    readOnly
-                  />
-                </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Apellidos"}
+                  value={users_lastname}
+                  setValue={setUsers_lastname}
+                  required
+                />
               </Grid>
 
-              <Box my={3}>
-                <Divider textAlign="left">
-                  <Chip color="dark-blue" label="Ubicación de Usuario" />
-                </Divider>
-              </Box>
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={12}>
-                  <LocationsSelect
-                    department={iddepartments}
-                    setDepartment={setIddepartments}
-                    requiredDepartment={true}
-                    city={idcities}
-                    setCity={setIdcities}
-                    requiredCity={true}
-                    disabledCity={false}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Dirección"}
-                    value={users_address}
-                    setValue={setUsers_address}
-                    required
-                  />
-                </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"number"}
+                  label={"Télefono"}
+                  value={users_phone}
+                  setValue={setUsers_phone}
+                  required
+                />
               </Grid>
 
-              <Box my={3}>
-                <Divider textAlign="left">
-                  <Chip color="blue" label="Información de Contacto" />
-                </Divider>
-              </Box>
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"text"}
-                    label={"Nombre"}
-                    value={users_contact_name}
-                    setValue={setUsers_contact_name}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12} md={6}>
-                  <TextFieldFilled
-                    type={"number"}
-                    label={"Télefono"}
-                    value={users_contact_phone}
-                    setValue={setUsers_contact_phone}
-                  />
-                </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Correo"}
+                  value={users_email}
+                  setValue={setUsers_email}
+                  required
+                />
               </Grid>
-            </Container>
-          }
-        />
-      </Box>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"password"}
+                  label={"Contraseña"}
+                  value={users_password}
+                  setValue={setUsers_password}
+                  required
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label="Ubicación de Usuario" />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={12}>
+                <LocationsSelect
+                  department={iddepartments}
+                  setDepartment={setIddepartments}
+                  requiredDepartment={true}
+                  city={idcities}
+                  setCity={setIdcities}
+                  requiredCity={true}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Dirección"}
+                  value={users_address}
+                  setValue={setUsers_address}
+                  required
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="blue" label="Información de Contacto" />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Nombre"}
+                  value={users_contact_name}
+                  setValue={setUsers_contact_name}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"number"}
+                  label={"Télefono"}
+                  value={users_contact_phone}
+                  setValue={setUsers_contact_phone}
+                />
+              </Grid>
+            </Grid>
+          </Container>
+        }
+      />
+
+      <DialogForm
+        title={"Editar Usuarios"}
+        open={openUpdate}
+        setOpen={setOpenUpdate}
+        button={{
+          label: "Actualizar",
+          type: "submit",
+          onSubmit: handleUpdateUsers,
+        }}
+        content={
+          <Container>
+            <Box mb={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label="Detalles de Usuario" />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={6}>
+                <RolesSelect value={idroles} setValue={setIdroles} required />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <StatusSelect
+                  value={idstatus}
+                  setValue={setIdstatus}
+                  required
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="blue" label="Información de Usuario" />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={6}>
+                <DocumentTypesSelect
+                  value={iddocument_types}
+                  setValue={setIddocument_types}
+                  readOnly
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"number"}
+                  label={"Identificación"}
+                  value={users_identification}
+                  setValue={setUsers_identification}
+                  required
+                  readOnly
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Nombres"}
+                  value={users_name}
+                  setValue={setUsers_name}
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Apellidos"}
+                  value={users_lastname}
+                  setValue={setUsers_lastname}
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"number"}
+                  label={"Télefono"}
+                  value={users_phone}
+                  setValue={setUsers_phone}
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Correo"}
+                  value={users_email}
+                  setValue={setUsers_email}
+                  required
+                  readOnly
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="dark-blue" label="Ubicación de Usuario" />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={12}>
+                <LocationsSelect
+                  department={iddepartments}
+                  setDepartment={setIddepartments}
+                  requiredDepartment={true}
+                  city={idcities}
+                  setCity={setIdcities}
+                  requiredCity={true}
+                  disabledCity={false}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Dirección"}
+                  value={users_address}
+                  setValue={setUsers_address}
+                  required
+                />
+              </Grid>
+            </Grid>
+
+            <Box my={3}>
+              <Divider textAlign="left">
+                <Chip color="blue" label="Información de Contacto" />
+              </Divider>
+            </Box>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"text"}
+                  label={"Nombre"}
+                  value={users_contact_name}
+                  setValue={setUsers_contact_name}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6}>
+                <TextFieldFilled
+                  type={"number"}
+                  label={"Télefono"}
+                  value={users_contact_phone}
+                  setValue={setUsers_contact_phone}
+                />
+              </Grid>
+            </Grid>
+          </Container>
+        }
+      />
     </Box>
   );
 }
