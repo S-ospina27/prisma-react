@@ -227,21 +227,19 @@ function Products({ loading, alert }) {
         />
       </Box>
 
-      <Box sx={{ borderRadius: 1, border: 1, borderColor: "grey.300" }} p={2}>
-        <DataTable
-          reload={handleReadProducts}
-          rows={products}
-          columns={ColumnsTable.products}
-          onRowClick={{
-            open: setOpenUpdate,
-            set: setFields,
-          }}
-          getRowId={"idproducts"}
-          sx={{
-            height: "450px",
-          }}
-        />
-      </Box>
+      <DataTable
+        reload={handleReadProducts}
+        rows={products}
+        columns={ColumnsTable.products}
+        onRowClick={{
+          open: setOpenUpdate,
+          set: setFields,
+        }}
+        getRowId={"idproducts"}
+        sx={{
+          height: "450px",
+        }}
+      />
 
       <DialogForm
         title={"Registrar Productos"}
