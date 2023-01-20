@@ -1,7 +1,6 @@
+import { Autocomplete, TextField } from "@mui/material";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
-import { get, getHeader } from "../tools/SessionSettings";
 import RoutesList from "../tools/RoutesList";
 
 function ServiceRequestSelect({
@@ -9,25 +8,58 @@ function ServiceRequestSelect({
   setValue,
   required,
   disabled,
-  readOnly
+  readOnly,
+  selected = [],
+  label,
 }) {
   const [serviceRequest, setServiceRequest] = useState([]);
 
+  const handleReadServiceRequest = () => {
+    axios.get(RoutesList.api.service.request.read.by_state).then((res) => {
+      const rows = [];
+
+      selected.map((request) => {
+        if (![undefined, false, null, ""].includes(res.data[request])) {
+          rows.push(...res.data[request]);
+        }
+      });
+
+      setServiceRequest(rows);
+    });
+  };
+
   useEffect(() => {
-    let route =  "";
-
-    // if (jwtDecode(get('jwt')).data.idroles === 2) {
-    //     route = RoutesList.api.service_request.read;
-    // } else {
-    //     route = RoutesList.api.service_request.read;
-    // }
-
-    // axios.get(route, getHeader()).then(res => {
-    //     console.log(res.data);
-    // });
+    handleReadServiceRequest();
   }, []);
 
-  return null;
+  return (
+    <Autocomplete
+      disablePortal
+      filterSelectedOptions
+      disabled={disabled}
+      readOnly={readOnly}
+      options={serviceRequest.map((request) => request.guide)}
+      getOptionLabel={(request) => request}
+      getOptionDisabled={(request) => request === value}
+      isOptionEqualToValue={(request, value) => request === value}
+      itemID={"idservice_request"}
+      value={value}
+      onChange={(event, newValue) => setValue(newValue)}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={!label ? "Solicitudes" : label}
+          color={"blue"}
+          variant={"filled"}
+          required={required}
+          InputProps={{
+            ...params.InputProps,
+            autoComplete: "off",
+          }}
+        />
+      )}
+    />
+  );
 }
 
 export default ServiceRequestSelect;

@@ -66,7 +66,7 @@ function NavbarNavigation() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="blue">
+      <AppBar position="sticky" color="blue">
         <Toolbar>
           {session() && (
             <IconButton

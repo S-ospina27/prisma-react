@@ -1,13 +1,14 @@
 export default {
   payments: [
-    { field: "fullname", headerName: "NOMBRE DEL TECNICO", width: 270 },
-    { field: "FINALIZADO", headerName: "ESTADO DEL SERVICIO", width: 200 },
-    { field: "service_type", headerName: "ESTADO DE PAGO", width: 200 },
-    { field: "service_request_warranty", headerName: "GARANTIA", width: 200 },
-    { field: "service_request_payment_states_creation_date", headerName: "FECHA PENDIENTE PAGO", width: 200 },
-    { field: "service_request_payment_paid_creation_date", headerName: "FECHA PAGO", width: 200 },
-    { field: "service_request_value", headerName: "VALOR", width: 200 },
-    { field: "service_request_payment_methods", headerName: "METODO DE PAGO", width: 200 },
+    { field: "guide_payments", headerName: "GUIA PAGO", width: 120 },
+    { field: "service_type", headerName: "ESTADO PAGO", width: 120 },
+    { field: "guide_request", headerName: "GUIA SOLICITUD", width: 150 },
+    { field: "service_type_request", headerName: "ESTADO SOLICITUD", width: 150 },
+    { field: "payments_value", headerName:"VALOR", width: 150, valueFormatter: ({ value }) => {
+      return "$" + value.toLocaleString('es');
+    } },
+    { field: "payments_creation_date", headerName:"FECHA DE CRACION", width: 200 },
+    { field: "payments_update_date", headerName:"FECHA DE ACTUALIZACION", width: 200 }
   ],
   SpareParts: [
     { field: "spare_parts_name", headerName: "REPUESTO", width: 270 },
@@ -46,39 +47,19 @@ export default {
     { field: "service_type", headerName: "ESTADO", width: 200 },
     { field: "products_reference", headerName: "PRODUCTO", width: 200 },
     { field: "fullname", headerName: "PROVEEDOR", width: 350 },
-    {
-      field: "service_orders_observation",
-      headerName: "OBSERVACIONES",
-      width: 350,
-    },
+    { field: "service_orders_observation", headerName: "OBSERVACIONES", width: 350, },
   ],
   users: [
     { field: "roles_name", headerName: "ROL", width: 250 },
-    {
-      field: "users_identification",
-      headerName: "# DE IDENTIFICACIÓN",
-      width: 250,
-    },
+    { field: "users_identification", headerName: "# DE IDENTIFICACIÓN", width: 250, },
     { field: "fullname", headerName: "NOMBRE COMPLETO", width: 250 },
     { field: "users_phone", headerName: "TELEFONO", width: 250 },
     { field: "users_email", headerName: "EMAIL", width: 250 },
     { field: "users_address", headerName: "DIRECCIÓN", width: 250 },
     { field: "cities_name", headerName: "CIUDAD", width: 250 },
-    {
-      field: "departments_name",
-      headerName: "DEPARTAMENTO",
-      width: 250,
-    },
-    {
-      field: "users_contact_name",
-      headerName: "NOMBRE DE CONTACTO",
-      width: 250,
-    },
-    {
-      field: "users_contact_phone",
-      headerName: "# DE CONTACTO",
-      width: 250,
-    },
+    { field: "departments_name", headerName: "DEPARTAMENTO", width: 250, },
+    { field: "users_contact_name", headerName: "NOMBRE DE CONTACTO", width: 250, },
+    { field: "users_contact_phone", headerName: "# DE CONTACTO", width: 250, },
     { field: "status_type", headerName: "STATUS", width: 250 },
   ],
   products: [
@@ -92,10 +73,6 @@ export default {
   ],
   type_products: [
     { field: "idproduct_types", headerName: "ID", width: 100 },
-    {
-      field: "product_types_name",
-      headerName: "TIPO PRODUCTO",
-      width: 300,
-    },
+    { field: "product_types_name", headerName: "TIPO PRODUCTO", width: 300, },
   ],
 };

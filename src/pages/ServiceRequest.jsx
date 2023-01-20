@@ -245,8 +245,6 @@ function ServiceRequest({ loading, alert }) {
         </Divider>
       </Box>
 
-      <ServiceRequestSelect />
-
       <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
         <MenuItems
           id={"service"}

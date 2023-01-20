@@ -37,6 +37,10 @@ export default {
         read: `${host}/api/products/types/read`,
       },
     },
+    payments: {
+      create: `${host}/api/payments/create`,
+      read: `${host}/api/payments/read`,
+    },
     service: {
       orders: {
         create: `${host}/api/service/orders/create`,
@@ -57,12 +61,9 @@ export default {
       request: {
         create: `${host}/api/service/request/create`,
         update: `${host}/api/service/request/update`,
-        payment: {
-          read: `${host}/api/service/request/payments/read`,
-          convert: `${host}/api/service/request/payments/convert`,
-        },
         read: {
           index: `${host}/api/service/request/read`,
+          by_state: `${host}/api/service/request/read/by-state`,
           graphics: {
             count_warranty: `${host}/api/service/request/read/graphics/count-warranty`,
             total_charges_per_month: `${host}/api/service/request/read/graphics/total-charges-per-month`,

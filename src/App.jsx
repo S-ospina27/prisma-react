@@ -22,11 +22,11 @@ import ServiceRequest from "./pages/ServiceRequest";
 import TechnicalInventory from "./pages/TechnicalInventory";
 import SpareParts from "./pages/SpareParts";
 import Dashboard from "./pages/Dashboard";
+import ApplicationOrderForm from "./pages/ApplicationOrderForm";
+import Payments from "./pages/Payments";
 
 import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware";
 import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
-import ServicePayments from "./pages/ServicePayments";
-import ApplicationOrderForm from "./pages/ApplicationOrderForm";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -183,7 +183,7 @@ function App() {
                 loading={setLoading}
                 alert={setAlert}
               >
-                <ServicePayments loading={setLoading} alert={setAlert} />
+                <Payments loading={setLoading} alert={setAlert} />
               </WithAuthenticationMiddleware>
             }
           />
