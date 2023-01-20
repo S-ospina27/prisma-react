@@ -19,14 +19,18 @@ import StatusSelect from "../components/common/StatusSelect";
 import DialogForm from "../components/common/DialogForm";
 import TextFieldFile from "../components/common/TextFieldFile";
 import MenuItems from "../components/common/MenuItems";
+import TextFieldOutlined from "../components/common/TextFieldOutlined";
+import DialogTransition from "../components/common/DialogTransition";
 
 import RoutesList from "../components/tools/RoutesList";
 import ColumnsTable from "../components/tools/ColumnsTable";
+import {
+  getHeader,
+  getHeaderMultipart,
+} from "../components/tools/SessionSettings";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import TextFieldOutlined from "../components/common/TextFieldOutlined";
-import DialogTransition from "../components/common/DialogTransition";
 
 function Products({ loading, alert }) {
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -49,13 +53,15 @@ function Products({ loading, alert }) {
   const [product_types_name, setProduct_types_name] = useState("");
 
   const handleReadProducts = () => {
-    axios.get(RoutesList.api.products.read.index).then((res) => {
+    axios.get(RoutesList.api.products.read.index, getHeader()).then((res) => {
+      // console.log(res.data);
       !res.data.status && setproducts(res.data);
     });
   };
 
   const handleReadTypeProducts = () => {
-    axios.get(RoutesList.api.products.types.read).then((res) => {
+    axios.get(RoutesList.api.products.types.read, getHeader()).then((res) => {
+      // console.log(res.data)
       !res.data.status && setTypeProducts_read(res.data);
     });
   };
@@ -105,16 +111,18 @@ function Products({ loading, alert }) {
       products_image.length > 0 ? products_image[0] : []
     );
 
-    axios.post(RoutesList.api.products.create, form).then((res) => {
-      // console.log(res.data);
-      handleReadProducts();
-      alert({
-        open: true,
-        message: res.data.message,
-        severity: res.data.status,
+    axios
+      .post(RoutesList.api.products.create, form, getHeaderMultipart())
+      .then((res) => {
+        // console.log(res.data);
+        handleReadProducts();
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
+        loading(false);
       });
-      loading(false);
-    });
   };
 
   const handleUpdateProducts = (e) => {
@@ -135,16 +143,18 @@ function Products({ loading, alert }) {
       products_image.length > 0 ? products_image[0] : strProducts_image
     );
 
-    axios.post(RoutesList.api.products.update, form).then((res) => {
-      // console.log(res.data);
-      handleReadProducts();
-      loading(false);
-      alert({
-        open: true,
-        message: res.data.message,
-        severity: res.data.status,
+    axios
+      .post(RoutesList.api.products.update, form, getHeaderMultipart())
+      .then((res) => {
+        // console.log(res.data);
+        handleReadProducts();
+        loading(false);
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
       });
-    });
   };
 
   const handleClose = () => {
@@ -158,17 +168,19 @@ function Products({ loading, alert }) {
     const form = new FormData();
     form.append("product_types_name", product_types_name);
 
-    axios.post(RoutesList.api.products.types.create, form).then((res) => {
-      // console.log(res.data);
-      setOpenTypeRegister(true);
-      setFieldsProductTypes();
-      handleReadTypeProducts();
-      alert({
-        open: true,
-        message: res.data.message,
-        severity: res.data.status,
+    axios
+      .post(RoutesList.api.products.types.create, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        setOpenTypeRegister(true);
+        setFieldsProductTypes();
+        handleReadTypeProducts();
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
       });
-    });
   };
 
   const handleUpdateProductsType = (e) => {
@@ -178,16 +190,18 @@ function Products({ loading, alert }) {
     form.append("product_types_name", product_types_name);
     form.append("idproduct_types", idproduct_types);
 
-    axios.post(RoutesList.api.products.types.update, form).then((res) => {
-      // console.log(res.data);
-      handleClose();
-      handleReadTypeProducts();
-      alert({
-        open: true,
-        message: res.data.message,
-        severity: res.data.status,
+    axios
+      .post(RoutesList.api.products.types.update, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
+        handleClose();
+        handleReadTypeProducts();
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
       });
-    });
   };
 
   useEffect(() => {
