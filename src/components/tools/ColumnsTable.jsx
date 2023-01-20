@@ -1,4 +1,14 @@
 export default {
+  payments: [
+    { field: "fullname", headerName: "NOMBRE DEL TECNICO", width: 270 },
+    { field: "FINALIZADO", headerName: "ESTADO DEL SERVICIO", width: 200 },
+    { field: "service_type", headerName: "ESTADO DE PAGO", width: 200 },
+    { field: "service_request_warranty", headerName: "GARANTIA", width: 200 },
+    { field: "service_request_payment_states_creation_date", headerName: "FECHA PENDIENTE PAGO", width: 200 },
+    { field: "service_request_payment_paid_creation_date", headerName: "FECHA PAGO", width: 200 },
+    { field: "service_request_value", headerName: "VALOR", width: 200 },
+    { field: "service_request_payment_methods", headerName: "METODO DE PAGO", width: 200 },
+  ],
   SpareParts: [
     { field: "spare_parts_name", headerName: "REPUESTO", width: 270 },
     { field: "spare_parts_amount", headerName: "CANTIDAD", width: 200 },
