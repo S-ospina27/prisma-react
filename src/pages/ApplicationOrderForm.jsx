@@ -7,6 +7,7 @@ import ProductsSelect from "../components/common/ProductsSelect";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 
 import RoutesList from "../components/tools/RoutesList";
+import { getHeader } from "../components/tools/SessionSettings";
 
 function ApplicationOrderForm({ loading, alert }) {
   const { idusers } = useParams();
@@ -59,22 +60,24 @@ function ApplicationOrderForm({ loading, alert }) {
       service_request_trouble_report
     );
 
-    axios.post(RoutesList.api.service.request.create, form).then((res) => {
-      // console.log(res.data);
+    axios
+      .post(RoutesList.api.service.request.create, form, getHeader())
+      .then((res) => {
+        // console.log(res.data);
 
-      setBlocked(false);
-      loading(false);
-      alert({
-        open: true,
-        message: res.data.message,
-        severity: res.data.status,
+        setBlocked(false);
+        loading(false);
+        alert({
+          open: true,
+          message: res.data.message,
+          severity: res.data.status,
+        });
+
+        if (res.data.status === "success") {
+          clearFields();
+          setTimeout(() => navigate("/"), 5000);
+        }
       });
-
-      if (res.data.status === "success") {
-        clearFields();
-        setTimeout(() => navigate("/"), 5000);
-      }
-    });
   };
 
   return (
