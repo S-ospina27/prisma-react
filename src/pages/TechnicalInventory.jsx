@@ -147,7 +147,7 @@ function TechnicalInventory({ loading, alert }) {
                   value={idservice_states}
                   setValue={setIdservice_states}
                   required
-                  ignore={["NO-DESPACHADO", "DESPACHADO"]}
+                  ignore={["NO-DESPACHADO", "DESPACHADO", "NOVEDAD", "PAGO"]}
                   ignoreItems={
                     idservice_states === 6
                       ? [
