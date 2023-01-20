@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RoutesList from "../tools/RoutesList";
+import { getHeader } from "../tools/SessionSettings";
 
 function ServiceStatesSelect({
   value,
@@ -15,7 +16,7 @@ function ServiceStatesSelect({
   const [Status, setStatus] = useState([]);
 
   useEffect(() => {
-    axios.get(RoutesList.api.status.service).then((res) => {
+    axios.get(RoutesList.api.status.service, getHeader()).then((res) => {
       setStatus(res.data);
     });
   }, []);
