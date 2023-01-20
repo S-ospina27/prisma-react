@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RoutesList from "../tools/RoutesList";
+import { getHeader } from "../tools/SessionSettings";
 
 function ProductsTypeSelect({
   value,
@@ -14,7 +15,7 @@ function ProductsTypeSelect({
   const [typeProducts, setTypeProducts] = useState([]);
 
   useEffect(() => {
-    axios.get(RoutesList.api.products.types.read).then((res) => {
+    axios.get(RoutesList.api.products.types.read, getHeader()).then((res) => {
       setTypeProducts(!res.data.status ? res.data : []);
     });
   }, []);
