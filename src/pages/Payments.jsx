@@ -14,6 +14,9 @@ function Payments({ loading, alert }) {
   const [payments, setPayments] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
 
+  const [idservice_request_c, setIdservice_request_c] = useState("");
+  const [payments_value_c, setPayments_value_c] = useState("");
+
   const [idservice_request, setIdservice_request] = useState("");
   const [payments_value, setPayments_value] = useState("");
 
@@ -23,7 +26,7 @@ function Payments({ loading, alert }) {
       payments_value: "",
     }
   ) => {
-    setIdservice_request(row.idservice_request);
+    setIdservice_request(row.guide);
     setPayments_value(row.payments_value);
   };
 
@@ -39,8 +42,11 @@ function Payments({ loading, alert }) {
     loading(true);
 
     const form = new FormData();
-    form.append("idservice_request", idservice_request.split("-").pop().trim());
-    form.append("payments_value", payments_value);
+    form.append(
+      "idservice_request",
+      idservice_request_c.split("-").pop().trim()
+    );
+    form.append("payments_value", payments_value_c);
 
     axios
       .post(RoutesList.api.payments.create, form, getHeader())
@@ -81,8 +87,8 @@ function Payments({ loading, alert }) {
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <ServiceRequestSelect
                   label={"Ordenes Solicitudes"}
-                  value={idservice_request}
-                  setValue={setIdservice_request}
+                  value={idservice_request_c}
+                  setValue={setIdservice_request_c}
                   required
                   selected={["FINALIZADO", "NOVEDAD"]}
                 />
@@ -91,8 +97,8 @@ function Payments({ loading, alert }) {
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <TextFieldFilled
                   label={"Valor"}
-                  value={payments_value}
-                  setValue={setPayments_value}
+                  value={payments_value_c}
+                  setValue={setPayments_value_c}
                   required
                   format
                 />
