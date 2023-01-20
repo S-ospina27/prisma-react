@@ -162,6 +162,10 @@ function ServiceRequest({ loading, alert }) {
       service_request_technical_novelty
     );
     form.append("service_request_email", service_request_email);
+    form.append(
+      "service_request_trouble_report",
+      service_request_trouble_report
+    );
 
     axios
       .post(RoutesList.api.service.request.update, form, getHeader())
