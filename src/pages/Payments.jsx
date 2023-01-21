@@ -3,16 +3,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DialogForm from "../components/common/DialogForm";
 import ServiceRequestSelect from "../components/common/ServiceRequestSelect";
-import DataTable from "../Components/DataTable";
-import TextFieldFilled from "../components/common/TextFieldFilled";
+import DataTableCheckBox from "../components/DataTableCheckBox";
 
 import ColumnsTable from "../components/tools/ColumnsTable";
 import RoutesList from "../components/tools/RoutesList";
 import { getHeader } from "../components/tools/SessionSettings";
 
+import PriceCheckIcon from "@mui/icons-material/PriceCheck";
+
 function Payments({ loading, alert }) {
   const [payments, setPayments] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
+  const [items, setItems] = useState([]);
 
   const [idservice_request_c, setIdservice_request_c] = useState("");
   const [payments_value_c, setPayments_value_c] = useState("");
@@ -50,7 +52,7 @@ function Payments({ loading, alert }) {
     axios
       .post(RoutesList.api.payments.create, form, getHeader())
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
 
         handleReadPayments();
         setFields();
@@ -61,6 +63,33 @@ function Payments({ loading, alert }) {
           severity: res.data.status,
         });
       });
+  };
+
+  const handleMassivePayments = () => {
+    if (items.length > 0) {
+      loading(true);
+      const form = new FormData();
+      items.forEach((item) => form.append("items[]", item));
+
+      axios
+        .post(RoutesList.api.payments.update.massive, form, getHeader())
+        .then((res) => {
+          // console.log(res.data);
+          loading(false);
+          handleReadPayments();
+          alert({
+            open: true,
+            message: res.data.message,
+            severity: res.data.status,
+          });
+        });
+    } else {
+      alert({
+        open: true,
+        message: "Debe seleccionar los pagos",
+        severity: "warning",
+      });
+    }
   };
 
   const handleUpdatePayments = (e) => {
@@ -102,7 +131,8 @@ function Payments({ loading, alert }) {
           </form>
         </Box>
 
-        <DataTable
+        <DataTableCheckBox
+          setValue={setItems}
           reload={handleReadPayments}
           rows={payments}
           columns={ColumnsTable.payments}
@@ -114,6 +144,15 @@ function Payments({ loading, alert }) {
           sx={{
             height: "450px",
           }}
+          toolbar={
+            <Button
+              type="button"
+              onClick={handleMassivePayments}
+              startIcon={<PriceCheckIcon />}
+            >
+              {"Pago"}
+            </Button>
+          }
         />
       </Container>
 

@@ -41,6 +41,9 @@ export default {
     payments: {
       create: `${host}/api/payments/create`,
       read: `${host}/api/payments/read`,
+      update: {
+        massive: `${host}/api/payments/update/massive`,
+      }
     },
     service: {
       orders: {
