@@ -42,6 +42,8 @@ function NavbarNavigation({ userSession }) {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
+    console.log(userSession);
+    console.log(clicked);
     if (userSession && !clicked) {
       setLinks(navigationLinks());
       setClicked(true);
@@ -61,6 +63,7 @@ function NavbarNavigation({ userSession }) {
     setLinks(RouteListNavigation.offline);
     remove("jwt");
     navigate("/");
+    setClicked(false);
   };
 
   return (
