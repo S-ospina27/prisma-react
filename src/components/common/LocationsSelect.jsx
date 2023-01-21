@@ -2,7 +2,6 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import RoutesList from "../tools/RoutesList";
-import { getHeader } from "../tools/SessionSettings";
 
 function LocationsSelect({
   labelDepartment,
@@ -23,17 +22,19 @@ function LocationsSelect({
   const [disabledCityAction, setDisabledCityAction] = useState(false);
 
   const handleReadDepartments = () => {
-    axios
-      .get(RoutesList.api.locations.read_departments, getHeader())
-      .then((res) => {
-        setDepartments(res.data);
-      });
+    axios.get(RoutesList.api.locations.read_departments).then((res) => {
+      // console.log(res.data);
+      setDepartments(res.data);
+    });
   };
 
   const handleReadCities = (iddepartments) => {
     axios
-      .get(RoutesList.api.locations.read_cities + iddepartments, getHeader())
-      .then((res) => setCities(res.data));
+      .get(RoutesList.api.locations.read_cities + iddepartments)
+      .then((res) => {
+        // console.log(res.data);
+        setCities(res.data);
+      });
   };
 
   const List = ({
@@ -51,7 +52,7 @@ function LocationsSelect({
       <Autocomplete
         disablePortal
         filterSelectedOptions
-        // disableClearable
+        disableClearable
         disabled={disabled}
         readOnly={readOnly}
         options={options}
