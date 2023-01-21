@@ -55,7 +55,7 @@ function Payments({ loading, alert }) {
       .post(RoutesList.api.payments.create, form, getHeader())
       .then((res) => {
         // console.log(res.data);
-
+        handleClose();
         handleReadPayments();
         setFields();
         loading(false);
@@ -97,6 +97,7 @@ function Payments({ loading, alert }) {
   const handleClose = () => {
     setOpencreate(false);
   };
+
   const handleUpdatePayments = (e) => {
     e.preventDefault();
   };
@@ -113,22 +114,6 @@ function Payments({ loading, alert }) {
             <Chip label={"Pagos"} color={"blue"} />
           </Divider>
         </Box>
-
-        {/* <Box mb={3}>
-          <form onSubmit={handleCreatePayments}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={6} lg={6}>
-               
-              </Grid>
-            </Grid>
-
-            <Box my={3}>
-              <Button type="submit" variant="contained" color="blue">
-                {"Crear"}
-              </Button>
-            </Box>
-          </form>
-        </Box> */}
 
         <DataTableCheckBox
           setValue={setItems}
@@ -197,32 +182,6 @@ function Payments({ loading, alert }) {
           </DialogActions>
         </form>
       </Dialog>
-
-      <DialogForm
-        title={"Actualizar Pago"}
-        open={openEdit}
-        setOpen={setOpenEdit}
-        button={{
-          type: "submit",
-          label: "Actualizar",
-          onSubmit: handleUpdatePayments,
-        }}
-        content={
-          <Box>
-            <Grid container spacing={2}>
-              {/* <Grid item xs={12} sm={12} md={6} lg={4}>
-                <ServiceRequestSelect
-                  label={"Ordenes Solicitudes"}
-                  value={idservice_request}
-                  setValue={setIdservice_request}
-                  required
-                  selected={["FINALIZADO", "NOVEDAD"]}
-                />
-              </Grid> */}
-            </Grid>
-          </Box>
-        }
-      />
     </Box>
   );
 }

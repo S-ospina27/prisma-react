@@ -8,6 +8,8 @@ export default {
       return "$" + value.toLocaleString('es');
     } },
     { field: "service_request_warranty", headerName: "GARANTIA", width: 180 },
+    { field: "payments_creation_date", headerName: "FECHA CREACIÓN", width: 180 },
+    { field: "payments_update_date", headerName: "FECHA DE PAGO", width: 180 },
   ],
   SpareParts: [
     { field: "spare_parts_name", headerName: "REPUESTO", width: 270 },
