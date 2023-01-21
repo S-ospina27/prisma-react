@@ -268,6 +268,7 @@ function Dashboard({ loading, alert }) {
 
   const hanlereadAverageTime = (e) => {
     e.preventDefault();
+    loading(true);
 
     const route =
       RoutesList.api.service.request.read.graphics.read_average_time;
@@ -278,7 +279,8 @@ function Dashboard({ loading, alert }) {
         getHeader()
       )
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
+        loading(false);
 
         if (!res.data.status) {
           setIdusers_technical("");
@@ -301,6 +303,12 @@ function Dashboard({ loading, alert }) {
           const amount = DaysSolution.length;
           // console.log(ejemplo)
           setPercentage(Math.round(result / amount));
+        } else {
+          alert({
+            open: true,
+            message: "No hay datos disponibles",
+            severity: res.data.status,
+          });
         }
       });
   };

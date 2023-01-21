@@ -42,8 +42,6 @@ function NavbarNavigation({ userSession }) {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log(userSession);
-    console.log(clicked);
     if (userSession && !clicked) {
       setLinks(navigationLinks());
       setClicked(true);
