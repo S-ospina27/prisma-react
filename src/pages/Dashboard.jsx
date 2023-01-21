@@ -279,7 +279,7 @@ function Dashboard({ loading, alert }) {
         getHeader()
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         loading(false);
 
         if (!res.data.status) {
