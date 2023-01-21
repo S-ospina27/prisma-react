@@ -1,5 +1,13 @@
+import { Box, Typography } from "@mui/material";
+
 function Home() {
-  return <h1>Home</h1>;
+  return (
+    <Box m={5}>
+      <Typography variant="h3" gutterBottom>
+        {"Home"}
+      </Typography>
+    </Box>
+  );
 }
 
 export default Home;
