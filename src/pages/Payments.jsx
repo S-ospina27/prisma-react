@@ -1,19 +1,21 @@
-import { Box, Button, Chip, Container, Divider, Grid } from "@mui/material";
+import { Box, Button, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import DialogForm from "../components/common/DialogForm";
+import DialogTransition from "../components/common/DialogTransition";
 import ServiceRequestSelect from "../components/common/ServiceRequestSelect";
 import DataTableCheckBox from "../components/DataTableCheckBox";
 
 import ColumnsTable from "../components/tools/ColumnsTable";
 import RoutesList from "../components/tools/RoutesList";
 import { getHeader } from "../components/tools/SessionSettings";
-
 import PriceCheckIcon from "@mui/icons-material/PriceCheck";
-
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import TextFieldFilled from "../components/common/TextFieldFilled";
 function Payments({ loading, alert }) {
   const [payments, setPayments] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
+  const [opencreate, setOpencreate] = useState(false);
   const [items, setItems] = useState([]);
 
   const [idservice_request_c, setIdservice_request_c] = useState("");
@@ -92,6 +94,9 @@ function Payments({ loading, alert }) {
     }
   };
 
+  const handleClose = () => {
+    setOpencreate(false);
+  };
   const handleUpdatePayments = (e) => {
     e.preventDefault();
   };
@@ -109,17 +114,11 @@ function Payments({ loading, alert }) {
           </Divider>
         </Box>
 
-        <Box mb={3}>
+        {/* <Box mb={3}>
           <form onSubmit={handleCreatePayments}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
-                <ServiceRequestSelect
-                  label={"Ordenes Solicitudes"}
-                  value={idservice_request_c}
-                  setValue={setIdservice_request_c}
-                  required
-                  selected={["FINALIZADO", "NOVEDAD"]}
-                />
+               
               </Grid>
             </Grid>
 
@@ -129,7 +128,7 @@ function Payments({ loading, alert }) {
               </Button>
             </Box>
           </form>
-        </Box>
+        </Box> */}
 
         <DataTableCheckBox
           setValue={setItems}
@@ -145,17 +144,59 @@ function Payments({ loading, alert }) {
             height: "450px",
           }}
           toolbar={
-            <Button
-              type="button"
-              disabled={items.length > 0 ? false : true}
-              onClick={handleMassivePayments}
-              startIcon={<PriceCheckIcon />}
-            >
-              {"Pago"}
-            </Button>
+            <>
+              <Button
+                type="button"
+                disabled={items.length > 0 ? false : true}
+                onClick={handleMassivePayments}
+                startIcon={<PriceCheckIcon />}
+              >
+                {"Pago"}
+              </Button>
+
+              <Button
+                type="button"
+                onClick={()=> setOpencreate(true)}
+                startIcon={<PointOfSaleIcon />}
+              >
+                {"Crear Solicitud"}
+              </Button>
+            </>
           }
         />
       </Container>
+
+      <Dialog
+        fullWidth
+        maxWidth={"xs"}
+        open={opencreate}
+        onClose={handleClose}
+        TransitionComponent={DialogTransition}
+      >
+        <form onSubmit={handleCreatePayments} >
+          <DialogTitle>Crear Solicitud</DialogTitle>
+
+          <DialogContent dividers>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={12}>
+              <ServiceRequestSelect
+                  label={"Ordenes Solicitudes"}
+                  value={idservice_request_c}
+                  setValue={setIdservice_request_c}
+                  required
+                  selected={["FINALIZADO", "NOVEDAD"]}
+                />
+              </Grid>          
+            </Grid>
+          </DialogContent>
+
+          <DialogActions>
+            <Button variant={"contained"} size={"small"} type="submit">
+              Crear
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
 
       <DialogForm
         title={"Actualizar Pago"}
