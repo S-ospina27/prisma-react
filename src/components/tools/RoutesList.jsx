@@ -3,6 +3,7 @@ const host = import.meta.env.VITE_SERVER_URL_AUD;
 export default {
   host: host,
   api: {
+    application_order_form: `${host}/api/application-order-form`,
     auth: {
       login: `${host}/api/auth/login`,
     },
@@ -59,7 +60,7 @@ export default {
         },
       },
       request: {
-        create: `${host}/api/service/request/create`,
+        // create: `${host}/api/service/request/create`,
         update: `${host}/api/service/request/update`,
         read: {
           index: `${host}/api/service/request/read`,

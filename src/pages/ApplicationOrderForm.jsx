@@ -61,7 +61,7 @@ function ApplicationOrderForm({ loading, alert }) {
     );
 
     axios
-      .post(RoutesList.api.service.request.create, form, getHeader())
+      .post(RoutesList.api.application_order_form, form, getHeader())
       .then((res) => {
         // console.log(res.data);
 
