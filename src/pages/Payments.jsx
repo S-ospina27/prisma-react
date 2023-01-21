@@ -147,6 +147,7 @@ function Payments({ loading, alert }) {
           toolbar={
             <Button
               type="button"
+              disabled={items.length > 0 ? false : true}
               onClick={handleMassivePayments}
               startIcon={<PriceCheckIcon />}
             >
