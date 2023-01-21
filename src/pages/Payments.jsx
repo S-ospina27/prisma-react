@@ -33,7 +33,7 @@ function Payments({ loading, alert }) {
   const handleReadPayments = () => {
     axios.get(RoutesList.api.payments.read, getHeader()).then((res) => {
       // console.log(res.data);
-      !res.data.status && setPayments(res.data);
+      setPayments(!res.data.status ? res.data : []);
     });
   };
 
@@ -46,12 +46,11 @@ function Payments({ loading, alert }) {
       "idservice_request",
       idservice_request_c.split("-").pop().trim()
     );
-    form.append("payments_value", payments_value_c);
 
     axios
       .post(RoutesList.api.payments.create, form, getHeader())
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
 
         handleReadPayments();
         setFields();
@@ -93,19 +92,9 @@ function Payments({ loading, alert }) {
                   selected={["FINALIZADO", "NOVEDAD"]}
                 />
               </Grid>
-
-              <Grid item xs={12} sm={12} md={6} lg={6}>
-                <TextFieldFilled
-                  label={"Valor"}
-                  value={payments_value_c}
-                  setValue={setPayments_value_c}
-                  required
-                  format
-                />
-              </Grid>
             </Grid>
 
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }} mt={3}>
+            <Box my={3}>
               <Button type="submit" variant="contained" color="blue">
                 {"Crear"}
               </Button>

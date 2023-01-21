@@ -1,14 +1,13 @@
 export default {
   payments: [
-    { field: "guide_payments", headerName: "GUIA PAGO", width: 120 },
-    { field: "service_type", headerName: "ESTADO PAGO", width: 120 },
-    { field: "guide_request", headerName: "GUIA SOLICITUD", width: 150 },
-    { field: "service_type_request", headerName: "ESTADO SOLICITUD", width: 150 },
+    { field: "guide_payments", headerName: "GUIA PAGO", width: 180 },
+    { field: "service_type", headerName: "ESTADO PAGO", width: 200 },
+    { field: "guide_request", headerName: "GUIA SOLICITUD", width: 180 },
+    { field: "service_type_request", headerName: "ESTADO SOLICITUD", width: 200 },
     { field: "payments_value", headerName:"VALOR", width: 150, valueFormatter: ({ value }) => {
       return "$" + value.toLocaleString('es');
     } },
-    { field: "payments_creation_date", headerName:"FECHA DE CRACION", width: 200 },
-    { field: "payments_update_date", headerName:"FECHA DE ACTUALIZACION", width: 200 }
+    { field: "service_request_warranty", headerName: "GARANTIA", width: 180 },
   ],
   SpareParts: [
     { field: "spare_parts_name", headerName: "REPUESTO", width: 270 },
