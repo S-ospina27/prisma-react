@@ -49,9 +49,11 @@ export function navigationLinks() {
     return jwt.data.idroles === 1
       ? RouteListNavigation.online.administrator
       : jwt.data.idroles === 2
-      ? []
+      ? RouteListNavigation.online.technical
       : jwt.data.idroles === 3
-      ? []
+      ? RouteListNavigation.online.dealer
+      : jwt.data.idroles === 4
+      ? RouteListNavigation.online.provider
       : [];
   }
 }

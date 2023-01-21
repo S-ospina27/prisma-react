@@ -83,9 +83,67 @@ export default {
     ],
     provider: [
       {
-        label: "Ordenes de Servicios",
-        icon: <MenuBookRoundedIcon color={"dark-blue"} />,
-        url: "/service/orders",
+        type: "title",
+        label: "INICIO",
+        childs: [
+          {
+            label: "Home",
+            icon: <HomeIcon color={"blue"} />,
+            url: "/",
+          },
+          {
+            label: "Dashboard",
+            icon: <DashboardIcon color={"dark-blue"} />,
+            url: "/dashboard",
+          },
+        ],
+      },
+      {
+        type: "title",
+        label: "SERVICIOS",
+        childs: [
+          {
+            label: "Ordenes",
+            icon: <MenuBookRoundedIcon color={"blue"} />,
+            url: "/service/orders",
+          },
+        ],
+      },
+    ],
+    technical: [
+      {
+        type: "title",
+        label: "INICIO",
+        childs: [
+          {
+            label: "Home",
+            icon: <HomeIcon color={"blue"} />,
+            url: "/",
+          },
+          {
+            label: "Dashboard",
+            icon: <DashboardIcon color={"dark-blue"} />,
+            url: "/dashboard",
+          },
+        ],
+      },
+    ],
+    dealer: [
+      {
+        type: "title",
+        label: "INICIO",
+        childs: [
+          {
+            label: "Home",
+            icon: <HomeIcon color={"blue"} />,
+            url: "/",
+          },
+          {
+            label: "Dashboard",
+            icon: <DashboardIcon color={"dark-blue"} />,
+            url: "/dashboard",
+          },
+        ],
       },
     ],
   },

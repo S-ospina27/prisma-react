@@ -10,7 +10,7 @@ import { set } from "../components/tools/SessionSettings";
 
 import logo from "./../assets/img/prisma.png";
 
-function Login({ loading, alert }) {
+function Login({ loading, alert, userSession }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,8 +37,11 @@ function Login({ loading, alert }) {
 
       if (res.data.status === "success") {
         set("jwt", res.data.data.jwt);
+        userSession(true);
         setCount_errors(0);
-        navigate(location.pathname === "/auth/login" ? "/dashboard" : location.pathname);
+        navigate(
+          location.pathname === "/auth/login" ? "/dashboard" : location.pathname
+        );
       } else if (res.data.status === "error") {
         setCount_errors(count_errors + 1);
       } else if (res.data.status === "existence-error") {

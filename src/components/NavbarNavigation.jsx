@@ -30,10 +30,11 @@ import session, {
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import prisma from "./../assets/img/prisma.png";
 
-function NavbarNavigation() {
+function NavbarNavigation({ userSession }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+
+  const [clicked, setClicked] = useState(false);
   const [links, setLinks] = useState(navigationLinks());
   const [anchor, setAnchor] = useState("left");
   const [state, setState] = useState({
@@ -41,6 +42,11 @@ function NavbarNavigation() {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
+    if (userSession && !clicked) {
+      setLinks(navigationLinks());
+      setClicked(true);
+    }
+
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -52,17 +58,10 @@ function NavbarNavigation() {
   };
 
   const closeSession = () => {
-    // setActualSession(false);
-    // setLinks(RouteListNavigation.offline);
+    setLinks(RouteListNavigation.offline);
     remove("jwt");
     navigate("/");
   };
-
-  // const updateSession = () => {
-  //   setActualSession(true);
-  //   setLinks(navigationLinks());
-  //   navigate("/dashboard");
-  // };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -121,31 +120,29 @@ function NavbarNavigation() {
                       </Divider>
                     </Box>
 
-                    {RouteListNavigation.online.administrator.map(
-                      (row, keyRow) => (
-                        <div key={keyRow}>
-                          <ListSubheader color="inherit">
-                            {row.label}
-                          </ListSubheader>
+                    {links.map((row, keyRow) => (
+                      <div key={keyRow}>
+                        <ListSubheader color="inherit">
+                          {row.label}
+                        </ListSubheader>
 
-                          {row.childs.map((child, keyChild) => (
-                            <ListItem
-                              key={`container-${keyChild}`}
-                              selected={child.url === location.pathname}
-                              disablePadding
-                            >
-                              <ListItemButton component={Link} to={child.url}>
-                                {child.icon && (
-                                  <ListItemIcon>{child.icon}</ListItemIcon>
-                                )}
+                        {row.childs.map((child, keyChild) => (
+                          <ListItem
+                            key={`container-${keyChild}`}
+                            selected={child.url === location.pathname}
+                            disablePadding
+                          >
+                            <ListItemButton component={Link} to={child.url}>
+                              {child.icon && (
+                                <ListItemIcon>{child.icon}</ListItemIcon>
+                              )}
 
-                                <ListItemText primary={child.label} />
-                              </ListItemButton>
-                            </ListItem>
-                          ))}
-                        </div>
-                      )
-                    )}
+                              <ListItemText primary={child.label} />
+                            </ListItemButton>
+                          </ListItem>
+                        ))}
+                      </div>
+                    ))}
                   </>
                 )}
 

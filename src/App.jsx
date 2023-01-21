@@ -28,7 +28,10 @@ import Payments from "./pages/Payments";
 import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware";
 import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
 
+import session from "./components/tools/SessionSettings";
+
 function App() {
+  const [userSession, setUserSession] = useState(session());
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({
     open: false,
@@ -78,7 +81,7 @@ function App() {
         </Snackbar>
       )}
 
-      <NavbarNavigation />
+      <NavbarNavigation userSession={userSession} />
 
       <Routes>
         <Route path="*" element={<NotFound />} />
@@ -98,7 +101,11 @@ function App() {
             path="login"
             element={
               <NoAuthenticationMiddleware>
-                <Login loading={setLoading} alert={setAlert} />
+                <Login
+                  loading={setLoading}
+                  alert={setAlert}
+                  userSession={setUserSession}
+                />
               </NoAuthenticationMiddleware>
             }
           />
