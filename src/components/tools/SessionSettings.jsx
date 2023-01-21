@@ -61,6 +61,7 @@ export function navigationLinks() {
 export function getHeader() {
   return {
     headers: {
+      Referer: import.meta.env.VITE_SERVER_URL_AUD,
       "Content-Type": "application/json",
       Authorization: `Bearer ` + get("jwt"),
     },
