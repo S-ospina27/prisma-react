@@ -132,7 +132,7 @@ function ServiceRequest({ loading, alert }) {
       .get(RoutesList.api.service.request.read.index, getHeader())
       .then((res) => {
         // console.log(res.data);
-        !res.data.status && setServiceRequest(res.data);
+        setServiceRequest(!res.data.status ? res.data : []);
       });
   };
 
