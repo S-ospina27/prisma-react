@@ -120,9 +120,12 @@ function Users({ loading, alert }) {
         message: res.data.message,
         severity: res.data.status,
       });
-      handleReadUsers();
-      setOpenRegister(false);
       loading(false);
+
+      if (res.data.status === "success") {
+        setOpenRegister(false);
+        handleReadUsers();
+      }
     });
   };
 
