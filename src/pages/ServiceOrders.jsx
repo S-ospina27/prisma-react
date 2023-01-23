@@ -193,10 +193,12 @@ function ServiceOrders({ loading, alert }) {
     if (getJWT("idroles") === 1) {
       route = RoutesList.api.service.orders.read.index;
     } else {
-      route = RoutesList.api.service.orders.read.by_provider;
+      route =
+        RoutesList.api.service.orders.read.by_provider +
+        `/${getJWT("idusers")}`;
     }
 
-    axios.get(`${route}/${getJWT("idusers")}`, getHeader()).then((res) => {
+    axios.get(route, getHeader()).then((res) => {
       // console.log(res.data);
       setOrderService(res.data);
     });
