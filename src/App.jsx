@@ -29,6 +29,8 @@ import NoAuthenticationMiddleware from "./middleware/NoAuthenticationMiddleware"
 import WithAuthenticationMiddleware from "./middleware/WithAuthenticationMiddleware";
 
 import session from "./components/tools/SessionSettings";
+import NotRolMiddleware from "./middleware/NotRolMiddleware";
+import AdministratorMiddleware from "./middleware/AdministratorMiddleware";
 
 function App() {
   const [userSession, setUserSession] = useState(session());
@@ -115,7 +117,9 @@ function App() {
           path="users"
           element={
             <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <Users loading={setLoading} alert={setAlert} />
+              <AdministratorMiddleware>
+                <Users loading={setLoading} alert={setAlert} />
+              </AdministratorMiddleware>
             </WithAuthenticationMiddleware>
           }
         />
@@ -124,7 +128,9 @@ function App() {
           path="products"
           element={
             <WithAuthenticationMiddleware loading={setLoading} alert={setAlert}>
-              <Products loading={setLoading} alert={setAlert} />
+              <AdministratorMiddleware>
+                <Products loading={setLoading} alert={setAlert} />
+              </AdministratorMiddleware>
             </WithAuthenticationMiddleware>
           }
         />
@@ -144,7 +150,9 @@ function App() {
                 loading={setLoading}
                 alert={setAlert}
               >
-                <ServiceOrders loading={setLoading} alert={setAlert} />
+                <NotRolMiddleware roles={[2, 3]}>
+                  <ServiceOrders loading={setLoading} alert={setAlert} />
+                </NotRolMiddleware>
               </WithAuthenticationMiddleware>
             }
           />
@@ -156,7 +164,9 @@ function App() {
                 loading={setLoading}
                 alert={setAlert}
               >
-                <ServiceRequest loading={setLoading} alert={setAlert} />
+                <NotRolMiddleware roles={[2, 3, 4]}>
+                  <ServiceRequest loading={setLoading} alert={setAlert} />
+                </NotRolMiddleware>
               </WithAuthenticationMiddleware>
             }
           />
@@ -168,7 +178,9 @@ function App() {
                 loading={setLoading}
                 alert={setAlert}
               >
-                <SpareParts loading={setLoading} alert={setAlert} />
+                <NotRolMiddleware roles={[2, 3, 4]}>
+                  <SpareParts loading={setLoading} alert={setAlert} />
+                </NotRolMiddleware>
               </WithAuthenticationMiddleware>
             }
           />
@@ -180,7 +192,9 @@ function App() {
                 loading={setLoading}
                 alert={setAlert}
               >
-                <TechnicalInventory loading={setLoading} alert={setAlert} />
+                <NotRolMiddleware roles={[2, 3, 4]}>
+                  <TechnicalInventory loading={setLoading} alert={setAlert} />
+                </NotRolMiddleware>
               </WithAuthenticationMiddleware>
             }
           />
@@ -191,7 +205,9 @@ function App() {
                 loading={setLoading}
                 alert={setAlert}
               >
-                <Payments loading={setLoading} alert={setAlert} />
+                <NotRolMiddleware roles={[2, 3, 4]}>
+                  <Payments loading={setLoading} alert={setAlert} />
+                </NotRolMiddleware>
               </WithAuthenticationMiddleware>
             }
           />
