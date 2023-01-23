@@ -216,7 +216,7 @@ function Users({ loading, alert }) {
               </Divider>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <RolesSelect value={idroles} setValue={setIdroles} required />
               </Grid>
@@ -237,7 +237,7 @@ function Users({ loading, alert }) {
               </Divider>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <DocumentTypesSelect
                   value={iddocument_types}
@@ -313,7 +313,7 @@ function Users({ loading, alert }) {
               </Divider>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={12}>
                 <LocationsSelect
                   department={iddepartments}
@@ -342,7 +342,7 @@ function Users({ loading, alert }) {
               </Divider>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
                   type={"text"}
@@ -382,7 +382,7 @@ function Users({ loading, alert }) {
               </Divider>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <RolesSelect value={idroles} setValue={setIdroles} required />
               </Grid>
@@ -402,7 +402,7 @@ function Users({ loading, alert }) {
               </Divider>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <DocumentTypesSelect
                   value={iddocument_types}
@@ -471,7 +471,7 @@ function Users({ loading, alert }) {
               </Divider>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={12}>
                 <LocationsSelect
                   department={iddepartments}
@@ -501,7 +501,7 @@ function Users({ loading, alert }) {
               </Divider>
             </Box>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
                   type={"text"}
