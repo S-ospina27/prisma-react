@@ -29,7 +29,7 @@ export default {
       create: `${host}/api/products/create`,
       update: `${host}/api/products/update`,
       read: {
-        index: `${host}/api/products/read/`,
+        index: `${host}/api/products/read`,
         by_status: `${host}/api/products/read/by-status`,
       },
       types: {
