@@ -55,6 +55,7 @@ function Payments({ loading, alert }) {
       .post(RoutesList.api.payments.create, form, getHeader())
       .then((res) => {
         // console.log(res.data);
+
         handleClose();
         handleReadPayments();
         setFields();
@@ -64,6 +65,7 @@ function Payments({ loading, alert }) {
           message: res.data.message,
           severity: res.data.status,
         });
+        setIdservice_request_c("");
       });
   };
 
@@ -171,7 +173,7 @@ function Payments({ loading, alert }) {
                   required
                   selected={["FINALIZADO", "NOVEDAD"]}
                 />
-              </Grid>          
+              </Grid>
             </Grid>
           </DialogContent>
 
