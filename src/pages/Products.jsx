@@ -55,7 +55,7 @@ function Products({ loading, alert }) {
   const handleReadProducts = () => {
     axios.get(RoutesList.api.products.read.index, getHeader()).then((res) => {
       // console.log(res.data);
-      !res.data.status && setproducts(res.data);
+      setproducts(!res.data.status ? res.data : []);
     });
   };
 
