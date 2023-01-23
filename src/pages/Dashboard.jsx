@@ -196,11 +196,9 @@ function Dashboard({ loading, alert }) {
   };
 
   const handleSendMessageWhatsapp = () => {
-    const text =
-      "URL de distribuidor: " +
-      `${
-        import.meta.env.VITE_SERVER_URL
-      }/service/application-order-form/${getJWT("idusers")}`;
+    const text = `${
+      import.meta.env.VITE_SERVER_URL
+    }/service/application-order-form/${getJWT("idusers")}`;
 
     window.open(`https://api.whatsapp.com/send?text=${text}`);
   };
