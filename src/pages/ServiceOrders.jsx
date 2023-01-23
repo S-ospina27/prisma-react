@@ -373,7 +373,6 @@ function ServiceOrders({ loading, alert }) {
 
   const handleExportServiceOrdersExcel = (e) => {
     e.preventDefault();
-    setOpenOrdersDate(false);
     loading(true);
 
     if ([null, ""].includes(date_start)) {
@@ -417,6 +416,7 @@ function ServiceOrders({ loading, alert }) {
           window.open(res.data.data.url);
           setDate_start(null);
           setDate_end(null);
+          setOpenOrdersDate(false);
         } else if (res.data.status === "warning") {
           loading(true);
           setTimeout(() => {
