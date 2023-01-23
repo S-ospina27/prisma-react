@@ -188,12 +188,18 @@ function ServiceOrders({ loading, alert }) {
   };
 
   const handleReadOrderService = () => {
-    axios
-      .get(RoutesList.api.service.orders.read.index, getHeader())
-      .then((res) => {
-        // console.log(res.data);
-        setOrderService(res.data);
-      });
+    let route = "";
+
+    if (getJWT("idroles") === 1) {
+      route = RoutesList.api.service.orders.read.index;
+    } else {
+      route = RoutesList.api.service.orders.read.by_provider;
+    }
+
+    axios.get(`${route}/${getJWT("idusers")}`, getHeader()).then((res) => {
+      // console.log(res.data);
+      setOrderService(res.data);
+    });
   };
 
   const handleCreateServiceOrders = (e) => {
