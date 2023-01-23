@@ -169,6 +169,18 @@ function ServiceOrders({ loading, alert }) {
           "NOVEDAD",
           "FINALIZADO",
         ],
+        6: [
+          "ACEPTADO",
+          "RECHAZADO",
+          "EN-PROCESO",
+          "NO-DESPACHADO",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "DEPACHADO",
+          "FINALIZADO",
+          "DESPACHADO",
+        ],
         7: [
           "DESPACHADO",
           "ACEPTADO",
@@ -183,7 +195,83 @@ function ServiceOrders({ loading, alert }) {
 
       return states[idservice_states];
     } else if (getJWT("idroles") === 4) {
-      return [];
+      const states = {
+        1: [
+          "PENDIENTE",
+          "EN-PROCESO",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "DEPACHADO",
+          "FINALIZADO",
+          "DESPACHADO",
+        ],
+        2: [
+          "ACEPTADO",
+          "NO-DESPACHADO",
+          "RECHAZADO",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "FINALIZADO",
+        ],
+        3: [
+          "DESPACHADO",
+          "NO-DESPACHADO",
+          "RECHAZADO",
+          "PENDIENTE",
+          "EN-PROCESO",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "FINALIZADO",
+        ],
+        4: [
+          "DESPACHADO",
+          "ACEPTADO",
+          "NO-DESPACHADO",
+          "PENDIENTE",
+          "EN-PROCESO",
+          "PAGO",
+          "NOVEDAD",
+          "FINALIZADO",
+          "ENVIADO",
+        ],
+        5: [
+          "DESPACHADO",
+          "ACEPTADO",
+          "NO-DESPACHADO",
+          "RECHAZADO",
+          "PENDIENTE",
+          "PAGO",
+          "NOVEDAD",
+          "FINALIZADO",
+        ],
+        6: [
+          "ACEPTADO",
+          "RECHAZADO",
+          "NO-DESPACHADO",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "DEPACHADO",
+          "FINALIZADO",
+          "DESPACHADO",
+        ],
+        7: [
+          "DESPACHADO",
+          "ACEPTADO",
+          "NO-DESPACHADO",
+          "RECHAZADO",
+          "PENDIENTE",
+          "EN-PROCESO",
+          "PAGO",
+          "NOVEDAD",
+          "FINALIZADO",
+        ],
+      };
+
+      return states[idservice_states];
     }
   };
 
@@ -352,29 +440,31 @@ function ServiceOrders({ loading, alert }) {
       </Box>
 
       <Container>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
-          <MenuItems
-            id={"operations"}
-            iconButton={true}
-            label={<MoreVertIcon color={"dark-blue"} />}
-            items={[
-              {
-                type: "modal",
-                name: "Crear Orden de Servicio",
-                icon: <AssignmentIcon color={"dark-blue"} />,
-                setOpen: setOpenCreateOrders,
-                idroles: [1],
-              },
-              {
-                type: "modal",
-                name: "Exportar Ordenes de Servicio",
-                icon: <AssignmentIcon color={"blue"} />,
-                setOpen: setOpenOrdersDate,
-                idroles: [1],
-              },
-            ]}
-          />
-        </Box>
+        {getJWT("idroles") === 1 && (
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }} mb={2}>
+            <MenuItems
+              id={"operations"}
+              iconButton={true}
+              label={<MoreVertIcon color={"dark-blue"} />}
+              items={[
+                {
+                  type: "modal",
+                  name: "Crear Orden de Servicio",
+                  icon: <AssignmentIcon color={"dark-blue"} />,
+                  setOpen: setOpenCreateOrders,
+                  idroles: [1],
+                },
+                {
+                  type: "modal",
+                  name: "Exportar Ordenes de Servicio",
+                  icon: <AssignmentIcon color={"blue"} />,
+                  setOpen: setOpenOrdersDate,
+                  idroles: [1],
+                },
+              ]}
+            />
+          </Box>
+        )}
 
         <DataTable
           reload={handleReadOrderService}
@@ -503,6 +593,7 @@ function ServiceOrders({ loading, alert }) {
                   setValue={setIdproducts}
                   selected={["ACTIVO"]}
                   required
+                  readOnly={getJWT("idroles") === 4 ? true : false}
                 />
               </Grid>
 
@@ -512,7 +603,7 @@ function ServiceOrders({ loading, alert }) {
                   setValue={setIdservice_states}
                   required
                   ignore={["PAGO"]}
-                  readOnly={idservice_states === 8 ? true : false}
+                  readOnly={[4, 8].includes(idservice_states) ? true : false}
                   ignoreItems={getStates(idservice_states)}
                 />
               </Grid>
@@ -524,6 +615,7 @@ function ServiceOrders({ loading, alert }) {
                   setValue={setIdusers}
                   required
                   selected={["PROVEEDOR"]}
+                  readOnly={getJWT("idroles") === 4 ? true : false}
                 />
               </Grid>
 
@@ -532,6 +624,7 @@ function ServiceOrders({ loading, alert }) {
                   value={service_orders_type}
                   setValue={setService_orders_type}
                   required
+                  readOnly={getJWT("idroles") === 4 ? true : false}
                 />
               </Grid>
 
@@ -542,7 +635,7 @@ function ServiceOrders({ loading, alert }) {
                   value={full_consecutive}
                   setValue={setFull_consecutive}
                   required
-                  readOnly
+                  readOnly={getJWT("idroles") === 4 ? true : false}
                 />
               </Grid>
             </Grid>
@@ -561,6 +654,7 @@ function ServiceOrders({ loading, alert }) {
                   value={service_orders_amount}
                   setValue={setService_orders_amount}
                   required
+                  readOnly={getJWT("idroles") === 4 ? true : false}
                 />
               </Grid>
 
@@ -570,7 +664,7 @@ function ServiceOrders({ loading, alert }) {
                   type={"number"}
                   value={service_orders_not_defective_amount}
                   setValue={setService_orders_not_defective_amount}
-                  readOnly
+                  readOnly={getJWT("idroles") === 4 ? true : false}
                 />
               </Grid>
 
@@ -581,6 +675,7 @@ function ServiceOrders({ loading, alert }) {
                   value={service_orders_total_price}
                   setValue={setService_orders_total_price}
                   required
+                  readOnly={getJWT("idroles") === 4 ? true : false}
                 />
               </Grid>
 
@@ -591,6 +686,7 @@ function ServiceOrders({ loading, alert }) {
                   value={service_orders_finished_product}
                   setValue={setService_orders_finished_product}
                   required
+                  readOnly={getJWT("idroles") === 4 ? true : false}
                 />
               </Grid>
 
@@ -608,12 +704,7 @@ function ServiceOrders({ loading, alert }) {
                   label={"Fecha de Entrega"}
                   value={service_orders_date_delivery}
                   setValue={setService_orders_date_delivery}
-                  readOnly={
-                    service_orders_date_delivery === null ? false : true
-                  }
-                  disabled={
-                    service_orders_date_delivery === null ? true : false
-                  }
+                  readOnly
                 />
               </Grid>
             </Grid>
@@ -631,7 +722,13 @@ function ServiceOrders({ loading, alert }) {
                   type={"number"}
                   value={service_orders_defective_amount}
                   setValue={setService_orders_defective_amount}
-                  disabled
+                  readOnly={
+                    getJWT("idroles") === 4
+                      ? idservice_states === 6
+                        ? false
+                        : true
+                      : true
+                  }
                 />
               </Grid>
 
@@ -641,7 +738,13 @@ function ServiceOrders({ loading, alert }) {
                   type={"number"}
                   value={service_orders_pending_amount}
                   setValue={setService_orders_pending_amount}
-                  disabled
+                  readOnly={
+                    getJWT("idroles") === 4
+                      ? idservice_states === 6
+                        ? false
+                        : true
+                      : true
+                  }
                 />
               </Grid>
 
@@ -651,7 +754,13 @@ function ServiceOrders({ loading, alert }) {
                   type={"text"}
                   value={service_orders_observation}
                   setValue={setService_orders_observation}
-                  disabled
+                  readOnly={
+                    getJWT("idroles") === 4
+                      ? [4, 6].includes(idservice_states)
+                        ? false
+                        : true
+                      : true
+                  }
                 />
               </Grid>
             </Grid>
