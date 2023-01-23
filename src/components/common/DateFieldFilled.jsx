@@ -16,7 +16,7 @@ function DateFieldFilled({
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"es-mx"}>
       <MobileDatePicker
         disableFuture
-        minDate={"2022-12-30"}
+        minDate={"2023-01-01"}
         views={["year", "month", "day"]}
         inputFormat={"YYYY-MM-DD"}
         label={label}
