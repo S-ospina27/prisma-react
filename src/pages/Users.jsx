@@ -108,14 +108,12 @@ function Users({ loading, alert }) {
     form.append("users_address", users_address);
     form.append("idcities", idcities.split("-").shift().trim());
     form.append("users_email", users_email);
-    if (idroles != 3) {
-      form.append("users_password", SHA256(users_password));
-    }
+    form.append("users_password", SHA256(users_password));
     form.append("users_contact_name", users_contact_name);
     form.append("users_contact_phone", users_contact_phone);
 
     axios.post(RoutesList.api.users.create, form, getHeader()).then((res) => {
-      // console.log(res.data);
+      console.log(res.data);
 
       alert({
         open: true,
