@@ -29,7 +29,7 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import DialogTransition from "../components/common/DialogTransition";
-import { getHeader } from "../components/tools/SessionSettings";
+import { getHeader, getJWT } from "../components/tools/SessionSettings";
 
 function ServiceOrders({ loading, alert }) {
   const [openCreateOrders, setOpenCreateOrders] = useState(false);
@@ -120,6 +120,71 @@ function ServiceOrders({ loading, alert }) {
         ? ""
         : row.service_orders_observation
     );
+  };
+
+  const getStates = (idservice_states) => {
+    if (getJWT("idroles") === 1) {
+      const states = {
+        1: [
+          "ACEPTADO",
+          "RECHAZADO",
+          "PENDIENTE",
+          "EN-PROCESO",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "DEPACHADO",
+          "FINALIZADO",
+          "DESPACHADO",
+        ],
+        2: [
+          "ACEPTADO",
+          "NO-DESPACHADO",
+          "RECHAZADO",
+          "PENDIENTE",
+          "EN-PROCESO",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "FINALIZADO",
+        ],
+        3: [
+          "NO-DESPACHADO",
+          "RECHAZADO",
+          "PENDIENTE",
+          "EN-PROCESO",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "FINALIZADO",
+        ],
+        5: [
+          "DESPACHADO",
+          "ACEPTADO",
+          "NO-DESPACHADO",
+          "RECHAZADO",
+          "PENDIENTE",
+          "ENVIADO",
+          "PAGO",
+          "NOVEDAD",
+          "FINALIZADO",
+        ],
+        7: [
+          "DESPACHADO",
+          "ACEPTADO",
+          "NO-DESPACHADO",
+          "RECHAZADO",
+          "PENDIENTE",
+          "EN-PROCESO",
+          "PAGO",
+          "NOVEDAD",
+        ],
+      };
+
+      return states[idservice_states];
+    } else if (getJWT("idroles") === 4) {
+      return [];
+    }
   };
 
   const handleReadOrderService = () => {
@@ -438,14 +503,9 @@ function ServiceOrders({ loading, alert }) {
                   value={idservice_states}
                   setValue={setIdservice_states}
                   required
-                  // ignore={[
-                  //   "ACEPTADO",
-                  //   "RECHAZADO",
-                  //   "PENDIENTE",
-                  //   "EN-PROCESO",
-                  //   "ENVIADO",
-                  // ]}
-                  // ignore={["DESPACHADO", "FINALIZADO"]}
+                  ignore={["PAGO"]}
+                  readOnly={idservice_states === 8 ? true : false}
+                  ignoreItems={getStates(idservice_states)}
                 />
               </Grid>
 
@@ -563,8 +623,7 @@ function ServiceOrders({ loading, alert }) {
                   type={"number"}
                   value={service_orders_defective_amount}
                   setValue={setService_orders_defective_amount}
-                  disabled={idservice_states === 6 ? false : true}
-                  required={idservice_states === 6 ? true : false}
+                  disabled
                 />
               </Grid>
 
@@ -574,8 +633,7 @@ function ServiceOrders({ loading, alert }) {
                   type={"number"}
                   value={service_orders_pending_amount}
                   setValue={setService_orders_pending_amount}
-                  disabled={idservice_states === 6 ? false : true}
-                  required={idservice_states === 6 ? true : false}
+                  disabled
                 />
               </Grid>
 
@@ -585,8 +643,7 @@ function ServiceOrders({ loading, alert }) {
                   type={"text"}
                   value={service_orders_observation}
                   setValue={setService_orders_observation}
-                  disabled={idservice_states === 6 ? false : true}
-                  required={idservice_states === 6 ? true : false}
+                  disabled
                 />
               </Grid>
             </Grid>
