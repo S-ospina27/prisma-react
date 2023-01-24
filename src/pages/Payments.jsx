@@ -1,4 +1,15 @@
-import { Box, Button, Chip, Container, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+} from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import DialogForm from "../components/common/DialogForm";
@@ -10,7 +21,7 @@ import ColumnsTable from "../components/tools/ColumnsTable";
 import RoutesList from "../components/tools/RoutesList";
 import { getHeader } from "../components/tools/SessionSettings";
 import PriceCheckIcon from "@mui/icons-material/PriceCheck";
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 function Payments({ loading, alert }) {
   const [payments, setPayments] = useState([]);
@@ -117,6 +128,30 @@ function Payments({ loading, alert }) {
           </Divider>
         </Box>
 
+        <Box mb={3}>
+          <form onSubmit={handleCreatePayments}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={12} md={6} lg={5}>
+                <ServiceRequestSelect
+                  label={"Ordenes Solicitudes"}
+                  value={idservice_request_c}
+                  setValue={setIdservice_request_c}
+                  required
+                  selected={["FINALIZADO", "NOVEDAD"]}
+                />
+              </Grid>
+            </Grid>
+
+            <Box mt={3}>
+              <Button variant={"contained"} type="submit">
+                Crear
+              </Button>
+            </Box>
+          </form>
+        </Box>
+
+        <Divider />
+
         <DataTableCheckBox
           setValue={setItems}
           reload={handleReadPayments}
@@ -141,49 +176,17 @@ function Payments({ loading, alert }) {
                 {"Pago"}
               </Button>
 
-              <Button
+              {/* <Button
                 type="button"
-                onClick={()=> setOpencreate(true)}
+                onClick={() => setOpencreate(true)}
                 startIcon={<PointOfSaleIcon />}
               >
                 {"Crear Solicitud"}
-              </Button>
+              </Button> */}
             </>
           }
         />
       </Container>
-
-      <Dialog
-        fullWidth
-        maxWidth={"xs"}
-        open={opencreate}
-        onClose={handleClose}
-        TransitionComponent={DialogTransition}
-      >
-        <form onSubmit={handleCreatePayments} >
-          <DialogTitle>Crear Solicitud</DialogTitle>
-
-          <DialogContent dividers>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={12}>
-              <ServiceRequestSelect
-                  label={"Ordenes Solicitudes"}
-                  value={idservice_request_c}
-                  setValue={setIdservice_request_c}
-                  required
-                  selected={["FINALIZADO", "NOVEDAD"]}
-                />
-              </Grid>
-            </Grid>
-          </DialogContent>
-
-          <DialogActions>
-            <Button variant={"contained"} size={"small"} type="submit">
-              Crear
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
     </Box>
   );
 }
