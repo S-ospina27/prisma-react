@@ -74,7 +74,7 @@ function ServiceRequest({ loading, alert }) {
   ] = useState("");
 
   const setFields = (row) => {
-    setGuide(`Guia-${row.idservice_request}`);
+    setGuide(row.guide);
     setIdservice_request(row.idservice_request);
     setService_request_payment_methods(
       row.service_request_payment_methods === null
