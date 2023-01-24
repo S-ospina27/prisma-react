@@ -10,7 +10,7 @@ export default {
     read_roles: `${host}/api/read-roles`,
     read_document_types: `${host}/api/read-document-types`,
     status: {
-      index: `${host}/api/status/`,
+      index: `${host}/api/status`,
       service: `${host}/api/status/service`,
     },
     locations: {
