@@ -44,6 +44,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import dayjs from "dayjs";
 import Alert from "@mui/material/Alert";
 import FormQRDistributor from "../components/forms/dashboard/FormQRDistributor";
+import GraphAmountServiceOrders from "../components/forms/dashboard/GraphAmountServiceOrders";
 
 ChartJS.register(
   CategoryScale,
@@ -93,8 +94,6 @@ function Dashboard({ loading, alert }) {
     },
   ]);
 
-  const [amountOrders, setAmountOrders] = useState([]);
-  const [labelsAmountOrders, setLabelsAmountOrders] = useState([]);
   const [unitPercentages, setUnitPercentages] = useState([]);
   const [warranty, setWarranty] = useState([]);
   const [totalChargesPerMonth, setTotalChargesPerMonth] = useState([]);
@@ -108,30 +107,6 @@ function Dashboard({ loading, alert }) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
-  };
-
-  const hanleReadAmountOrders = () => {
-    axios
-      .get(
-        RoutesList.api.service.orders.read.graphics.amount_orders,
-        getHeader()
-      )
-      .then((res) => {
-        // console.log(res.data);
-
-        if (!res.data.status) {
-          const labels = [];
-          const values = [];
-
-          Object.entries(res.data).forEach(([key, amount]) => {
-            values.push(amount.cont);
-            labels.push(`${amount.service_type} - ${amount.cont}`);
-          });
-
-          setAmountOrders(values);
-          setLabelsAmountOrders(labels);
-        }
-      });
   };
 
   const hanleReadUnitPercentages = () => {
@@ -289,7 +264,6 @@ function Dashboard({ loading, alert }) {
 
   useEffect(() => {
     if (idroles === 1) {
-      hanleReadAmountOrders();
       hanleReadUnitPercentages();
       hanleReadCountWarranty();
       handleReadTotalChargesPerMonth();
@@ -314,49 +288,7 @@ function Dashboard({ loading, alert }) {
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <Box mb={3}>
-                      <Divider textAlign="left">
-                        <Chip
-                          label="Cantidad Ordenes de servicio"
-                          color="dark-blue"
-                        />
-                      </Divider>
-                    </Box>
-
-                    <Bar
-                      options={{
-                        elements: {
-                          bar: {
-                            borderWidth: 2,
-                          },
-                        },
-                        plugins: {
-                          legend: {
-                            position: "top",
-                            display: false,
-                          },
-                        },
-                      }}
-                      data={{
-                        labels: labelsAmountOrders,
-                        datasets: [
-                          {
-                            label: "Cantidad Ordenes",
-                            data: amountOrders,
-                            backgroundColor: [
-                              "rgb(42, 138, 194)",
-                              "rgb(255, 255, 0)",
-                              "rgb(18, 170, 0)",
-                            ],
-                            borderColor: [
-                              "rgba(42, 138, 194, 0.5)",
-                              "rgba(255, 255, 0, 0.5)",
-                              "rgba(18, 170, 0, 0.5)",
-                            ],
-                          },
-                        ],
-                      }}
-                    />
+                    <GraphAmountServiceOrders />
                   </Grid>
 
                   <Grid item xs={12}>
