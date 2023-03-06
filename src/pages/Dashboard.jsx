@@ -99,43 +99,36 @@ function Dashboard({ loading, alert }) {
           {idroles === 1 && (
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <GraphAmountServiceOrders />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <GraphPercentagesUnitsServiceOrders />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <GraphGuaranteesRequestsOrders />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <GraphTotalValueGuaranteesOrdersRequestsMonth
-                      getRandomInt={getRandomInt}
-                      colors={colors}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <GraphTotalValueWithoutGuaranteesRequestsOrdersMonth
-                      getRandomInt={getRandomInt}
-                      colors={colors}
-                    />
-                  </Grid>
-                </Grid>
+                <GraphAmountServiceOrders />
               </Grid>
 
               <Grid item xs={12} sm={12} md={6} lg={6}>
-                <FormFollowUpGuidesRequestOrders
-                  alert={alert}
-                  loading={loading}
+                <GraphPercentagesUnitsServiceOrders />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6} lg={6}>
+                <GraphGuaranteesRequestsOrders />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6} lg={6}>
+                <GraphTotalValueGuaranteesOrdersRequestsMonth
+                  getRandomInt={getRandomInt}
+                  colors={colors}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={6} lg={6}>
+                <GraphTotalValueWithoutGuaranteesRequestsOrdersMonth
+                  getRandomInt={getRandomInt}
+                  colors={colors}
                 />
               </Grid>
             </Grid>
           )}
+
+          {/* <Grid item xs={12} sm={12} md={6} lg={6}>
+            <FormFollowUpGuidesRequestOrders alert={alert} loading={loading} />
+          </Grid> */}
         </Box>
       </Container>
     </>

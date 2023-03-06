@@ -53,7 +53,7 @@ function GraphTotalValueWithoutGuaranteesRequestsOrdersMonth({
       <Box mb={5}>
         <Divider textAlign="left">
           <Chip
-            label="Valor total sin garantias ordenes de solicitudes por mes"
+            label="Valor total sin Garantias Ordenes de Solicitudes por mes"
             color="dark-blue"
           />
         </Divider>

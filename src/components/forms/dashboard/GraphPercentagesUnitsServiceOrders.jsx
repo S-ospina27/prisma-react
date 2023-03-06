@@ -46,7 +46,7 @@ function GraphPercentagesUnitsServiceOrders() {
       <Box mb={3}>
         <Divider textAlign="left">
           <Chip
-            label="Porcentaje de unidades ordenes de servicio"
+            label="Porcentaje de Unidades Ordenes de Servicio"
             color="dark-blue"
           />
         </Divider>

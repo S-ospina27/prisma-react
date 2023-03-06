@@ -33,7 +33,7 @@ function GraphGuaranteesRequestsOrders() {
     <>
       <Box mb={3}>
         <Divider textAlign="left">
-          <Chip label="Garantias ordenes de solicitudes" color="dark-blue" />
+          <Chip label="Garantias Ordenes de Solicitudes" color="dark-blue" />
         </Divider>
       </Box>
 

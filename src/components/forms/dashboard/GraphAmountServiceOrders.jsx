@@ -42,7 +42,7 @@ function GraphAmountServiceOrders() {
     <>
       <Box mb={3}>
         <Divider textAlign="left">
-          <Chip label="Cantidad Ordenes de servicio" color="dark-blue" />
+          <Chip label="Cantidad Ordenes de Servicio" color="dark-blue" />
         </Divider>
       </Box>
 
