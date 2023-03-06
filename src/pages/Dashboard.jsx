@@ -46,6 +46,7 @@ import Alert from "@mui/material/Alert";
 import FormQRDistributor from "../components/forms/dashboard/FormQRDistributor";
 import GraphAmountServiceOrders from "../components/forms/dashboard/GraphAmountServiceOrders";
 import GraphPercentagesUnitsServiceOrders from "../components/forms/dashboard/GraphPercentagesUnitsServiceOrders";
+import GraphGuaranteesRequestsOrders from "../components/forms/dashboard/GraphGuaranteesRequestsOrders";
 
 ChartJS.register(
   CategoryScale,
@@ -95,7 +96,6 @@ function Dashboard({ loading, alert }) {
     },
   ]);
 
-  const [warranty, setWarranty] = useState([]);
   const [totalChargesPerMonth, setTotalChargesPerMonth] = useState([]);
   const [totalChargesWarranty, settotalChargesWarranty] = useState([]);
   const [timeline, setTimeline] = useState([]);
@@ -107,23 +107,6 @@ function Dashboard({ loading, alert }) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
-  };
-
-  const hanleReadCountWarranty = () => {
-    axios
-      .get(
-        RoutesList.api.service.request.read.graphics.count_warranty,
-        getHeader()
-      )
-      .then((res) => {
-        if (!res.data.status) {
-          const values = [];
-          res.data.forEach((row) => {
-            values.push(row.cont === null ? 0 : row.cont);
-          });
-          setWarranty(values);
-        }
-      });
   };
 
   const handleReadTotalChargesPerMonth = () => {
@@ -259,49 +242,7 @@ function Dashboard({ loading, alert }) {
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Box mb={3}>
-                      <Divider textAlign="left">
-                        <Chip
-                          label="Garantias ordenes de solicitudes"
-                          color="dark-blue"
-                        />
-                      </Divider>
-                    </Box>
-
-                    <Bar
-                      options={{
-                        elements: {
-                          bar: {
-                            borderWidth: 2,
-                          },
-                        },
-                        plugins: {
-                          legend: {
-                            position: "top",
-                            display: false,
-                          },
-                        },
-                      }}
-                      data={{
-                        labels: ["SiN ASIGNAR", "CON GARANTIA", "SIN GARANTIA"],
-                        datasets: [
-                          {
-                            label: "Cantidad garantia",
-                            data: warranty,
-                            backgroundColor: [
-                              "rgb(183, 167, 167)",
-                              "rgb(18, 170, 0)",
-                              "rgb(255, 0, 0)",
-                            ],
-                            borderColor: [
-                              "rgba(183, 167, 167 , 0.5)",
-                              "rgba(18, 170, 0, 0.5)",
-                              "rgba(255, 0, 0, 0.5)",
-                            ],
-                          },
-                        ],
-                      }}
-                    />
+                    <GraphGuaranteesRequestsOrders />
                   </Grid>
 
                   <Grid item xs={12}>
