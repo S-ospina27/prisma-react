@@ -36,8 +36,6 @@ import UsersSelect from "../components/common/UsersSelect";
 import RoutesList from "../components/tools/RoutesList";
 import { getHeader, getJWT } from "../components/tools/SessionSettings";
 
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import CloseIcon from "@mui/icons-material/Close";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -45,6 +43,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import CheckIcon from "@mui/icons-material/Check";
 import dayjs from "dayjs";
 import Alert from "@mui/material/Alert";
+import FormQRDistributor from "../components/forms/dashboard/FormQRDistributor";
 
 ChartJS.register(
   CategoryScale,
@@ -180,29 +179,6 @@ function Dashboard({ loading, alert }) {
       });
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(
-      `${
-        import.meta.env.VITE_SERVER_URL
-      }/service/application-order-form/${getJWT("idusers")}`
-    );
-
-    alert({
-      open: true,
-      message: "URL copiada",
-      severity: "info",
-      time: 2000,
-    });
-  };
-
-  const handleSendMessageWhatsapp = () => {
-    const text = `${
-      import.meta.env.VITE_SERVER_URL
-    }/service/application-order-form/${getJWT("idusers")}`;
-
-    window.open(`https://api.whatsapp.com/send?text=${text}`);
-  };
-
   const handleReadTotalChargesPerMonth = () => {
     axios
       .get(
@@ -331,46 +307,7 @@ function Dashboard({ loading, alert }) {
 
       <Container>
         <Box my={5}>
-          {idroles === 3 && (
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={4} mx={"auto"}>
-                <Box my={3}>
-                  <QRCode
-                    size={256}
-                    value={`${
-                      import.meta.env.VITE_SERVER_URL
-                    }/service/application-order-form/${getJWT("idusers")}`}
-                    viewBox={`0 0 256 256`}
-                    style={{ width: "100%" }}
-                  />
-                </Box>
-
-                <Box mb={2}>
-                  <Button
-                    variant="contained"
-                    color="whatsapp"
-                    startIcon={<WhatsAppIcon />}
-                    sx={{ width: "100%" }}
-                    onClick={handleSendMessageWhatsapp}
-                  >
-                    {"Whatsapp"}
-                  </Button>
-                </Box>
-
-                <Box mb={2}>
-                  <Button
-                    variant="contained"
-                    color="gray"
-                    startIcon={<ContentCopyIcon />}
-                    sx={{ width: "100%" }}
-                    onClick={handleCopy}
-                  >
-                    {"Copiar"}
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-          )}
+          {idroles === 3 && <FormQRDistributor alert={alert} />}
 
           {idroles === 1 && (
             <Grid container spacing={2}>
