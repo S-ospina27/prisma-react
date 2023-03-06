@@ -18,35 +18,17 @@ import {
   PointElement,
   LineElement,
 } from "chart.js";
-import {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineOppositeContent,
-  TimelineDot,
-} from "@mui/lab";
-import axios from "axios";
 import { useState } from "react";
-import UsersSelect from "../components/common/UsersSelect";
 
-import RoutesList from "../components/tools/RoutesList";
-import { getHeader, getJWT } from "../components/tools/SessionSettings";
+import { getJWT } from "../components/tools/SessionSettings";
 
-import ScheduleIcon from "@mui/icons-material/Schedule";
-import CloseIcon from "@mui/icons-material/Close";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import CheckIcon from "@mui/icons-material/Check";
-import dayjs from "dayjs";
-import Alert from "@mui/material/Alert";
 import FormQRDistributor from "../components/forms/dashboard/FormQRDistributor";
 import GraphAmountServiceOrders from "../components/forms/dashboard/GraphAmountServiceOrders";
 import GraphPercentagesUnitsServiceOrders from "../components/forms/dashboard/GraphPercentagesUnitsServiceOrders";
 import GraphGuaranteesRequestsOrders from "../components/forms/dashboard/GraphGuaranteesRequestsOrders";
 import GraphTotalValueGuaranteesOrdersRequestsMonth from "../components/forms/dashboard/GraphTotalValueGuaranteesOrdersRequestsMonth";
 import GraphTotalValueWithoutGuaranteesRequestsOrdersMonth from "../components/forms/dashboard/GraphTotalValueWithoutGuaranteesRequestsOrdersMonth";
+import FormFollowUpGuidesRequestOrders from "../components/forms/dashboard/FormFollowUpGuidesRequestOrders";
 
 ChartJS.register(
   CategoryScale,
@@ -96,62 +78,10 @@ function Dashboard({ loading, alert }) {
     },
   ]);
 
-  const [timeline, setTimeline] = useState([]);
-  const [idusers_technical, setIdusers_technical] = useState("");
-  const [percentage, setPercentage] = useState(0);
-  const DaysSolution = [];
-
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
-  };
-
-  const hanlereadAverageTime = (e) => {
-    e.preventDefault();
-    loading(true);
-
-    const route =
-      RoutesList.api.service.request.read.graphics.read_average_time;
-
-    axios
-      .get(
-        route + `/${idusers_technical.split("-").shift().trim()}`,
-        getHeader()
-      )
-      .then((res) => {
-        // console.log(res.data);
-        loading(false);
-
-        if (!res.data.status) {
-          setIdusers_technical("");
-          setTimeline(res.data);
-          let dateSolution1 = 0;
-          let dateSolution2 = 0;
-          let dateAssigment1 = 0;
-          let dateAssigment2 = 0;
-
-          res.data.forEach((request) => {
-            dateSolution1 = dayjs(request.service_request_date_visit);
-            dateSolution2 = dayjs(request.service_request_date_close);
-            DaysSolution.push(dateSolution2.diff(dateSolution1, "day"));
-          });
-
-          const result = DaysSolution.reduce(
-            (total, diference) => total + diference,
-            0
-          );
-          const amount = DaysSolution.length;
-          // console.log(ejemplo)
-          setPercentage(Math.round(result / amount));
-        } else {
-          alert({
-            open: true,
-            message: "No hay datos disponibles",
-            severity: res.data.status,
-          });
-        }
-      });
   };
 
   return (
@@ -199,113 +129,10 @@ function Dashboard({ loading, alert }) {
               </Grid>
 
               <Grid item xs={12} sm={12} md={6} lg={6}>
-                <Box mb={5}>
-                  <Divider textAlign="left">
-                    <Chip
-                      label="Seguimiento de guias ordenes de solicitud"
-                      color="dark-blue"
-                    />
-                  </Divider>
-                </Box>
-
-                <form onSubmit={hanlereadAverageTime}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <UsersSelect
-                        value={idusers_technical}
-                        setValue={setIdusers_technical}
-                        selected={["TECNICO"]}
-                        required
-                      />
-
-                      <Box
-                        mt={3}
-                        sx={{ display: "flex", justifyContent: "flex-end" }}
-                      >
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          color="dark-blue"
-                        >
-                          {"Buscar"}
-                        </Button>
-                      </Box>
-                    </Grid>
-
-                    {timeline.length > 0 && (
-                      <Grid item xs={12}>
-                        <Alert variant="filled" severity="info">
-                          {"Tiempo promedio en dar solucion a solicitudes es de " +
-                            percentage +
-                            " días"}
-                        </Alert>
-
-                        <Timeline>
-                          {timeline.map((request, keyRequest) => (
-                            <TimelineItem key={keyRequest}>
-                              <TimelineOppositeContent
-                                sx={{ m: "auto 0" }}
-                                align="right"
-                                variant="body2"
-                                color="text.secondary"
-                              >
-                                {request.idservice_states === 6
-                                  ? `Fecha registro: ${request.service_request_creation_date}`
-                                  : request.idservice_states === 8
-                                  ? `Fecha cierre: ${request.service_request_date_close}`
-                                  : `Fecha visita: ${request.service_request_date_visit}`}
-                              </TimelineOppositeContent>
-
-                              <TimelineSeparator>
-                                <TimelineConnector />
-
-                                <TimelineDot
-                                  color={
-                                    request.idservice_states === 6
-                                      ? "warning"
-                                      : request.idservice_states === 8
-                                      ? "success"
-                                      : request.idservice_states === 4
-                                      ? "error"
-                                      : request.idservice_states === 9
-                                      ? "error"
-                                      : "blue"
-                                  }
-                                >
-                                  {request.idservice_states === 6 ? (
-                                    <ScheduleIcon />
-                                  ) : request.idservice_states === 8 ? (
-                                    <CheckIcon />
-                                  ) : request.idservice_states === 4 ? (
-                                    <CloseIcon />
-                                  ) : request.idservice_states === 9 ? (
-                                    <ErrorOutlineIcon />
-                                  ) : (
-                                    <MoreHorizIcon />
-                                  )}
-                                </TimelineDot>
-
-                                <TimelineConnector />
-                              </TimelineSeparator>
-
-                              <TimelineContent sx={{ py: "12px", px: 2 }}>
-                                <Typography variant="h5" component="span">
-                                  {`Guía-${request.idservice_request}`}
-                                </Typography>
-
-                                <Typography
-                                  sx={{ fontWeight: 500 }}
-                                >{`Estado: ${request.service_type}`}</Typography>
-                                <Typography>{`Departamento: ${request.departments_name}`}</Typography>
-                                <Typography>{`Ciudad: ${request.cities_name}`}</Typography>
-                              </TimelineContent>
-                            </TimelineItem>
-                          ))}
-                        </Timeline>
-                      </Grid>
-                    )}
-                  </Grid>
-                </form>
+                <FormFollowUpGuidesRequestOrders
+                  alert={alert}
+                  loading={loading}
+                />
               </Grid>
             </Grid>
           )}
