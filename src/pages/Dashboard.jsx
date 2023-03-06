@@ -45,6 +45,7 @@ import dayjs from "dayjs";
 import Alert from "@mui/material/Alert";
 import FormQRDistributor from "../components/forms/dashboard/FormQRDistributor";
 import GraphAmountServiceOrders from "../components/forms/dashboard/GraphAmountServiceOrders";
+import GraphPercentagesUnitsServiceOrders from "../components/forms/dashboard/GraphPercentagesUnitsServiceOrders";
 
 ChartJS.register(
   CategoryScale,
@@ -94,7 +95,6 @@ function Dashboard({ loading, alert }) {
     },
   ]);
 
-  const [unitPercentages, setUnitPercentages] = useState([]);
   const [warranty, setWarranty] = useState([]);
   const [totalChargesPerMonth, setTotalChargesPerMonth] = useState([]);
   const [totalChargesWarranty, settotalChargesWarranty] = useState([]);
@@ -107,34 +107,6 @@ function Dashboard({ loading, alert }) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
-  };
-
-  const hanleReadUnitPercentages = () => {
-    axios
-      .get(
-        RoutesList.api.service.orders.read.graphics.unit_percentages,
-        getHeader()
-      )
-      .then((res) => {
-        // console.log(res.data);
-
-        if (!res.data.status) {
-          const values = [];
-
-          if (res.data.cont_success != null) {
-            let success =
-              (parseInt(res.data.cont_success) * 100) / res.data.cont;
-            values.push(success);
-          }
-
-          if (res.data.cont_err != null) {
-            let error = (parseInt(res.data.cont_err) * 100) / res.data.cont;
-            values.push(error);
-          }
-
-          setUnitPercentages(values);
-        }
-      });
   };
 
   const hanleReadCountWarranty = () => {
@@ -262,15 +234,6 @@ function Dashboard({ loading, alert }) {
       });
   };
 
-  useEffect(() => {
-    if (idroles === 1) {
-      hanleReadUnitPercentages();
-      hanleReadCountWarranty();
-      handleReadTotalChargesPerMonth();
-      handleReadTotalChargesWarranty();
-    }
-  }, []);
-
   return (
     <>
       <Box my={3}>
@@ -292,47 +255,7 @@ function Dashboard({ loading, alert }) {
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Box mb={3}>
-                      <Divider textAlign="left">
-                        <Chip
-                          label="Porcentaje de unidades ordenes de servicio"
-                          color="dark-blue"
-                        />
-                      </Divider>
-                    </Box>
-
-                    <Bar
-                      options={{
-                        elements: {
-                          bar: {
-                            borderWidth: 2,
-                          },
-                        },
-                        plugins: {
-                          legend: {
-                            position: "top",
-                            display: false,
-                          },
-                        },
-                      }}
-                      data={{
-                        labels: ["PORCENTAJE BUENAS", "PORCENTAJE MALAS"],
-                        datasets: [
-                          {
-                            label: "Cantidad Ordenes",
-                            data: unitPercentages,
-                            backgroundColor: [
-                              "rgb(18, 170, 0)",
-                              "rgb(255, 0, 0)",
-                            ],
-                            borderColor: [
-                              "rgba(18, 170, 0, 0.5)",
-                              "rgba(255, 0, 0, 0.5)",
-                            ],
-                          },
-                        ],
-                      }}
-                    />
+                    <GraphPercentagesUnitsServiceOrders />
                   </Grid>
 
                   <Grid item xs={12}>
