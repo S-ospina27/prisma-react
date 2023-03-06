@@ -198,6 +198,7 @@ function App() {
               </WithAuthenticationMiddleware>
             }
           />
+
           <Route
             path="payments"
             element={
