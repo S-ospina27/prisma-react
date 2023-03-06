@@ -28,6 +28,8 @@ function Login({ loading, alert, userSession }) {
     form.append("count_errors", count_errors);
 
     axios.post(RoutesList.api.auth.login, form).then((res) => {
+      // console.log(res.data);
+
       loading(false);
       alert({
         open: true,
