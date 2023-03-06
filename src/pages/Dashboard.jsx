@@ -47,6 +47,7 @@ import FormQRDistributor from "../components/forms/dashboard/FormQRDistributor";
 import GraphAmountServiceOrders from "../components/forms/dashboard/GraphAmountServiceOrders";
 import GraphPercentagesUnitsServiceOrders from "../components/forms/dashboard/GraphPercentagesUnitsServiceOrders";
 import GraphGuaranteesRequestsOrders from "../components/forms/dashboard/GraphGuaranteesRequestsOrders";
+import GraphTotalValueGuaranteesOrdersRequestsMonth from "../components/forms/dashboard/GraphTotalValueGuaranteesOrdersRequestsMonth";
 
 ChartJS.register(
   CategoryScale,
@@ -96,7 +97,6 @@ function Dashboard({ loading, alert }) {
     },
   ]);
 
-  const [totalChargesPerMonth, setTotalChargesPerMonth] = useState([]);
   const [totalChargesWarranty, settotalChargesWarranty] = useState([]);
   const [timeline, setTimeline] = useState([]);
   const [idusers_technical, setIdusers_technical] = useState("");
@@ -107,36 +107,6 @@ function Dashboard({ loading, alert }) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
-  };
-
-  const handleReadTotalChargesPerMonth = () => {
-    axios
-      .get(
-        RoutesList.api.service.request.read.graphics.total_charges_per_month,
-        getHeader()
-      )
-      .then((res) => {
-        const items = [];
-
-        Object.entries(res.data).forEach(([key, year]) => {
-          let values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-          year.forEach((month) => {
-            values[month.month_item - 1] = parseInt(month.total_item);
-          });
-
-          const random = getRandomInt(0, colors.length);
-
-          items.push({
-            label: key,
-            data: values,
-            borderColor: colors[random].borderColor,
-            backgroundColor: colors[random].backgroundColor,
-          });
-        });
-
-        setTotalChargesPerMonth(items);
-      });
   };
 
   const handleReadTotalChargesWarranty = () => {
@@ -246,36 +216,9 @@ function Dashboard({ loading, alert }) {
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Box mb={5}>
-                      <Divider textAlign="left">
-                        <Chip
-                          label="Valor total garantias ordenes de solicitudes por mes"
-                          color="dark-blue"
-                        />
-                      </Divider>
-                    </Box>
-
-                    <Line
-                      data={{
-                        labels: [
-                          "Enero",
-                          "Febrero",
-                          "Marzo",
-                          "Abril",
-                          "Mayo",
-                          "Junio",
-                          "Julio",
-                          "Agosto",
-                          "Septiembre",
-                          "Octubre",
-                          "Noviembre",
-                          "Diciembre",
-                        ],
-                        datasets: totalChargesPerMonth,
-                      }}
-                      options={{
-                        responsive: true,
-                      }}
+                    <GraphTotalValueGuaranteesOrdersRequestsMonth
+                      getRandomInt={getRandomInt}
+                      colors={colors}
                     />
                   </Grid>
 
