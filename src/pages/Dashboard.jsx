@@ -27,10 +27,8 @@ import {
   TimelineOppositeContent,
   TimelineDot,
 } from "@mui/lab";
-import { Bar, Line } from "react-chartjs-2";
 import axios from "axios";
-import QRCode from "react-qr-code";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UsersSelect from "../components/common/UsersSelect";
 
 import RoutesList from "../components/tools/RoutesList";
@@ -48,6 +46,7 @@ import GraphAmountServiceOrders from "../components/forms/dashboard/GraphAmountS
 import GraphPercentagesUnitsServiceOrders from "../components/forms/dashboard/GraphPercentagesUnitsServiceOrders";
 import GraphGuaranteesRequestsOrders from "../components/forms/dashboard/GraphGuaranteesRequestsOrders";
 import GraphTotalValueGuaranteesOrdersRequestsMonth from "../components/forms/dashboard/GraphTotalValueGuaranteesOrdersRequestsMonth";
+import GraphTotalValueWithoutGuaranteesRequestsOrdersMonth from "../components/forms/dashboard/GraphTotalValueWithoutGuaranteesRequestsOrdersMonth";
 
 ChartJS.register(
   CategoryScale,
@@ -97,7 +96,6 @@ function Dashboard({ loading, alert }) {
     },
   ]);
 
-  const [totalChargesWarranty, settotalChargesWarranty] = useState([]);
   const [timeline, setTimeline] = useState([]);
   const [idusers_technical, setIdusers_technical] = useState("");
   const [percentage, setPercentage] = useState(0);
@@ -107,37 +105,6 @@ function Dashboard({ loading, alert }) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
-  };
-
-  const handleReadTotalChargesWarranty = () => {
-    axios
-      .get(
-        RoutesList.api.service.request.read.graphics.total_charges_warranty,
-        getHeader()
-      )
-      .then((res) => {
-        // console.log(res.data);
-        const items = [];
-
-        Object.entries(res.data).forEach(([key, year]) => {
-          let values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-          year.forEach((month) => {
-            values[month.month_item - 1] = parseInt(month.total_item);
-          });
-
-          const random = getRandomInt(0, colors.length);
-
-          items.push({
-            label: key,
-            data: values,
-            borderColor: colors[random].borderColor,
-            backgroundColor: colors[random].backgroundColor,
-          });
-        });
-
-        settotalChargesWarranty(items);
-      });
   };
 
   const hanlereadAverageTime = (e) => {
@@ -223,36 +190,9 @@ function Dashboard({ loading, alert }) {
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Box mb={5}>
-                      <Divider textAlign="left">
-                        <Chip
-                          label="Valor total sin garantias ordenes de solicitudes por mes"
-                          color="dark-blue"
-                        />
-                      </Divider>
-                    </Box>
-
-                    <Line
-                      data={{
-                        labels: [
-                          "Enero",
-                          "Febrero",
-                          "Marzo",
-                          "Abril",
-                          "Mayo",
-                          "Junio",
-                          "Julio",
-                          "Agosto",
-                          "Septiembre",
-                          "Octubre",
-                          "Noviembre",
-                          "Diciembre",
-                        ],
-                        datasets: totalChargesWarranty,
-                      }}
-                      options={{
-                        responsive: true,
-                      }}
+                    <GraphTotalValueWithoutGuaranteesRequestsOrdersMonth
+                      getRandomInt={getRandomInt}
+                      colors={colors}
                     />
                   </Grid>
                 </Grid>
