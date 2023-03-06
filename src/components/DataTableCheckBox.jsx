@@ -148,8 +148,13 @@ function DataTableCheckBox({
       localeText={esES.components.MuiDataGrid.defaultProps.localeText}
       onRowClick={(params) => {
         if (onRowClick) {
-          onRowClick.set(params.row);
-          onRowClick.open(true);
+          if (![null, undefined].includes(onRowClick.set)) {
+            onRowClick.set(params.row);
+          }
+
+          if (![null, undefined].includes(onRowClick.open)) {
+            onRowClick.open(true);
+          }
         }
       }}
       components={{
