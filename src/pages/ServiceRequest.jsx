@@ -74,6 +74,7 @@ function ServiceRequest({ loading, alert }) {
   ] = useState("");
 
   const setFields = (row) => {
+    // console.log(row);
     setGuide(row.guide);
     setIdservice_request(row.idservice_request);
     setService_request_payment_methods(
@@ -152,7 +153,7 @@ function ServiceRequest({ loading, alert }) {
     );
     form.append("idservice_states", idservice_states);
     form.append("idservice_request", idservice_request);
-    form.append("setService_request_value", setService_request_value);
+    form.append("service_request_value", service_request_value);
     form.append(
       "service_request_payment_methods",
       service_request_payment_methods
@@ -170,7 +171,7 @@ function ServiceRequest({ loading, alert }) {
     axios
       .post(RoutesList.api.service.request.update, form, getHeader())
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
 
         alert({
           open: true,
