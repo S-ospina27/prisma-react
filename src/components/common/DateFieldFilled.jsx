@@ -11,11 +11,12 @@ function DateFieldFilled({
   required,
   disabled,
   readOnly,
+  disableFuture = false,
 }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"es-mx"}>
       <MobileDatePicker
-        disableFuture
+        disableFuture={disableFuture}
         minDate={"2023-01-01"}
         views={["year", "month", "day"]}
         inputFormat={"YYYY-MM-DD"}

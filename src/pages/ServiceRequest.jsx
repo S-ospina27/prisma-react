@@ -178,7 +178,7 @@ function ServiceRequest({ loading, alert }) {
           severity: res.data.status,
           message: res.data.message,
         });
-        handleReadServiceRequest();
+        // handleReadServiceRequest();
         loading(false);
       });
   };
