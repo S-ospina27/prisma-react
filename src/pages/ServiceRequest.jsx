@@ -147,10 +147,10 @@ function ServiceRequest({ loading, alert }) {
       "idusers_technical",
       idusers_technical.split("-").shift().trim()
     );
-    form.append(
-      "service_request_date_visit",
-      dayjs(service_request_date_visit).format("YYYY-MM-DD")
-    );
+    // form.append(
+    //   "service_request_date_visit",
+    //   dayjs(service_request_date_visit).format("YYYY-MM-DD")
+    // );
     form.append("idservice_states", idservice_states);
     form.append("idservice_request", idservice_request);
     form.append("service_request_value", service_request_value);
@@ -308,7 +308,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={guide}
                   setValue={setGuide}
-                  required
                   readOnly
                 />
               </Grid>
@@ -329,7 +328,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={product_types_name}
                   setValue={setProduct_types_name}
-                  required
                   readOnly
                 />
               </Grid>
@@ -340,7 +338,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={products_reference}
                   setValue={setProducts_reference}
-                  required
                   readOnly
                 />
               </Grid>
@@ -367,7 +364,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_warranty}
                   setValue={setService_request_warranty}
-                  required
                   readOnly
                 />
               </Grid>
@@ -378,17 +374,16 @@ function ServiceRequest({ loading, alert }) {
                   type={"number"}
                   value={service_request_value}
                   setValue={setService_request_value}
-                  required
                   readOnly
                 />
               </Grid>
+
               <Grid item xs={12} sm={12} md={6}>
                 <TextFieldFilled
                   label={"Metodo de pago"}
                   type={"text"}
                   value={service_request_payment_methods}
                   setValue={setService_request_payment_methods}
-                  required
                   readOnly
                 />
               </Grid>
@@ -396,7 +391,7 @@ function ServiceRequest({ loading, alert }) {
 
             <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Informacion del Cliente"} />
+                <Chip color="blue" label={"Informacion del Cliente"} />
               </Divider>
             </Box>
 
@@ -407,7 +402,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_client_name}
                   setValue={setService_request_client_name}
-                  required
                   readOnly
                 />
               </Grid>
@@ -418,7 +412,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={cities_name}
                   setValue={setCities_name}
-                  required
                   readOnly
                 />
               </Grid>
@@ -429,7 +422,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={departments_name}
                   setValue={setDepartments_name}
-                  required
                   readOnly
                 />
               </Grid>
@@ -440,7 +432,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_neighborhood}
                   setValue={setService_request_neighborhood}
-                  required
                   readOnly
                 />
               </Grid>
@@ -451,7 +442,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_address}
                   setValue={setService_request_address}
-                  required
                   readOnly
                 />
               </Grid>
@@ -462,7 +452,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_phone_contact}
                   setValue={setService_request_phone_contact}
-                  required
                   readOnly
                 />
               </Grid>
@@ -473,7 +462,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_email}
                   setValue={setService_request_email}
-                  required
                   readOnly
                 />
               </Grid>
@@ -481,7 +469,7 @@ function ServiceRequest({ loading, alert }) {
 
             <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="blue" label={"Informacion del Distribidor"} />
+                <Chip color="dark-blue" label={"Informacion del Distribidor"} />
               </Divider>
             </Box>
 
@@ -492,7 +480,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={iddealers}
                   setValue={setIdealers}
-                  required
                   readOnly
                 />
               </Grid>
@@ -503,7 +490,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={name_dealers}
                   setValue={setName_dealers}
-                  required
                   readOnly
                 />
               </Grid>
@@ -514,7 +500,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={users_lastname_dealers}
                   setValue={setUsers_lastname_dealers}
-                  required
                   readOnly
                 />
               </Grid>
@@ -522,7 +507,7 @@ function ServiceRequest({ loading, alert }) {
 
             <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="dark-blue" label={"Trazabilidad de Solicitud"} />
+                <Chip color="blue" label={"Trazabilidad de Solicitud"} />
               </Divider>
             </Box>
 
@@ -533,7 +518,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_creation_date}
                   setValue={setService_request_creation_date}
-                  required
                   readOnly
                 />
               </Grid>
@@ -543,7 +527,7 @@ function ServiceRequest({ loading, alert }) {
                   label={"Fecha de Visita"}
                   value={service_request_date_visit}
                   setValue={setService_request_date_visit}
-                  required
+                  readOnly
                 />
               </Grid>
 
@@ -553,7 +537,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_date_close}
                   setValue={setService_request_date_close}
-                  required
                   readOnly
                 />
               </Grid>
@@ -561,7 +544,7 @@ function ServiceRequest({ loading, alert }) {
 
             <Box my={3}>
               <Divider textAlign="left">
-                <Chip color="blue" label={"Novedad de la Solicitud"} />
+                <Chip color="dark-blue" label={"Novedad de la Solicitud"} />
               </Divider>
             </Box>
 
@@ -572,7 +555,6 @@ function ServiceRequest({ loading, alert }) {
                   type={"text"}
                   value={service_request_trouble_report}
                   setValue={setService_request_trouble_report}
-                  required
                   readOnly
                 />
               </Grid>
@@ -607,7 +589,7 @@ function ServiceRequest({ loading, alert }) {
                   <>
                     <Box my={3}>
                       <Divider textAlign="left">
-                        <Chip color="dark-blue" label={"Evidencia Novedad"} />
+                        <Chip color="blue" label={"Evidencia Novedad"} />
                       </Divider>
                     </Box>
 
