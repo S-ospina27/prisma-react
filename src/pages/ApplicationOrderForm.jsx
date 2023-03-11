@@ -4,10 +4,14 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LocationsSelect from "../components/common/LocationsSelect";
 import ProductsSelect from "../components/common/ProductsSelect";
+import TextFieldFile from "../components/common/TextFieldFile";
 import TextFieldFilled from "../components/common/TextFieldFilled";
 
 import RoutesList from "../components/tools/RoutesList";
-import { getHeader } from "../components/tools/SessionSettings";
+import {
+  getHeader,
+  getHeaderMultipart,
+} from "../components/tools/SessionSettings";
 
 function ApplicationOrderForm({ loading, alert }) {
   const { idusers } = useParams();
@@ -28,6 +32,7 @@ function ApplicationOrderForm({ loading, alert }) {
   const [service_request_email, setService_request_email] = useState("");
   const [service_request_trouble_report, setService_request_trouble_report] =
     useState("");
+  const [service_request_evidence, setService_request_evidence] = useState([]);
 
   const clearFields = () => {
     setIddepartments("");
@@ -39,6 +44,7 @@ function ApplicationOrderForm({ loading, alert }) {
     setService_request_phone_contact("");
     setService_request_email("");
     setService_request_trouble_report("");
+    setService_request_evidence([]);
   };
 
   const handleCreateServiceRequest = (e) => {
@@ -59,9 +65,13 @@ function ApplicationOrderForm({ loading, alert }) {
       "service_request_trouble_report",
       service_request_trouble_report
     );
+    form.append(
+      "service_request_evidence",
+      service_request_evidence.length > 0 ? service_request_evidence[0] : []
+    );
 
     axios
-      .post(RoutesList.api.application_order_form, form, getHeader())
+      .post(RoutesList.api.application_order_form, form, getHeaderMultipart())
       .then((res) => {
         // console.log(res.data);
 
@@ -169,6 +179,17 @@ function ApplicationOrderForm({ loading, alert }) {
                 selected={["ACTIVO"]}
                 showColumns={["product_types_name"]}
                 required
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <TextFieldFile
+                type={"text"}
+                label={"Subir Archivo"}
+                value={service_request_evidence}
+                setValue={setService_request_evidence}
+                required
+                accept={[".jpg", ".png", ".jpeg"]}
               />
             </Grid>
 
