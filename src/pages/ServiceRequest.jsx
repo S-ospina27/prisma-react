@@ -603,43 +603,53 @@ function ServiceRequest({ loading, alert }) {
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
-                <Box my={3}>
-                  <Divider textAlign="left">
-                    <Chip color="dark-blue" label={"Evidencia Novedad"} />
-                  </Divider>
-                </Box>
+                {![null, "", undefined].includes(service_request_evidence) && (
+                  <>
+                    <Box my={3}>
+                      <Divider textAlign="left">
+                        <Chip color="dark-blue" label={"Evidencia Novedad"} />
+                      </Divider>
+                    </Box>
 
-                <Button
-                  variant={"contained"}
-                  color={"primary"}
-                  onClick={() =>
-                    window.open(
-                      `${RoutesList.host}/assets/img/products/${service_request_evidence}`
-                    )
-                  }
-                >
-                  {service_request_evidence}
-                </Button>
+                    <Button
+                      variant={"contained"}
+                      color={"primary"}
+                      onClick={() =>
+                        window.open(
+                          `${RoutesList.host}/assets/img/service/request/evidence/${service_request_evidence}`
+                        )
+                      }
+                    >
+                      {service_request_evidence}
+                    </Button>
+                  </>
+                )}
               </Grid>
 
               <Grid item xs={12} sm={12} md={6}>
-                <Box my={3}>
-                  <Divider textAlign="left">
-                    <Chip color="dark-blue" label={"Evidencia Solución"} />
-                  </Divider>
-                </Box>
+                {![null, "", undefined].includes(
+                  service_request_technical_novelty
+                ) && (
+                  <>
+                    <Box my={3}>
+                      <Divider textAlign="left">
+                        <Chip color="dark-blue" label={"Evidencia Solución"} />
+                      </Divider>
+                    </Box>
 
-                <Button
-                  variant={"contained"}
-                  color={"primary"}
-                  onClick={() =>
-                    window.open(
-                      `${RoutesList.host}/assets/img/products/${service_request_evidence}`
-                    )
-                  }
-                >
-                  {service_request_evidence}
-                </Button>
+                    <Button
+                      variant={"contained"}
+                      color={"primary"}
+                      onClick={() =>
+                        window.open(
+                          `${RoutesList.host}/assets/img/service/request/evidence/${service_request_technical_novelty}`
+                        )
+                      }
+                    >
+                      {service_request_technical_novelty}
+                    </Button>
+                  </>
+                )}
               </Grid>
             </Grid>
           </Container>
