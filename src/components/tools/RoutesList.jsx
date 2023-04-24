@@ -10,7 +10,7 @@ export default {
     read_roles: `${host}/api/read-roles`,
     read_document_types: `${host}/api/read-document-types`,
     status: {
-      index: `${host}/api/status`,
+      index: `${host}/api/status/index`,
       service: `${host}/api/status/service`,
     },
     locations: {
@@ -21,7 +21,7 @@ export default {
       create: `${host}/api/users/create`,
       update: `${host}/api/users/update`,
       read: {
-        index: `${host}/api/users/read`,
+        index: `${host}/api/users/read/index`,
         by_rol: `${host}/api/users/read/by-rol`,
       },
     },
@@ -54,7 +54,7 @@ export default {
           pdf: `${host}/api/service/orders/export/pdf`,
         },
         read: {
-          index: `${host}/api/service/orders/read`,
+          index: `${host}/api/service/orders/read/index`,
           by_provider: `${host}/api/service/orders/read/by-provider`,
           graphics: {
             amount_orders: `${host}/api/service/orders/read/graphics/amount-orders`,
@@ -63,10 +63,9 @@ export default {
         },
       },
       request: {
-        // create: `${host}/api/service/request/create`,
         update: `${host}/api/service/request/update`,
         read: {
-          index: `${host}/api/service/request/read`,
+          index: `${host}/api/service/request/read/index`,
           by_state: `${host}/api/service/request/read/by-state`,
           graphics: {
             count_warranty: `${host}/api/service/request/read/graphics/count-warranty`,
